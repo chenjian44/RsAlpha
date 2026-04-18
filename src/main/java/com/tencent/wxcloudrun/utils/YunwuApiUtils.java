@@ -106,7 +106,9 @@ public class YunwuApiUtils {
                 JSONObject choice = choices.getJSONObject(0);
                 if (choice.containsKey("message")) {
                     JSONObject message = choice.getJSONObject("message");
-                    return message.getString("content");
+                    if (message.containsKey("content")) {
+                        return message.getString("content");
+                    }
                 }
             }
         }
