@@ -30,6 +30,6 @@ public class YunwuConfig {
     }
 
     public static double getTemperature() {
-        return Double.parseDouble(properties.getProperty("yunwu.api.temperature", "0.7"));
+        return Double.parseDouble(properties.getProperty("yunwu.api.temperature", "0.0"));
     }
 }

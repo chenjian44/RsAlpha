@@ -3,6 +3,7 @@ package com.tencent.wxcloudrun.scheduler;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.model.DcChannelMessage;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
+import com.tencent.wxcloudrun.utils.FeishuUtils;
 import com.tencent.wxcloudrun.utils.PromptUtils;
 import com.tencent.wxcloudrun.utils.YunwuApiUtils;
 import org.slf4j.Logger;
@@ -62,13 +63,24 @@ public class DcChannelMessageScheduler {
 
                 // 调用LLM接口进行分析
                 if (!messages.isEmpty()) {
-                    String userMessage  = String.format(prompt, messagesContent);
+                    String userMessage = String.format(prompt, messagesContent);
                     
                     log.info("Calling LLM API for channelId: {}", channelId);
                     JSONObject response = YunwuApiUtils.callYunwuApi(userMessage);
                     String assistantResponse = YunwuApiUtils.getAssistantResponse(response);
                     
                     log.info("LLM analysis result for channelId {}: {}", channelId, assistantResponse);
+
+                    // 推送分析结果到飞书
+                    if (!assistantResponse.isEmpty()) {
+                        log.info("Pushing analysis result to Feishu for channelId: {}", channelId);
+                        boolean pushSuccess = FeishuUtils.sendMessage(assistantResponse);
+                        if (pushSuccess) {
+                            log.info("Feishu push successful for channelId: {}", channelId);
+                        } else {
+                            log.error("Feishu push failed for channelId: {}", channelId);
+                        }
+                    }
                 }
             }
 
