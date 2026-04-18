@@ -23,9 +23,12 @@ public class DcChannelMessageScheduler {
     }
 
     @Scheduled(cron = "0 0 10 * * ?")
-    public void processChannelMessages() {
+    public void scheduledProcessChannelMessages() {
         log.info("Starting scheduled task: processChannelMessages at 10:00 AM");
+        processChannelMessages();
+    }
 
+    public void processChannelMessages() {
         try {
             List<String> channelIds = dcChannelMessageService.getAllChannelIds();
             log.info("Found {} distinct channelIds", channelIds.size());

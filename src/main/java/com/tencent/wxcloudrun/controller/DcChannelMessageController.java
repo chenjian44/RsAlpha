@@ -2,6 +2,7 @@ package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.DcChannelMessageRequest;
+import com.tencent.wxcloudrun.scheduler.DcChannelMessageScheduler;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,13 @@ public class DcChannelMessageController {
 
     private static final Logger log = LoggerFactory.getLogger(DcChannelMessageController.class);
     private final DcChannelMessageService dcChannelMessageService;
+    private final DcChannelMessageScheduler dcChannelMessageScheduler;
 
     @Autowired
-    public DcChannelMessageController(DcChannelMessageService dcChannelMessageService) {
+    public DcChannelMessageController(DcChannelMessageService dcChannelMessageService,
+                                      DcChannelMessageScheduler dcChannelMessageScheduler) {
         this.dcChannelMessageService = dcChannelMessageService;
+        this.dcChannelMessageScheduler = dcChannelMessageScheduler;
     }
 
     @PostMapping("/api/dc-channel-message")
@@ -32,6 +36,19 @@ public class DcChannelMessageController {
         } catch (Exception e) {
             log.error("Failed to save message: {}", e.getMessage());
             return ApiResponse.error("保存消息失败: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/api/dc-channel-message/trigger")
+    public ApiResponse triggerProcessChannelMessages() {
+        try {
+            log.info("Manually triggering processChannelMessages task");
+            dcChannelMessageScheduler.processChannelMessages();
+            log.info("processChannelMessages task triggered successfully");
+            return ApiResponse.ok();
+        } catch (Exception e) {
+            log.error("Failed to trigger processChannelMessages task: {}", e.getMessage());
+            return ApiResponse.error("触发任务失败: " + e.getMessage());
         }
     }
 }
