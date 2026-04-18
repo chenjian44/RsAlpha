@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.YunwuConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,6 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class YunwuApiUtils {
+
+    private static final Logger log = LoggerFactory.getLogger(YunwuApiUtils.class);
 
     public static JSONObject callYunwuApi(String userMessage) {
         try {
@@ -41,6 +45,8 @@ public class YunwuApiUtils {
             
             // 发送HTTP请求
             URL url = new URL(YunwuConfig.getApiUrl());
+            log.info("Calling Yunwu API at: {}", url);
+            
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -55,6 +61,8 @@ public class YunwuApiUtils {
             
             // 读取响应
             int responseCode = conn.getResponseCode();
+            log.info("Yunwu API response code: {}", responseCode);
+            
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     responseCode == 200 ? conn.getInputStream() : conn.getErrorStream()));
             
@@ -66,10 +74,12 @@ public class YunwuApiUtils {
             reader.close();
             conn.disconnect();
             
+            log.info("Yunwu API response: {}", response.toString());
+            
             // 解析响应
             return JSON.parseObject(response.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error calling Yunwu API: {}", e.getMessage(), e);
             JSONObject errorResponse = new JSONObject();
             errorResponse.put("error", e.getMessage());
             return errorResponse;
@@ -86,6 +96,9 @@ public class YunwuApiUtils {
                     return message.getString("content");
                 }
             }
+        }
+        if (response.containsKey("error")) {
+            log.error("Yunwu API error: {}", response.getString("error"));
         }
         return "";
     }
