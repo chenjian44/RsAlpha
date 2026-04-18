@@ -3,6 +3,7 @@ package com.tencent.wxcloudrun.scheduler;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.model.DcChannelMessage;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
+import com.tencent.wxcloudrun.utils.PromptUtils;
 import com.tencent.wxcloudrun.utils.YunwuApiUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,8 @@ public class DcChannelMessageScheduler {
                 List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByChannelId(channelId);
                 log.info("Retrieved {} messages for channelId: {}", messages.size(), channelId);
 
+                String prompt = PromptUtils.readSystemPrompt();
+
                 // 整合消息内容
                 StringBuilder messagesContent = new StringBuilder();
                 messagesContent.append("以下是该频道的消息记录（按时间升序排列）：\n\n");
@@ -59,12 +62,7 @@ public class DcChannelMessageScheduler {
 
                 // 调用LLM接口进行分析
                 if (!messages.isEmpty()) {
-                    String userMessage = "请分析以下频道的消息记录，提供详细的分析报告，包括：\n"
-                            + "1. 消息的主题和主要内容\n"
-                            + "2. 参与者的互动模式\n"
-                            + "3. 关键信息和趋势\n"
-                            + "4. 可能的见解和建议\n\n"
-                            + messagesContent.toString();
+                    String userMessage  = String.format(prompt, messagesContent);
                     
                     log.info("Calling LLM API for channelId: {}", channelId);
                     JSONObject response = YunwuApiUtils.callYunwuApi(userMessage);
