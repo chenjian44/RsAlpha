@@ -4,6 +4,7 @@ import com.tencent.wxcloudrun.dao.DcChannelMessagesMapper;
 import com.tencent.wxcloudrun.dto.DcChannelMessageRequest;
 import com.tencent.wxcloudrun.model.DcChannelMessage;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
+import com.tencent.wxcloudrun.utils.EmojiUtil;
 import com.tencent.wxcloudrun.utils.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +35,14 @@ public class DcChannelMessageServiceImpl implements DcChannelMessageService {
             message.setChannelName(request.getChannelName());
             message.setTimestamp(Timestamp.valueOf(request.getTimestamp()));
             message.setUser(request.getUser());
-            message.setContent(request.getContent());
-            message.setContentMd5(MD5Utils.getMD5(request.getContent()));
+            // 过滤 content 中的 emoji
+            String filteredContent = EmojiUtil.filterEmoji(request.getContent());
+            message.setContent(filteredContent);
+            message.setContentMd5(MD5Utils.getMD5(filteredContent));
             dcChannelMessagesMapper.insert(message);
-
         } catch (DuplicateKeyException e) {
             log.info("Duplicate message detected, skipping. channelId: {}, contentMd5: {}",
-                    request.getChannelId(), MD5Utils.getMD5(request.getContent()));
+                    request.getChannelId(), MD5Utils.getMD5(EmojiUtil.filterEmoji(request.getContent())));
         } catch (Exception e) {
             log.error("Unexpected error when saving message: {}", e.getMessage());
         }
