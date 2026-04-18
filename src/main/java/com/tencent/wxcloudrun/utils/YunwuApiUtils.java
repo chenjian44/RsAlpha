@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class YunwuApiUtils {
 
@@ -25,16 +27,7 @@ public class YunwuApiUtils {
             
             JSONArray messages = new JSONArray();
             
-            // 添加系统提示词
-            String systemPrompt = PromptUtils.readSystemPrompt();
-            if (!systemPrompt.isEmpty()) {
-                JSONObject systemMessage = new JSONObject();
-                systemMessage.put("role", "system");
-                systemMessage.put("content", systemPrompt);
-                messages.add(systemMessage);
-            }
-            
-            // 添加用户消息
+            // 只添加用户消息，不添加系统提示词，与curl命令保持一致
             JSONObject userMessageObj = new JSONObject();
             userMessageObj.put("role", "user");
             userMessageObj.put("content", userMessage);
@@ -43,28 +36,38 @@ public class YunwuApiUtils {
             requestBody.put("messages", messages);
             requestBody.put("temperature", YunwuConfig.getTemperature());
             
-            // 发送HTTP请求
-            URL url = new URL(YunwuConfig.getApiUrl());
-            log.info("Calling Yunwu API at: {}", url);
+            String requestBodyStr = requestBody.toJSONString();
+            log.info("Request body: {}", requestBodyStr);
             
+            // 发送HTTP请求
+            String apiUrl = YunwuConfig.getApiUrl();
+            log.info("API URL: {}", apiUrl);
+            
+            URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            // 设置请求属性
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Authorization", "Bearer " + YunwuConfig.getApiKey());
+            conn.setRequestProperty("Content-Length", String.valueOf(requestBodyStr.getBytes(StandardCharsets.UTF_8).length));
             conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            conn.setInstanceFollowRedirects(false);
             
             // 写入请求体
             try (OutputStream os = conn.getOutputStream()) {
-                os.write(requestBody.toJSONString().getBytes());
+                os.write(requestBodyStr.getBytes(StandardCharsets.UTF_8));
                 os.flush();
             }
             
             // 读取响应
             int responseCode = conn.getResponseCode();
-            log.info("Yunwu API response code: {}", responseCode);
+            log.info("Response code: {}", responseCode);
             
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    responseCode == 200 ? conn.getInputStream() : conn.getErrorStream()));
+                    responseCode == 200 ? conn.getInputStream() : conn.getErrorStream(), StandardCharsets.UTF_8));
             
             StringBuilder response = new StringBuilder();
             String line;
@@ -74,10 +77,11 @@ public class YunwuApiUtils {
             reader.close();
             conn.disconnect();
             
-            log.info("Yunwu API response: {}", response.toString());
+            String responseStr = response.toString();
+            log.info("Response: {}", responseStr);
             
             // 解析响应
-            return JSON.parseObject(response.toString());
+            return JSON.parseObject(responseStr);
         } catch (Exception e) {
             log.error("Error calling Yunwu API: {}", e.getMessage(), e);
             JSONObject errorResponse = new JSONObject();
