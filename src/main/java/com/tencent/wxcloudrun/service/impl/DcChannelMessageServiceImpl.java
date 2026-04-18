@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class DcChannelMessageServiceImpl implements DcChannelMessageService {
@@ -28,5 +29,15 @@ public class DcChannelMessageServiceImpl implements DcChannelMessageService {
         message.setUser(request.getUser());
         message.setContent(request.getContent());
         dcChannelMessagesMapper.insert(message);
+    }
+
+    @Override
+    public List<DcChannelMessage> getMessagesByChannelId(String channelId) {
+        return dcChannelMessagesMapper.selectByChannelIdOrderByTimestamp(channelId);
+    }
+
+    @Override
+    public List<String> getAllChannelIds() {
+        return dcChannelMessagesMapper.selectDistinctChannelIds();
     }
 }

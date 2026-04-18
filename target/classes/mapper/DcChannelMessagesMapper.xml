@@ -5,4 +5,15 @@
         INSERT INTO DcChannelMessages (channelId, channelName, timestamp, user, content, createdAt, updatedAt)
         VALUES (#{channelId}, #{channelName}, #{timestamp}, #{user}, #{content}, NOW(), NOW())
     </insert>
+
+    <select id="selectByChannelIdOrderByTimestamp" parameterType="string" resultType="com.tencent.wxcloudrun.model.DcChannelMessage">
+        SELECT id, channelId, channelName, timestamp, user, content, createdAt, updatedAt
+        FROM DcChannelMessages
+        WHERE channelId = #{channelId}
+        ORDER BY timestamp ASC
+    </select>
+
+    <select id="selectDistinctChannelIds" resultType="string">
+        SELECT DISTINCT channelId FROM DcChannelMessages ORDER BY channelId ASC
+    </select>
 </mapper>
