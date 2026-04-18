@@ -37,6 +37,7 @@ public class DcChannelMessageServiceImpl implements DcChannelMessageService {
             message.setContent(request.getContent());
             message.setContentMd5(MD5Utils.getMD5(request.getContent()));
             dcChannelMessagesMapper.insert(message);
+
         } catch (DuplicateKeyException e) {
             log.info("Duplicate message detected, skipping. channelId: {}, contentMd5: {}",
                     request.getChannelId(), MD5Utils.getMD5(request.getContent()));
