@@ -35,8 +35,8 @@ public class DcChannelMessageController {
     @PostMapping("/api/dc-channel-message")
     public ApiResponse receiveMessage(@RequestBody DcChannelMessageRequest request) {
         try {
-            log.info("Saving message to database, channelId: {}, channelName: {}, user: {}",
-                    request.getChannelId(), request.getChannelName(), request.getUser());
+            log.info("Saving message to database, channelId: {}, channelName: {}, user: {}, content:{}",
+                    request.getChannelId(), request.getChannelName(), request.getUser(),request.getContent());
             dcChannelMessageService.saveMessage(request);
             log.info("Message saved successfully");
             return ApiResponse.ok();
