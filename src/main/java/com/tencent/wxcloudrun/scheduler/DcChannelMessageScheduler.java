@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.StringJoiner;
@@ -36,28 +38,41 @@ public class DcChannelMessageScheduler {
     @Scheduled(cron = "0 0 10 * * ?")
     public void scheduledProcessChannelMessages() {
         log.info("Starting scheduled task: processChannelMessages at 10:00 AM");
-        processChannelMessages();
+        
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+        
+        Timestamp beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
+        Timestamp endTime = Timestamp.valueOf(LocalDateTime.now());
+        
+        processChannelMessages(beginTime, endTime);
     }
 
-    public void processChannelMessages() {
+    public void processChannelMessages(Timestamp beginTime, Timestamp endTime) {
+        processChannelMessages(beginTime, endTime, true);
+    }
+
+    public void processChannelMessages(Timestamp beginTime, Timestamp endTime, boolean saveToDatabase) {
         try {
-            List<String> channelIds = dcChannelMessageService.getAllChannelIds();
-            log.info("Found {} distinct channelIds", channelIds.size());
+            log.info("Query time range - begin: {}, end: {}", beginTime, endTime);
+
+            List<String> channelIds = dcChannelMessageService.getAllChannelIdsByTimeRange(beginTime, endTime);
+            log.info("Found {} distinct channelIds in time range", channelIds.size());
 
             StringBuilder allSummaries = new StringBuilder("\n\n");
-            LocalDate today = LocalDate.now();
-            String dateStr = today.format(DateTimeFormatter.ISO_DATE); // 格式为yyyy-mm-dd
-            // 整合消息内容
-            StringBuilder messagesContent = new StringBuilder();
+
             for (String channelId : channelIds) {
                 log.info("Processing channelId: {}", channelId);
-                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByChannelId(channelId);
+                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByChannelIdAndTimeRange(channelId, beginTime, endTime);
                 log.info("Retrieved {} messages for channelId: {}", messages.size(), channelId);
 
                 if (messages.isEmpty()) {
                     continue;
                 }
 
+                String prompt = PromptUtils.readSystemPrompt();
+
+                StringBuilder messagesContent = new StringBuilder();
                 messagesContent.append("以下是该频道的消息记录（按时间升序排列）：\n\n");
                 
                 for (DcChannelMessage message : messages) {
@@ -69,41 +84,42 @@ public class DcChannelMessageScheduler {
                             message.getContent());
                     
                     messagesContent.append("时间: ").append(message.getTimestamp()).append("\n");
-                    messagesContent.append("频道: ").append(message.getChannelName()).append("\n");
+                    messagesContent.append("用户: ").append(message.getUser()).append("\n");
                     messagesContent.append("内容: ").append(message.getContent()).append("\n\n");
                 }
 
-            }
-            String prompt = PromptUtils.readSystemPrompt();
+                String userMessage = String.format(prompt, messagesContent);
+                
+                log.info("Calling LLM API for channelId: {}", channelId);
+                JSONObject response = YunwuApiUtils.callYunwuApi(userMessage);
+                String assistantResponse = YunwuApiUtils.getAssistantResponse(response);
+                
+                log.info("LLM analysis result for channelId {}: {}", channelId, assistantResponse);
 
-            // 调用LLM接口进行分析
-            String userMessage = String.format(prompt, messagesContent);
+                if (!assistantResponse.isEmpty()) {
+                    log.info("Pushing analysis result to Feishu for channelId: {}", channelId);
+                    String channelName = messages.get(0).getChannelName();
+                    String title = String.format("%s 频道分析报告", channelName);
+                    boolean pushSuccess = FeishuUtils.sendRichTextMessage(title, assistantResponse);
+                    if (pushSuccess) {
+                        log.info("Feishu push successful for channelId: {}", channelId);
+                    } else {
+                        log.error("Feishu push failed for channelId: {}", channelId);
+                    }
 
-            JSONObject response = YunwuApiUtils.callYunwuApi(userMessage);
-            String assistantResponse = YunwuApiUtils.getAssistantResponse(response);
-
-
-            // 推送分析结果到飞书（使用富文本格式）
-            if (!assistantResponse.isEmpty()) {
-
-                String title = String.format("%s频道分析报告",today);
-                boolean pushSuccess = FeishuUtils.sendRichTextMessage(title, assistantResponse);
-                if (pushSuccess) {
-                } else {
-                    log.error("Feishu push failed for : {}", title);
+                    allSummaries.append("# " + channelName + " 频道分析\n").append(assistantResponse);
                 }
-
-                // 将分析结果添加到总总结中
-                allSummaries.append(today).append("频道分析\n").append(assistantResponse);
             }
 
-            // 生成每日总总结并保存到数据库
-            if (allSummaries.length() > 0) {
-
+            if (saveToDatabase && allSummaries.length() > 0) {
+                LocalDate yesterday = LocalDate.now().minusDays(1);
+                String dateStr = yesterday.format(DateTimeFormatter.ISO_DATE);
+                
                 DailySummary dailySummary = new DailySummary();
                 dailySummary.setDate(dateStr);
                 dailySummary.setContent(allSummaries.toString());
                 
+                log.info("Saving daily summary to database for date: {}", dateStr);
                 dailySummaryService.saveSummary(dailySummary);
                 log.info("Daily summary saved successfully");
             }

@@ -2,18 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tencent.wxcloudrun.dao.DcChannelMessagesMapper">
     <insert id="insert" parameterType="com.tencent.wxcloudrun.model.DcChannelMessage">
-        INSERT INTO DcChannelMessages (channelId, channelName, timestamp, user, content, createdAt, updatedAt)
-        VALUES (#{channelId}, #{channelName}, #{timestamp}, #{user}, #{content}, NOW(), NOW())
+        INSERT INTO DcChannelMessages (channelId, channelName, timestamp, user, content, contentMd5, createdAt, updatedAt)
+        VALUES (#{channelId}, #{channelName}, #{timestamp}, #{user}, #{content}, #{contentMd5}, NOW(), NOW())
+        ON DUPLICATE KEY UPDATE updatedAt = NOW()
     </insert>
 
     <select id="selectByChannelIdOrderByTimestamp" parameterType="string" resultType="com.tencent.wxcloudrun.model.DcChannelMessage">
-        SELECT id, channelId, channelName, timestamp, user, content, createdAt, updatedAt
+        SELECT id, channelId, channelName, timestamp, user, content, contentMd5, createdAt, updatedAt
         FROM DcChannelMessages
         WHERE channelId = #{channelId}
         ORDER BY timestamp ASC
     </select>
 
+    <select id="selectByChannelIdAndTimeRange" resultType="com.tencent.wxcloudrun.model.DcChannelMessage">
+        SELECT id, channelId, channelName, timestamp, user, content, contentMd5, createdAt, updatedAt
+        FROM DcChannelMessages
+        WHERE channelId = #{channelId}
+        AND timestamp >= #{beginTime}
+        AND timestamp <= #{endTime}
+        ORDER BY timestamp ASC
+    </select>
+
     <select id="selectDistinctChannelIds" resultType="string">
         SELECT DISTINCT channelId FROM DcChannelMessages ORDER BY channelId ASC
+    </select>
+
+    <select id="selectDistinctChannelIdsByTimeRange" resultType="string">
+        SELECT DISTINCT channelId
+        FROM DcChannelMessages
+        WHERE timestamp >= #{beginTime}
+        AND timestamp <= #{endTime}
+        ORDER BY channelId ASC
     </select>
 </mapper>

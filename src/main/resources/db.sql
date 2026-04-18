@@ -6,17 +6,19 @@ CREATE TABLE `Counters` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `DcChannelMessages` (
+CREATE TABLE IF NOT EXISTS `DcChannelMessages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `channelId` varchar(255) NOT NULL,
   `channelName` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user` varchar(255) NOT NULL,
   `content` text NOT NULL,
+  `contentMd5` varchar(32) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_content_md5` (`contentMd5`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `daily_summaries` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

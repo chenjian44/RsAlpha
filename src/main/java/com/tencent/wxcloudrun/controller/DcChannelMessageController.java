@@ -9,7 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 public class DcChannelMessageController {
@@ -40,10 +47,32 @@ public class DcChannelMessageController {
     }
 
     @PostMapping("/api/dc-channel-message/trigger")
-    public ApiResponse triggerProcessChannelMessages() {
+    public ApiResponse triggerProcessChannelMessages(
+            @RequestParam(required = false) String beginDate,
+            @RequestParam(required = false) String endDate) {
         try {
-            log.info("Manually triggering processChannelMessages task");
-            dcChannelMessageScheduler.processChannelMessages();
+            log.info("Manually triggering processChannelMessages task with beginDate: {}, endDate: {}", beginDate, endDate);
+            
+            Timestamp beginTime = null;
+            Timestamp endTime = null;
+            
+            if (beginDate != null && !beginDate.isEmpty()) {
+                beginTime = Timestamp.valueOf(LocalDateTime.of(LocalDate.parse(beginDate, DateTimeFormatter.ISO_DATE), LocalTime.MIN));
+            } else {
+                LocalDate yesterday = LocalDate.now().minusDays(1);
+                beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
+            }
+            
+            if (endDate != null && !endDate.isEmpty()) {
+                endDate = endDate + " 23:59:59";
+                endTime = Timestamp.valueOf(LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            } else {
+                endTime = Timestamp.valueOf(LocalDateTime.now());
+            }
+            
+            log.info("Time range - beginTime: {}, endTime: {}", beginTime, endTime);
+            
+            dcChannelMessageScheduler.processChannelMessages(beginTime, endTime);
             log.info("processChannelMessages task triggered successfully");
             return ApiResponse.ok();
         } catch (Exception e) {

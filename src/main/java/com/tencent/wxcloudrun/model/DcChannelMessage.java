@@ -12,6 +12,7 @@ public class DcChannelMessage {
     private Timestamp timestamp;
     private String user;
     private String content;
+    private String contentMd5;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 }

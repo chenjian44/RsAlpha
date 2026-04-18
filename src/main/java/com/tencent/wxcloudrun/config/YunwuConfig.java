@@ -18,7 +18,7 @@ public class YunwuConfig {
     }
 
     public static String getApiKey() {
-        return getProperty("yunwu.api.key", "");
+        return getProperty("yunwu.api.key", "sk-5Oy2J9SEKRky76NIZeihwM3LsqJ9Q1jHWS5HkQUGIfjpeadN");
     }
 
     public static String getApiUrl() {
