@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class YunwuApiUtils {
@@ -21,9 +20,22 @@ public class YunwuApiUtils {
 
     public static JSONObject callYunwuApi(String userMessage) {
         try {
+            // 获取配置
+            String apiKey = YunwuConfig.getApiKey();
+            String apiUrl = YunwuConfig.getApiUrl();
+            String model = YunwuConfig.getModel();
+            double temperature = YunwuConfig.getTemperature();
+            
+            // 打印配置信息（隐藏部分API密钥）
+            String maskedApiKey = apiKey.substring(0, 5) + "****" + apiKey.substring(apiKey.length() - 5);
+            log.info("API Key: {}", maskedApiKey);
+            log.info("API URL: {}", apiUrl);
+            log.info("Model: {}", model);
+            log.info("Temperature: {}", temperature);
+            
             // 构建请求参数
             JSONObject requestBody = new JSONObject();
-            requestBody.put("model", YunwuConfig.getModel());
+            requestBody.put("model", model);
             
             JSONArray messages = new JSONArray();
             
@@ -34,22 +46,19 @@ public class YunwuApiUtils {
             messages.add(userMessageObj);
             
             requestBody.put("messages", messages);
-            requestBody.put("temperature", YunwuConfig.getTemperature());
+            requestBody.put("temperature", temperature);
             
             String requestBodyStr = requestBody.toJSONString();
             log.info("Request body: {}", requestBodyStr);
             
             // 发送HTTP请求
-            String apiUrl = YunwuConfig.getApiUrl();
-            log.info("API URL: {}", apiUrl);
-            
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             
             // 设置请求属性
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Authorization", "Bearer " + YunwuConfig.getApiKey());
+            conn.setRequestProperty("Authorization", "Bearer " + apiKey);
             conn.setRequestProperty("Content-Length", String.valueOf(requestBodyStr.getBytes(StandardCharsets.UTF_8).length));
             conn.setDoOutput(true);
             conn.setDoInput(true);
