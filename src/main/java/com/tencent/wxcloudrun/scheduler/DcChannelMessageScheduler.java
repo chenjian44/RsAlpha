@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.StringJoiner;
 
 @Component
 public class DcChannelMessageScheduler {
@@ -59,7 +58,7 @@ public class DcChannelMessageScheduler {
             List<String> channelIds = dcChannelMessageService.getAllChannelIdsByTimeRange(beginTime, endTime);
             log.info("Found {} distinct channelIds in time range", channelIds.size());
 
-            StringBuilder allSummaries = new StringBuilder("\n\n");
+            StringBuilder allSummaries = new StringBuilder();
 
             for (String channelId : channelIds) {
                 log.info("Processing channelId: {}", channelId);
@@ -107,7 +106,7 @@ public class DcChannelMessageScheduler {
                         log.error("Feishu push failed for channelId: {}", channelId);
                     }
 
-                    allSummaries.append("# " + channelName + " 频道分析\n").append(assistantResponse);
+                    allSummaries.append("# ").append(channelName).append(" 频道分析\n").append(assistantResponse).append("\n\n");
                 }
             }
 

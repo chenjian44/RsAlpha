@@ -53,19 +53,20 @@ public class DcChannelMessageController {
         try {
             log.info("Manually triggering processChannelMessages task with beginDate: {}, endDate: {}", beginDate, endDate);
             
-            Timestamp beginTime = null;
-            Timestamp endTime = null;
+            Timestamp beginTime;
+            Timestamp endTime;
             
             if (beginDate != null && !beginDate.isEmpty()) {
-                beginTime = Timestamp.valueOf(LocalDateTime.of(LocalDate.parse(beginDate, DateTimeFormatter.ISO_DATE), LocalTime.MIN));
+                LocalDate beginLocalDate = LocalDate.parse(beginDate, DateTimeFormatter.ISO_DATE);
+                beginTime = Timestamp.valueOf(beginLocalDate.atStartOfDay());
             } else {
                 LocalDate yesterday = LocalDate.now().minusDays(1);
                 beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
             }
             
             if (endDate != null && !endDate.isEmpty()) {
-                endDate = endDate + " 23:59:59";
-                endTime = Timestamp.valueOf(LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                LocalDate endLocalDate = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
+                endTime = Timestamp.valueOf(endLocalDate.atTime(LocalTime.MAX));
             } else {
                 endTime = Timestamp.valueOf(LocalDateTime.now());
             }
@@ -76,7 +77,7 @@ public class DcChannelMessageController {
             log.info("processChannelMessages task triggered successfully");
             return ApiResponse.ok();
         } catch (Exception e) {
-            log.error("Failed to trigger processChannelMessages task: {}", e.getMessage());
+            log.error("Failed to trigger processChannelMessages task: {}", e.getMessage(), e);
             return ApiResponse.error("触发任务失败: " + e.getMessage());
         }
     }
