@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.FeishuConfig;
 import org.slf4j.Logger;
@@ -30,13 +31,18 @@ public class FeishuUtils {
                 return false;
             }
 
-            // 构建飞书消息格式
+            if (content == null || content.isEmpty()) {
+                log.error("Message content is empty");
+                return false;
+            }
+
+            // 构建飞书消息格式 - 修正text字段格式
             JSONObject messageBody = new JSONObject();
             messageBody.put("msg_type", "text");
             
-            JSONObject textContent = new JSONObject();
-            textContent.put("content", content);
-            messageBody.put("content", textContent);
+            JSONObject contentObj = new JSONObject();
+            contentObj.put("text", content);
+            messageBody.put("content", contentObj);
 
             String requestBody = messageBody.toJSONString();
             log.info("Sending Feishu message: {}", requestBody);
@@ -103,6 +109,11 @@ public class FeishuUtils {
                 return false;
             }
 
+            if (content == null || content.isEmpty()) {
+                log.error("Message content is empty");
+                return false;
+            }
+
             // 构建飞书富文本消息格式
             JSONObject messageBody = new JSONObject();
             messageBody.put("msg_type", "post");
@@ -110,17 +121,19 @@ public class FeishuUtils {
             JSONObject postContent = new JSONObject();
             JSONObject zhCn = new JSONObject();
             
-            JSONObject titleObj = new JSONObject();
-            titleObj.put("tag", "text");
-            titleObj.put("text", title);
+            zhCn.put("title", title != null ? title : "");
             
-            JSONObject contentObj = new JSONObject();
-            contentObj.put("tag", "text");
-            contentObj.put("text", content);
+            // 构建富文本内容
+            JSONObject textContent = new JSONObject();
+            textContent.put("tag", "text");
+            textContent.put("text", content);
             
-            zhCn.put("title", title);
-            zhCn.put("content", JSON.parseArray("[[" + JSON.toJSONString(titleObj) + "],[" + JSON.toJSONString(contentObj) + "]]"));
+            JSONArray contentArray = new JSONArray();
+            JSONArray lineArray = new JSONArray();
+            lineArray.add(textContent);
+            contentArray.add(lineArray);
             
+            zhCn.put("content", contentArray);
             postContent.put("zh_cn", zhCn);
             messageBody.put("content", postContent);
 
