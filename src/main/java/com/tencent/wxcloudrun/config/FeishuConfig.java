@@ -19,10 +19,31 @@ public class FeishuConfig {
     }
 
     public static String getWebhookUrl() {
-        return properties.getProperty("feishu.webhook.url", "");
+        return getProperty("feishu.webhook.url", "");
     }
 
     public static boolean isEnabled() {
-        return Boolean.parseBoolean(properties.getProperty("feishu.enabled", "false"));
+        return Boolean.parseBoolean(getProperty("feishu.enabled", "false"));
+    }
+
+    private static String getProperty(String key, String defaultValue) {
+        String value = properties.getProperty(key);
+        if (value == null) {
+            return defaultValue;
+        }
+        // 解析环境变量占位符 ${ENV_VAR:default}
+        if (value.startsWith("${") && value.endsWith("}")) {
+            String envVar = value.substring(2, value.length() - 1);
+            String[] parts = envVar.split(":");
+            String envKey = parts[0];
+            String envDefault = parts.length > 1 ? parts[1] : null;
+            
+            String envValue = System.getenv(envKey);
+            if (envValue != null) {
+                return envValue;
+            }
+            return envDefault != null ? envDefault : defaultValue;
+        }
+        return value;
     }
 }

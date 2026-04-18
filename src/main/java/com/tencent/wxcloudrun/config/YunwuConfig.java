@@ -18,18 +18,39 @@ public class YunwuConfig {
     }
 
     public static String getApiKey() {
-        return properties.getProperty("yunwu.api.key", "sk-5Oy2J9SEKRky76NIZeihwM3LsqJ9Q1jHWS5HkQUGIfjpeadN");
+        return getProperty("yunwu.api.key", "");
     }
 
     public static String getApiUrl() {
-        return properties.getProperty("yunwu.api.url", "https://yunwu.ai/v1/chat/completions");
+        return getProperty("yunwu.api.url", "https://yunwu.ai/v1/chat/completions");
     }
 
     public static String getModel() {
-        return properties.getProperty("yunwu.api.model", "gemini-3.1-flash-lite-preview");
+        return getProperty("yunwu.api.model", "gemini-3.1-flash-lite-preview");
     }
 
     public static double getTemperature() {
-        return Double.parseDouble(properties.getProperty("yunwu.api.temperature", "0.0"));
+        return Double.parseDouble(getProperty("yunwu.api.temperature", "0.0"));
+    }
+
+    private static String getProperty(String key, String defaultValue) {
+        String value = properties.getProperty(key);
+        if (value == null) {
+            return defaultValue;
+        }
+        // 解析环境变量占位符 ${ENV_VAR:default}
+        if (value.startsWith("${") && value.endsWith("}")) {
+            String envVar = value.substring(2, value.length() - 1);
+            String[] parts = envVar.split(":");
+            String envKey = parts[0];
+            String envDefault = parts.length > 1 ? parts[1] : null;
+            
+            String envValue = System.getenv(envKey);
+            if (envValue != null) {
+                return envValue;
+            }
+            return envDefault != null ? envDefault : defaultValue;
+        }
+        return value;
     }
 }
