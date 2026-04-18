@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -41,9 +40,6 @@ public class DcChannelMessageServiceImpl implements DcChannelMessageService {
         } catch (DuplicateKeyException e) {
             log.info("Duplicate message detected, skipping. channelId: {}, contentMd5: {}",
                     request.getChannelId(), MD5Utils.getMD5(request.getContent()));
-        } catch (SQLException e) {
-            log.error("Database error when saving message: {}", e.getMessage());
-            // 可以在这里添加其他处理逻辑，比如降级处理
         } catch (Exception e) {
             log.error("Unexpected error when saving message: {}", e.getMessage());
         }
