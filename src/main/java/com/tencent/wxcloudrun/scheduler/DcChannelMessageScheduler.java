@@ -49,15 +49,9 @@ public class DcChannelMessageScheduler {
                 messagesContent.append("以下是该频道的消息记录（按时间升序排列）：\n\n");
                 
                 for (DcChannelMessage message : messages) {
-                    log.info("Message - channelId: {}, channelName: {}, user: {}, timestamp: {}, content: {}",
-                            message.getChannelId(),
-                            message.getChannelName(),
-                            message.getUser(),
-                            message.getTimestamp(),
-                            message.getContent());
                     
                     messagesContent.append("时间: ").append(message.getTimestamp()).append("\n");
-                    messagesContent.append("用户: ").append(message.getUser()).append("\n");
+                    messagesContent.append("频道: ").append(message.getChannelName()).append("\n");
                     messagesContent.append("内容: ").append(message.getContent()).append("\n\n");
                 }
 
