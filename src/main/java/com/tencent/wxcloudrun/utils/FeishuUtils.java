@@ -125,7 +125,7 @@ public class FeishuUtils {
             
             // 构建富文本内容
             JSONObject textContent = new JSONObject();
-            textContent.put("tag", "markdown");
+            textContent.put("tag", "text");
             textContent.put("text", content);
             
             JSONArray contentArray = new JSONArray();
