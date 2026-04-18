@@ -42,8 +42,6 @@ public class DcChannelMessageScheduler {
                 List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByChannelId(channelId);
                 log.info("Retrieved {} messages for channelId: {}", messages.size(), channelId);
 
-                String channelName = "";
-
                 String prompt = PromptUtils.readSystemPrompt();
 
                 // 整合消息内容
@@ -61,7 +59,6 @@ public class DcChannelMessageScheduler {
                     messagesContent.append("时间: ").append(message.getTimestamp()).append("\n");
                     messagesContent.append("用户: ").append(message.getUser()).append("\n");
                     messagesContent.append("内容: ").append(message.getContent()).append("\n\n");
-                    channelName = message.getChannelName();
                 }
 
                 // 调用LLM接口进行分析
@@ -74,10 +71,12 @@ public class DcChannelMessageScheduler {
                     
                     log.info("LLM analysis result for channelId {}: {}", channelId, assistantResponse);
 
-                    // 推送分析结果到飞书
+                    // 推送分析结果到飞书（使用富文本格式）
                     if (!assistantResponse.isEmpty()) {
                         log.info("Pushing analysis result to Feishu for channelId: {}", channelId);
-                        boolean pushSuccess = FeishuUtils.sendRichTextMessage(channelName + "频道总结",assistantResponse);
+                        String channelName = messages.get(0).getChannelName();
+                        String title = String.format("%s 频道分析报告", channelName);
+                        boolean pushSuccess = FeishuUtils.sendRichTextMessage(title, assistantResponse);
                         if (pushSuccess) {
                             log.info("Feishu push successful for channelId: {}", channelId);
                         } else {

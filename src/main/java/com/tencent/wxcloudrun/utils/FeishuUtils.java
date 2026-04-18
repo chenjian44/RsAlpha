@@ -114,28 +114,31 @@ public class FeishuUtils {
                 return false;
             }
 
-            // 构建飞书富文本消息格式
+            // 构建飞书富文本消息格式 - 修正post字段格式
             JSONObject messageBody = new JSONObject();
             messageBody.put("msg_type", "post");
             
-            JSONObject postContent = new JSONObject();
-            JSONObject zhCn = new JSONObject();
+            JSONObject contentObj = new JSONObject();
+            JSONObject postObj = new JSONObject();
+            JSONObject zhCnObj = new JSONObject();
             
-            zhCn.put("title", title != null ? title : "");
+            zhCnObj.put("title", title != null ? title : "");
             
             // 构建富文本内容
-            JSONObject textContent = new JSONObject();
-            textContent.put("tag", "text");
-            textContent.put("text", content);
-            
             JSONArray contentArray = new JSONArray();
             JSONArray lineArray = new JSONArray();
-            lineArray.add(textContent);
+            
+            JSONObject textObj = new JSONObject();
+            textObj.put("tag", "text");
+            textObj.put("text", content);
+            
+            lineArray.add(textObj);
             contentArray.add(lineArray);
             
-            zhCn.put("content", contentArray);
-            postContent.put("zh_cn", zhCn);
-            messageBody.put("content", postContent);
+            zhCnObj.put("content", contentArray);
+            postObj.put("zh_cn", zhCnObj);
+            contentObj.put("post", postObj);
+            messageBody.put("content", contentObj);
 
             String requestBody = messageBody.toJSONString();
             log.info("Sending Feishu rich text message: {}", requestBody);
