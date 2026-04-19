@@ -37,13 +37,13 @@ public class DcChannelMessageScheduler {
     @Scheduled(cron = "0 0 10 * * ?")
     public void scheduledProcessChannelMessages() {
         log.info("Starting scheduled task: processChannelMessages at 10:00 AM");
-        
+
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);
-        
+
         Timestamp beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
         Timestamp endTime = Timestamp.valueOf(LocalDateTime.now());
-        
+
         processChannelMessages(beginTime, endTime);
     }
 
@@ -60,12 +60,12 @@ public class DcChannelMessageScheduler {
 
             StringBuilder allSummaries = new StringBuilder();
             LocalDate today = LocalDate.now();
-            String dateStr = today.format(DateTimeFormatter.ISO_DATE); // 格式为yyyy-mm-dd
-            // 整合消息内容
+            String dateStr = today.format(DateTimeFormatter.ISO_DATE);
             StringBuilder messagesContent = new StringBuilder();
+
             for (String channelId : channelIds) {
                 log.info("Processing channelId: {}", channelId);
-                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByChannelId(channelId);
+                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByChannelIdAndTimeRange(channelId, beginTime, endTime);
                 log.info("Retrieved {} messages for channelId: {}", messages.size(), channelId);
 
                 if (messages.isEmpty()) {
@@ -88,31 +88,31 @@ public class DcChannelMessageScheduler {
                 }
 
             }
-            String prompt = PromptUtils.readSystemPrompt();
 
-            // 调用LLM接口进行分析
+            if (messagesContent.length() == 0) {
+                log.info("No messages found in time range, skip processing");
+                return;
+            }
+
+            String prompt = PromptUtils.readSystemPrompt();
             String userMessage = String.format(prompt, messagesContent);
 
             JSONObject response = YunwuApiUtils.callYunwuApi(userMessage);
             String assistantResponse = YunwuApiUtils.getAssistantResponse(response);
 
-            // 推送分析结果到飞书（使用富文本格式）
             if (!assistantResponse.isEmpty()) {
-
-                String title = String.format("%s频道分析报告",today);
+                String title = String.format("%s 频道分析报告", today);
                 boolean pushSuccess = FeishuUtils.sendRichTextMessage(title, assistantResponse);
                 if (pushSuccess) {
+                    log.info("Feishu push successful");
                 } else {
                     log.error("Feishu push failed for : {}", title);
                 }
 
-                // 将分析结果添加到总总结中
-                allSummaries.append(today).append("频道分析\n").append(assistantResponse);
+                allSummaries.append(today).append(" 频道分析\n").append(assistantResponse);
             }
 
-            // 生成每日总总结并保存到数据库
-            if (allSummaries.length() > 0) {
-
+            if (saveToDatabase && allSummaries.length() > 0) {
                 DailySummary dailySummary = new DailySummary();
                 dailySummary.setDate(dateStr);
                 dailySummary.setContent(allSummaries.toString());
