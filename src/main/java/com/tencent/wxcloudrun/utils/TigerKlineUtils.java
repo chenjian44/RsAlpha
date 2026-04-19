@@ -61,21 +61,19 @@ public class TigerKlineUtils {
             log.warn("Only 1 year of data is supported, using 1 year instead of {}", years);
         }
 
+//        String cacheKey = symbol;
+//        CacheEntry<List<Map<String, Object>>> cachedEntry = yearlyKlineCache.get(cacheKey);
+//
+//        if (cachedEntry != null && !cachedEntry.isExpired()) {
+//            log.info("Cache hit for symbol: {}, using cached yearly Kline data", symbol);
+//            return cachedEntry.data;
+//        }
 
-        String cacheKey = symbol;
-        CacheEntry<List<Map<String, Object>>> cachedEntry = yearlyKlineCache.get(cacheKey);
-
-        if (cachedEntry != null && !cachedEntry.isExpired()) {
-            log.info("Cache hit for symbol: {}, using cached yearly Kline data", symbol);
-            return cachedEntry.data;
-        }
-
-        log.info("Cache miss for symbol: {}, fetching yearly Kline data", symbol);
         List<Map<String, Object>> klineList = fetchYearlyKlineFromApi(symbol, 1);
 
         if (!klineList.isEmpty()) {
-            yearlyKlineCache.put(cacheKey, new CacheEntry<>(klineList, System.currentTimeMillis() + CACHE_EXPIRE_MILLIS));
-            log.info("Yearly Kline data cached for symbol: {}", symbol);
+//            yearlyKlineCache.put(cacheKey, new CacheEntry<>(klineList, System.currentTimeMillis() + CACHE_EXPIRE_MILLIS));
+//            log.info("Yearly Kline data cached for symbol: {}", symbol);
         }
 
         return klineList;
