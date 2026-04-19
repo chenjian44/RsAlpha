@@ -150,17 +150,21 @@
 <div id="chart-container"></div>
 
 <script>
-  // --- 1. 初始化变量 ---
-  let chart;
-  let candlestickSeries;
+  // --- 1. 声明全局变量 (确保只声明一次) ---
+  var chartInstance = null;
+  var candlestickSeries = null;
   const chartContainer = document.getElementById('chart-container');
 
   // --- 2. 初始化图表函数 ---
   function initChart() {
-      // 适配 4.x 版本的配置结构
-      chart = LightweightCharts.createChart(chartContainer, {
+      // 如果已经初始化过，先销毁（防止重复创建）
+      if (chartInstance !== null) {
+          chartContainer.innerHTML = '';
+      }
+
+      chartInstance = LightweightCharts.createChart(chartContainer, {
           layout: {
-              background: { color: '#131722' }, // 4.x 新写法
+              background: { color: '#131722' },
               textColor: '#d1d4dc',
           },
           grid: {
@@ -171,8 +175,8 @@
           timeScale: { borderColor: '#485c7b', timeVisible: true },
       });
 
-      // 使用 addSeries 替代旧的 addCandlestickSeries
-      candlestickSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+      // 重点：使用正确的 Series 创建方式
+      candlestickSeries = chartInstance.addSeries(LightweightCharts.CandlestickSeries, {
           upColor: '#26a69a',
           downColor: '#ef5350',
           borderVisible: false,
@@ -183,7 +187,9 @@
 
   // --- 3. 加载数据的函数 ---
   async function loadData() {
-      const ticker = document.getElementById('tickerInput').value.toUpperCase();
+      const tickerInput = document.getElementById('tickerInput');
+      const ticker = tickerInput.value.toUpperCase();
+
       if (!ticker || !candlestickSeries) return;
 
       console.log(`正在请求 ${ticker} 的数据...`);
@@ -195,8 +201,6 @@
 
           if (kJson.code === 0 && Array.isArray(kJson.data)) {
               candlestickSeries.setData(kJson.data);
-          } else {
-              console.error('K线数据解析失败:', kJson);
           }
 
           // B. 加载标注数据
@@ -205,45 +209,45 @@
 
           if (mJson.code === 0 && Array.isArray(mJson.data)) {
               const formattedMarkers = mJson.data.map(item => {
-                  // 处理时间格式，确保兼容 YYYY-MM-DD
                   const markerDate = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
-
                   return {
                       time: markerDate,
                       position: 'aboveBar',
-                      color: item.user.includes('猫姐') ? '#f68410' : '#2196F3',
+                      color: (item.user && item.user.includes('猫姐')) ? '#f68410' : '#2196F3',
                       shape: 'circle',
-                      text: (item.user || '分析师') + ': ' + (item.content || '').substring(0, 15) + '...',
+                      text: (item.user || '分析师') + ': ' + (item.content || '').substring(0, 15),
                   };
               });
 
-              // 必须按时间从小到大排序，否则 TradingView 会报错
-              formattedMarkers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+              // 排序：这是 setMarkers 成功的关键
+              formattedMarkers.sort((a, b) => {
+                  return new Date(a.time).getTime() - new Date(b.time).getTime();
+              });
 
+              // 关键调用
               candlestickSeries.setMarkers(formattedMarkers);
-          } else {
-              console.warn('标注数据为空或接口异常:', mJson);
+              console.log("Markers 设置成功:", formattedMarkers.length);
           }
 
       } catch (error) {
-          console.error('网络请求或逻辑处理异常:', error);
-          alert('数据加载异常，请打开 F12 查看 Console');
+          console.error('逻辑处理异常:', error);
       }
   }
 
-  // --- 4. 执行流程 ---
+  // --- 4. 启动逻辑 ---
 
-  // 第一步：构建图表实例
-  initChart();
-
-  // 第二步：初始加载 Mock 或真实数据
-  loadData();
-
-  // 第三步：窗口自适应
-  window.addEventListener('resize', () => {
-      chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
+  // 确保 DOM 加载完成后再初始化
+  document.addEventListener('DOMContentLoaded', () => {
+      initChart();
+      loadData();
   });
 
+  // 响应式
+  window.addEventListener('resize', () => {
+      if (chartInstance) {
+          chartInstance.resize(chartContainer.clientWidth, chartContainer.clientHeight);
+      }
+  });
 </script>
 </body>
 </html>
