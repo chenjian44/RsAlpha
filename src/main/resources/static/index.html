@@ -20,9 +20,9 @@
 
     /* 详情弹窗 (Modal) 样式 */
     #infoModal {
-        display: none; 
-        position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; 
-        background-color: rgba(0,0,0,0.4); 
+        display: none;
+        position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.4);
         backdrop-filter: blur(2px); /* 毛玻璃效果 */
         align-items: center; justify-content: center;
     }
@@ -33,17 +33,17 @@
     .close-btn { color: #999; float: right; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 24px; transition: color 0.2s; }
     .close-btn:hover { color: #333; }
     .modal-date { font-size: 20px; font-weight: 600; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #f0f3fa; padding-bottom: 12px; color: #191919; }
-    
+
     /* 弹窗内每条观点的卡片样式 */
     .opinion-card { padding: 16px; margin-bottom: 12px; border-radius: 8px; background: #f8f9fa; border-left: 4px solid #ccc; font-size: 14px; line-height: 1.6; color: #333; }
     .opinion-card:last-child { margin-bottom: 0; }
     .opinion-header { font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-    
+
     /* 情绪颜色定义 */
     .color-bull { color: #26a69a; } /* 绿: 看涨 */
     .color-neutral { color: #fbc02d; } /* 黄: 中性 */
     .color-bear { color: #ef5350; } /* 红: 看空 */
-    
+
     /* 卡片左侧边框颜色 */
     .border-bull { border-left-color: #26a69a; }
     .border-neutral { border-left-color: #fbc02d; }
@@ -74,7 +74,7 @@
       const container = document.getElementById('chart-container');
       const modal = document.getElementById('infoModal');
       const closeModal = document.getElementById('closeModal');
-      
+
       // 全局字典，用于存储按日期分组的投研观点
       let dailyOpinions = {};
 
@@ -87,10 +87,10 @@
 
       // 2. 初始化 K 线系列 (红涨绿跌配置)
       const candleSeries = chart.addCandlestickSeries({
-          upColor: '#ef5350', 
-          downColor: '#26a69a', 
-          borderVisible: false, 
-          wickUpColor: '#ef5350', 
+          upColor: '#ef5350',
+          downColor: '#26a69a',
+          borderVisible: false,
+          wickUpColor: '#ef5350',
           wickDownColor: '#26a69a',
       });
 
@@ -106,7 +106,6 @@
 
           try {
               // A. 加载 K 线数据
-              // 注意：请确保你的 Spring Boot 后端正常提供此接口
               const kRes = await fetch(`/api/charts/kline?symbol=${ticker}`);
               const kJson = await kRes.json();
               if (kJson.code === 0 && Array.isArray(kJson.data)) {
@@ -123,10 +122,11 @@
                   const markers = [];
 
                   mJson.data.forEach(item => {
-                      // 提取纯日期 YYYY-MM-DD
-                      const dateStr = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
-                      
-                      // 智能语义提取情绪分值 (应对后端缺少 sentiment_score 的情况)
+                      // 💡 截取前 10 位，彻底抹平时间格式差异 (YYYY-MM-DD)
+                      const rawTime = item.timestamp || item.date || '';
+                      const dateStr = rawTime.length >= 10 ? rawTime.substring(0, 10) : rawTime;
+
+                      // 智能语义提取情绪分值
                       let sentiment = 1; // 默认看涨
                       if (item.sentiment_score !== undefined) {
                           sentiment = item.sentiment_score;
@@ -140,24 +140,24 @@
                               sentiment = 1;  // 绿色看多
                           }
                       }
-                      
-                      // 将数据塞入当天的数据槽位中
+
+                      // 将数据塞入纯净的当天数据槽位中
                       if (!dailyOpinions[dateStr]) dailyOpinions[dateStr] = [];
                       dailyOpinions[dateStr].push({
                           user: item.user || item.blogger || '分析师',
                           horizon: item.horizon || '未定周期',
                           content: item.content || item.strategy || '',
-                          sentiment: sentiment 
+                          sentiment: sentiment
                       });
                   });
 
                   // 生成图表底部的极简小圆点
                   Object.keys(dailyOpinions).forEach(date => {
                       const opinions = dailyOpinions[date];
-                      
+
                       // 找出当天的最高情绪，决定小圆点的颜色和位置
                       const maxSentiment = Math.max(...opinions.map(o => o.sentiment));
-                      
+
                       let mColor = '#fbc02d'; // 黄
                       let mPos = 'inBar';
                       if (maxSentiment === 1) { mColor = '#26a69a'; mPos = 'belowBar'; } // 绿 (在K线下方)
@@ -175,8 +175,8 @@
                   markers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
                   candleSeries.setMarkers(markers);
               }
-          } catch (err) { 
-              console.error("[RsAlpha] 加载网络请求异常:", err); 
+          } catch (err) {
+              console.error("[RsAlpha] 加载网络请求异常:", err);
           }
       }
 
@@ -203,7 +203,10 @@
               // 排序规则：看涨(1)在上，中性(0)居中，看空(-1)垫底
               opinions.sort((a, b) => b.sentiment - a.sentiment);
 
-              document.getElementById('modalTitle').innerText = `${clickedDate} 投研共振详情`;
+              // 标题显示聚合数量
+              document.getElementById('modalTitle').innerHTML =
+                  `${clickedDate} 投研共振详情 <span style="font-size:14px; color:#787b86; font-weight:normal; margin-left:10px;">(共 ${opinions.length} 条观点)</span>`;
+
               let htmlStr = '';
               
               opinions.forEach(op => {
