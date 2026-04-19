@@ -77,6 +77,12 @@ public class TigerKlineUtils {
             log.warn("Only 1 year of data is supported, using 1 year instead of {}", years);
         }
 
+        // 处理 BRK 标的，自动转换为 BRK.B
+        if (symbol.equals("BRK")) {
+            symbol = "BRK.B";
+        }
+
+
         String cacheKey = symbol;
         CacheEntry<List<Map<String, Object>>> cachedEntry = yearlyKlineCache.get(cacheKey);
 
@@ -90,8 +96,6 @@ public class TigerKlineUtils {
         if (!klineList.isEmpty()) {
             yearlyKlineCache.put(cacheKey, new CacheEntry<>(klineList, System.currentTimeMillis() + CACHE_EXPIRE_MILLIS));
             log.info("Yearly Kline data cached for symbol: {}", symbol);
-
-
         }
 
         return klineList;
