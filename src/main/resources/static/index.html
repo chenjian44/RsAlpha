@@ -63,6 +63,7 @@
       const closeModal = document.getElementById('closeModal');
 
       let dailyOpinions = {};
+      let validTradingDays = []; // 存储真实的交易日历
 
       const chart = LightweightCharts.createChart(container, {
           layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#191919' },
@@ -77,18 +78,47 @@
       closeModal.onclick = () => modal.style.display = "none";
       window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
 
+      // 寻找最近的交易日（解决周末数据不显示问题）
+      function getClosestTradingDay(targetDateStr) {
+          if (!validTradingDays.length) return targetDateStr;
+          if (validTradingDays.includes(targetDateStr)) return targetDateStr;
+
+          let closestDate = targetDateStr;
+          for (let i = validTradingDays.length - 1; i >= 0; i--) {
+              if (validTradingDays[i] <= targetDateStr) {
+                  closestDate = validTradingDays[i];
+                  break;
+              }
+          }
+          return closestDate;
+      }
+
       async function loadData() {
           const ticker = document.getElementById('tickerInput').value.toUpperCase().trim();
           if (!ticker) return;
           dailyOpinions = {};
+          validTradingDays = [];
 
           try {
+              // A. 先加载 K 线数据，提取真实交易日历
               const kRes = await fetch(`/api/charts/kline?symbol=${ticker}`);
               const kJson = await kRes.json();
               if (kJson.code === 0 && Array.isArray(kJson.data)) {
                   candleSeries.setData(kJson.data);
+
+                  validTradingDays = kJson.data.map(item => {
+                      if (typeof item.time === 'string') return item.time;
+                      if (typeof item.time === 'object') {
+                          const y = item.time.year;
+                          const m = String(item.time.month).padStart(2, '0');
+                          const d = String(item.time.day).padStart(2, '0');
+                          return `${y}-${m}-${d}`;
+                      }
+                      return item.time;
+                  });
               }
 
+              // B. 加载研报数据
               const mRes = await fetch(`/api/charts/markers?ticker=${ticker}`);
               const mJson = await mRes.json();
 
@@ -96,12 +126,14 @@
                   const markers = [];
 
                   mJson.data.forEach(item => {
-                      // 1. 提取 YYYY-MM-DD 和时间
                       const rawTimestamp = item.timestamp || '';
-                      const dateStr = rawTimestamp.length >= 10 ? rawTimestamp.substring(0, 10) : rawTimestamp;
+                      const rawDateStr = rawTimestamp.length >= 10 ? rawTimestamp.substring(0, 10) : rawTimestamp;
                       const timeStr = rawTimestamp.includes(' ') ? rawTimestamp.split(' ')[1] : '';
 
-                      // 2. 情绪识别逻辑
+                      // 将周末数据强制归档到周五
+                      const alignDateStr = getClosestTradingDay(rawDateStr);
+
+                      // 情绪识别逻辑（恢复原始严苛模式：包含“减仓/风险/看跌/看空”即标红防守）
                       let sentiment = 1;
                       if (item.sentiment_score !== undefined) {
                           sentiment = item.sentiment_score;
@@ -120,8 +152,7 @@
                       const cleanHorizon = (item.horizon || '未定周期').trim();
                       const cleanContent = (item.content || item.strategy || '').trim();
 
-                      // 💡 3. 终极去重升级：完全抛弃时间戳，仅对“博主+核心策略内容”进行 MD5 加密
-                      // 只要同一个人在同一天发了同样的内容，就算后端接口时间戳变了，MD5值也是绝对一样的
+                      // 构建去重指纹：名字+内容 MD5 加密
                       const fingerprint = md5(`${cleanUser}|${cleanContent}`);
 
                       const newOpinion = {
@@ -129,29 +160,29 @@
                           horizon: cleanHorizon,
                           content: cleanContent,
                           sentiment: sentiment,
+                          originalDate: rawDateStr, // 保存真实的发布日期
                           time: timeStr,
                           fingerprint: fingerprint
                       };
 
-                      if (!dailyOpinions[dateStr]) dailyOpinions[dateStr] = [];
+                      if (!dailyOpinions[alignDateStr]) dailyOpinions[alignDateStr] = [];
 
-                      // 💡 4. 精准比对 MD5 值
-                      const isExactDuplicate = dailyOpinions[dateStr].some(existing =>
+                      // MD5 精准去重拦截
+                      const isExactDuplicate = dailyOpinions[alignDateStr].some(existing =>
                           existing.fingerprint === fingerprint
                       );
 
-                      // 只有当这个 MD5 指纹在今天没出现过时，才放进数组里
                       if (!isExactDuplicate) {
-                          dailyOpinions[dateStr].push(newOpinion);
+                          dailyOpinions[alignDateStr].push(newOpinion);
                       }
                   });
 
-                  // 5. 渲染图表 Markers
+                  // 渲染 Marker
                   Object.keys(dailyOpinions).forEach(date => {
                       const opinions = dailyOpinions[date];
 
                       opinions.forEach(op => {
-                          let mColor = '#fbc02d'; // 黄
+                          let mColor = '#fbc02d';
                           let mPos = 'inBar';
                           if (op.sentiment === 1) { mColor = '#26a69a'; mPos = 'belowBar'; }
                           else if (op.sentiment === -1) { mColor = '#ef5350'; mPos = 'aboveBar'; }
@@ -173,7 +204,7 @@
           }
       }
 
-      // 6. 点击事件处理
+      // 点击事件处理
       chart.subscribeClick((param) => {
           if (!param || !param.time) return;
 
@@ -185,17 +216,21 @@
               clickedDate = `${y}-${m}-${d}`;
           } else if (typeof param.time === 'number') {
               const dateObj = new Date(param.time * 1000);
-              clickedDate = dateObj.toISOString().split('T')[0];
+              const y = dateObj.getFullYear();
+              const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+              const d = String(dateObj.getDate()).padStart(2, '0');
+              clickedDate = `${y}-${m}-${d}`;
+          } else if (typeof param.time === 'string') {
+              clickedDate = param.time.substring(0, 10);
           }
 
           if (dailyOpinions[clickedDate]) {
               let opinions = dailyOpinions[clickedDate];
 
-              // 按情绪排序：看涨在前，看空在后
               opinions.sort((a, b) => b.sentiment - a.sentiment);
 
               document.getElementById('modalTitle').innerHTML =
-                  `${clickedDate} 投研共振详情 <span style="font-size:14px; color:#787b86; font-weight:normal; margin-left:10px;">(共 ${opinions.length} 条观点)</span>`;
+                  `${clickedDate} 投研详情 <span style="font-size:14px; color:#787b86; font-weight:normal; margin-left:10px;">(共 ${opinions.length} 条数据，含休市期间)</span>`;
 
               let htmlStr = '';
 
@@ -208,7 +243,7 @@
                       sentimentText = '<span class="color-bull">🟢 乐观 / 看多</span>';
                   } else if (op.sentiment === -1) {
                       borderClass = 'border-bear';
-                      sentimentText = '<span class="color-bear">🔴 悲观 / 看空</span>';
+                      sentimentText = '<span class="color-bear">🔴 悲观 / 提示防守</span>';
                   }
 
                   htmlStr += `
@@ -216,7 +251,7 @@
                         <div class="opinion-header">
                             <span style="font-size:15px;">🎯 <b>${op.user}</b>
                                 <span style="color:#787b86;font-size:13px;font-weight:normal;margin-left:5px;">
-                                    [${op.horizon}] ${op.time}
+                                    [${op.horizon}] ${op.originalDate} ${op.time}
                                 </span>
                             </span>
                             ${sentimentText}
