@@ -76,7 +76,7 @@ public class BloggerSentimentParser {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
                     BloggerSentiment sentiment = new BloggerSentiment();
-                    sentiment.setDate(getStringValue(obj, "date", date));
+                    sentiment.setDate(date);
                     sentiment.setTicker(getStringValue(obj, "ticker", "").toUpperCase());
                     sentiment.setBlogger(getStringValue(obj, "blogger", ""));
                     sentiment.setSentimentScore(getIntValue(obj, "sentiment_score", 0));
