@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.utils;
 
 
+import com.alibaba.fastjson.JSON;
 import com.tigerbrokers.stock.openapi.client.config.ClientConfig;
 import com.tigerbrokers.stock.openapi.client.https.client.TigerHttpClient;
 import com.tigerbrokers.stock.openapi.client.https.domain.quote.item.KlineItem;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalField;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,8 +43,9 @@ public class TigerKlineUtils {
         if (tigerClient == null) {
             try {
                 ClientConfig config = ClientConfig.DEFAULT_CONFIG;
+                config.configFilePath = "src/main/resources/";
                 tigerClient = TigerHttpClient.getInstance().clientConfig(config);
-                log.info("Tiger API client initialized successfully using SDK");
+                log.info("Tiger API client initialized successfully with direct configuration");
             } catch (Exception e) {
                 log.error("Failed to initialize Tiger API client: {}", e.getMessage(), e);
             }
@@ -59,11 +62,6 @@ public class TigerKlineUtils {
             log.warn("Only 1 year of data is supported, using 1 year instead of {}", years);
         }
 
-        // 检查并添加.US后缀
-        if (!symbol.contains(".")) {
-            symbol = symbol + ".US";
-            log.info("Added .US suffix to symbol: {}", symbol);
-        }
 
         String cacheKey = symbol;
         CacheEntry<List<Map<String, Object>>> cachedEntry = yearlyKlineCache.get(cacheKey);
@@ -103,22 +101,34 @@ public class TigerKlineUtils {
             log.info("Fetching yearly Kline data for symbol: {}, from: {} to: {}", 
                     symbol, beginDateStr, endDateStr);
 
-            QuoteKlineRequest request = QuoteKlineRequest.newRequest(Collections.singletonList(symbol), KType.day, beginDateStr,endDateStr);
+            QuoteKlineRequest request = QuoteKlineRequest.newRequest(Collections.singletonList(symbol), KType.day, beginDate.toString(),endDate.toString());
 
             QuoteKlineResponse response = client.execute(request);
+
+            log.info("QuoteKlineResponse response :{}" , JSON.toJSONString(response));
 
             if (response.isSuccess()) {
                 List<KlineItem> items = response.getKlineItems();
                 if (items != null) {
                     for (KlineItem item : items) {
-                        Map<String, Object> klineMap = new HashMap<>();
-                        klineMap.put("time", item.getItems().get(0).getTime());
-                        klineMap.put("open", item.getItems().get(0).getOpen());
-                        klineMap.put("high", item.getItems().get(0).getHigh());
-                        klineMap.put("low", item.getItems().get(0).getLow());
-                        klineMap.put("close", item.getItems().get(0).getClose());
-                        klineMap.put("volume", item.getItems().get(0).getVolume());
-                        klineList.add(klineMap);
+                        // 遍历每个 KlineItem 中的所有 items 元素
+                        if (item.getItems() != null && !item.getItems().isEmpty()) {
+                            for (com.tigerbrokers.stock.openapi.client.https.domain.quote.item.KlinePoint point : item.getItems()) {
+                                Map<String, Object> klineMap = new HashMap<>();
+                                // 将时间从毫秒转换为秒
+                                klineMap.put("time", point.getTime() / 1000);
+                                klineMap.put("open", point.getOpen());
+                                klineMap.put("high", point.getHigh());
+                                klineMap.put("low", point.getLow());
+                                klineMap.put("close", point.getClose());
+                                klineMap.put("volume", point.getVolume());
+                                // 添加 amount 字段（如果存在）
+                                if (point.getAmount() != null) {
+                                    klineMap.put("amount", point.getAmount());
+                                }
+                                klineList.add(klineMap);
+                            }
+                        }
                     }
                 }
                 log.info("Successfully retrieved {} kline records for symbol: {}", klineList.size(), symbol);
