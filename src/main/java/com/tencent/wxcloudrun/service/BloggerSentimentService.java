@@ -12,6 +12,8 @@ public interface BloggerSentimentService {
 
     List<BloggerSentiment> getSentimentsByTickerAndDate(String ticker, String date);
 
+    List<BloggerSentiment> getSentimentsByTickerAndDates(String ticker, List<String> dates);
+
     BloggerSentiment getSentimentByDateAndTickerAndBlogger(String date, String ticker, String blogger);
 
     void updateSentiment(BloggerSentiment sentiment);

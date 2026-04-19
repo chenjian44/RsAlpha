@@ -14,6 +14,8 @@ public interface BloggerSentimentMapper {
 
     List<BloggerSentiment> getByTickerAndDate(String ticker, String date);
 
+    List<BloggerSentiment> getByTickerAndDates(String ticker, List<String> dates);
+
     BloggerSentiment getByDateAndTickerAndBlogger(String date, String ticker, String blogger);
 
     void update(BloggerSentiment sentiment);

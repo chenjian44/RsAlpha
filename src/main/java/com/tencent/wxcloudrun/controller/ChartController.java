@@ -1,13 +1,17 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.model.BloggerSentiment;
+import com.tencent.wxcloudrun.service.BloggerSentimentService;
 import com.tencent.wxcloudrun.utils.TigerKlineUtils;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,15 +22,65 @@ import java.util.Map;
 @RequestMapping("/api/charts")
 public class ChartController {
 
+    @Autowired
+    private BloggerSentimentService bloggerSentimentService;
+
     @GetMapping("/markers")
     public ApiResponse getMarkers(@RequestParam String ticker) {
-        List<Map<String, Object>> mockMarkers = new ArrayList<>();
+        List<Map<String, Object>> markers = new ArrayList<>();
 
-        mockMarkers.add(createMarkerMap("2026-04-10 10:00:00", "猫姐", ticker + " 动能分界线 170.5，站稳看多"));
-        mockMarkers.add(createMarkerMap("2026-04-14 22:30:00", "鲍博士", ticker + " 财报前瞻，预期偏向乐观"));
-        mockMarkers.add(createMarkerMap("2026-04-16 09:15:00", "猫姐", ticker + " 触及压力位，建议部分止盈"));
+        // 获取当前日期和过去7天的日期
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        List<String> dates = new ArrayList<>();
 
-        return ApiResponse.ok(mockMarkers);
+        // 收集过去7天的日期
+        for (int i = 0; i < 7; i++) {
+            LocalDate date = today.minusDays(i);
+            dates.add(date.format(formatter));
+        }
+
+        // 批量查询过去7天的情感数据
+        List<BloggerSentiment> sentiments = bloggerSentimentService.getSentimentsByTickerAndDates(ticker, dates);
+
+        // 处理查询结果
+        if (sentiments != null && !sentiments.isEmpty()) {
+            for (BloggerSentiment sentiment : sentiments) {
+                // 构建标记内容
+                String content = buildMarkerContent(sentiment);
+                // 构建时间戳（使用日期 + 固定时间）
+                String timestamp = sentiment.getDate() + " 10:00:00";
+                // 添加到标记列表
+                markers.add(createMarkerMap(timestamp, sentiment.getBlogger(), content));
+            }
+        }
+
+        return ApiResponse.ok(markers);
+    }
+
+    private String buildMarkerContent(BloggerSentiment sentiment) {
+        StringBuilder content = new StringBuilder();
+        content.append(sentiment.getTicker());
+        
+        if (sentiment.getSentimentScore() != null) {
+            if (sentiment.getSentimentScore() > 0) {
+                content.append(" 看涨，");
+            } else if (sentiment.getSentimentScore() < 0) {
+                content.append(" 看跌，");
+            } else {
+                content.append(" 中性，");
+            }
+        }
+        
+        if (sentiment.getHorizon() != null) {
+            content.append("时间范围：").append(sentiment.getHorizon()).append("，");
+        }
+        
+        if (sentiment.getStrategy() != null) {
+            content.append("策略：").append(sentiment.getStrategy());
+        }
+        
+        return content.toString();
     }
 
     @GetMapping("/kline")

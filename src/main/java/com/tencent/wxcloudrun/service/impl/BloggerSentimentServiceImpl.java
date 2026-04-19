@@ -34,6 +34,11 @@ public class BloggerSentimentServiceImpl implements BloggerSentimentService {
     }
 
     @Override
+    public List<BloggerSentiment> getSentimentsByTickerAndDates(String ticker, List<String> dates) {
+        return bloggerSentimentMapper.getByTickerAndDates(ticker, dates);
+    }
+
+    @Override
     public BloggerSentiment getSentimentByDateAndTickerAndBlogger(String date, String ticker, String blogger) {
         return bloggerSentimentMapper.getByDateAndTickerAndBlogger(date, ticker, blogger);
     }
