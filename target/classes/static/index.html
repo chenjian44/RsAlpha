@@ -150,19 +150,18 @@
 <div id="chart-container"></div>
 
 <script>
-  // 使用匿名函数包裹，防止变量污染全局作用域
+  // 使用立即执行函数封装，彻底隔离作用域
   (function() {
-      // 1. 内部变量声明
-      let chartObj = null;
+      let chart = null;
       let candleSeries = null;
-      const container = document.getElementById('chart-container');
 
-      // 2. 初始化图表逻辑
+      // 1. 初始化图表
       function init() {
+          const container = document.getElementById('chart-container');
           if (!container) return;
 
-          // 创建图表实例
-          chartObj = LightweightCharts.createChart(container, {
+          // 创建图表
+          chart = LightweightCharts.createChart(container, {
               layout: {
                   background: { color: '#131722' },
                   textColor: '#d1d4dc',
@@ -171,12 +170,11 @@
                   vertLines: { color: '#334158' },
                   horzLines: { color: '#334158' },
               },
-              crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
               timeScale: { borderColor: '#485c7b', timeVisible: true },
           });
 
-          // 核心修复：4.x 版本必须这样添加并赋值
-          candleSeries = chartObj.addSeries(LightweightCharts.CandlestickSeries, {
+          // 【核心修复点】：确保使用此方式创建系列，并将其赋值给全局变量
+          candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
               upColor: '#26a69a',
               downColor: '#ef5350',
               borderVisible: false,
@@ -184,62 +182,71 @@
               wickDownColor: '#ef5350',
           });
 
-          // 初始化完成后加载数据
+          // 初始加载一次数据
           window.loadData();
       }
 
-      // 3. 将加载函数暴露给 window，方便按钮调用
+      // 2. 暴露给外部按钮调用的加载函数
       window.loadData = async function() {
-          const tickerInput = document.getElementById('tickerInput');
-          if (!tickerInput || !candleSeries) return;
+          const input = document.getElementById('tickerInput');
+          const ticker = input ? input.value.toUpperCase() : 'TSLA';
 
-          const ticker = tickerInput.value.toUpperCase();
-          console.log(`[RsAlpha] 正在请求标的: ${ticker}`);
+          if (!candleSeries) {
+              console.error("[RsAlpha] 系列尚未初始化");
+              return;
+          }
+
+          console.log(`[RsAlpha] 正在处理: ${ticker}`);
 
           try {
-              // A. 请求 K 线
-              const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
-              const kJson = await kResponse.json();
+              // A. 加载 K 线
+              const kRes = await fetch(`/api/charts/kline?symbol=${ticker}`);
+              const kJson = await kRes.json();
               if (kJson.code === 0 && Array.isArray(kJson.data)) {
                   candleSeries.setData(kJson.data);
               }
 
-              // B. 请求标注
-              const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
-              const mJson = await mResponse.json();
+              // B. 加载标注 (Markers)
+              const mRes = await fetch(`/api/charts/markers?ticker=${ticker}`);
+              const mJson = await mRes.json();
+
               if (mJson.code === 0 && Array.isArray(mJson.data)) {
-                  const formattedMarkers = mJson.data.map(item => {
-                      const markerDate = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
+                  const markers = mJson.data.map(item => {
+                      // 时间格式兼容
+                      const t = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
                       return {
-                          time: markerDate,
+                          time: t,
                           position: 'aboveBar',
                           color: (item.user && item.user.includes('猫姐')) ? '#f68410' : '#2196F3',
                           shape: 'circle',
-                          text: (item.user || '分析师') + ': ' + (item.content || '').substring(0, 15),
+                          text: (item.user || 'Analyst') + ': ' + (item.content || '').substring(0, 12),
                       };
                   });
 
-                  // 严格排序
-                  formattedMarkers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+                  // 按照 TradingView 要求强制排序
+                  markers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
 
-                  // 调用 setMarkers
-                  candleSeries.setMarkers(formattedMarkers);
-                  console.log(`[RsAlpha] Markers 渲染成功, 数量: ${formattedMarkers.length}`);
+                  // 【重点】：在 4.x 中 setMarkers 依然是 Series 的方法
+                  // 如果报不是 function，通常是因为 candleSeries 引用丢失
+                  candleSeries.setMarkers(markers);
+                  console.log(`[RsAlpha] ${ticker} 标注加载成功: ${markers.length} 条`);
               }
-          } catch (e) {
-              console.error("[RsAlpha] 数据加载异常:", e);
+          } catch (err) {
+              console.error("[RsAlpha] 运行异常:", err);
           }
       };
 
-      // 4. 响应式监听
+      // 3. 响应式与启动
       window.addEventListener('resize', () => {
-          if (chartObj) {
-              chartObj.resize(container.clientWidth, container.clientHeight);
-          }
+          if (chart) chart.resize(container.clientWidth, container.clientHeight);
       });
 
-      // 5. 启动
-      init();
+      // 确保在 DOM 加载完后初始化
+      if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+      } else {
+          init();
+      }
   })();
 </script>
 </body>
