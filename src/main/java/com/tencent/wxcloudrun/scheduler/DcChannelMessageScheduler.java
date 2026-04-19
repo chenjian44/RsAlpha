@@ -95,7 +95,7 @@ public class DcChannelMessageScheduler {
             }
 
             String prompt = PromptUtils.readSystemPrompt();
-            String userMessage = String.format(prompt, messagesContent);
+            String userMessage = prompt +"<Post>\n" + messagesContent + "\n</Post>";
 
             JSONObject response = YunwuApiUtils.callYunwuApi(userMessage);
             String assistantResponse = YunwuApiUtils.getAssistantResponse(response);
