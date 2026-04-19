@@ -41,6 +41,7 @@ public class DcChannelMessageScheduler {
         this.bloggerSentimentService = bloggerSentimentService;
     }
 
+
     @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Shanghai")
     public void scheduledProcessChannelMessages() {
 
