@@ -26,73 +26,224 @@
 <div id="chart-container"></div>
 
 <script>
-  // 1. 初始化图表
+  // --- 1. 初始化变量 ---
+  let chart;
+  let candlestickSeries;
   const chartContainer = document.getElementById('chart-container');
-  const chart = LightweightCharts.createChart(chartContainer, {
-      layout: {
-          backgroundColor: '#131722',
-          textColor: '#d1d4dc',
-      },
-      grid: {
-          vertLines: { color: '#334158' },
-          horzLines: { color: '#334158' },
-      },
-      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-      priceScale: { borderColor: '#485c7b' },
-      timeScale: { borderColor: '#485c7b', timeVisible: true },
-  });
 
-  const candlestickSeries = chart.addCandlestickSeries({
-      upColor: '#26a69a', downColor: '#ef5350', borderVisible: false,
-      wickUpColor: '#26a69a', wickDownColor: '#ef5350',
-  });
+  // --- 2. 初始化图表函数 ---
+  function initChart() {
+      // 适配 4.x 版本的配置结构
+      chart = LightweightCharts.createChart(chartContainer, {
+          layout: {
+              background: { color: '#131722' }, // 4.x 新写法
+              textColor: '#d1d4dc',
+          },
+          grid: {
+              vertLines: { color: '#334158' },
+              horzLines: { color: '#334158' },
+          },
+          crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+          timeScale: { borderColor: '#485c7b', timeVisible: true },
+      });
 
-  // 2. 加载数据的函数
-async function loadData() {
-    const ticker = document.getElementById('tickerInput').value.toUpperCase();
-    if (!ticker) return;
+      // 使用 addSeries 替代旧的 addCandlestickSeries
+      candlestickSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+          upColor: '#26a69a',
+          downColor: '#ef5350',
+          borderVisible: false,
+          wickUpColor: '#26a69a',
+          wickDownColor: '#ef5350',
+      });
+  }
 
-    try {
-        // --- 修复 K 线数据加载 ---
-        const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
-        const kJson = await kResponse.json();
+  // --- 3. 加载数据的函数 ---
+  async function loadData() {
+      const ticker = document.getElementById('tickerInput').value.toUpperCase();
+      if (!ticker || !candlestickSeries) return;
 
-        // 关键点：这里要传入 kJson.data，因为它才是数组
-        if (kJson.code === 0 && Array.isArray(kJson.data)) {
-            candlestickSeries.setData(kJson.data);
-        } else {
-            console.error('K线数据格式错误:', kJson);
-        }
+      console.log(`正在请求 ${ticker} 的数据...`);
 
-        // --- 修复 Marker 数据加载 ---
-        const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
-        const mJson = await mResponse.json();
+      try {
+          // A. 加载 K 线数据
+          const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
+          const kJson = await kResponse.json();
 
-        if (mJson.code === 0 && Array.isArray(mJson.data)) {
-            const formattedMarkers = mJson.data.map(item => ({
-                time: item.timestamp.split(' ')[0],
-                position: 'aboveBar',
-                color: item.user.includes('猫姐') ? '#f68410' : '#2196F3',
-                shape: 'circle',
-                text: item.user + ': ' + item.content.substring(0, 15) + '...',
-            }));
+          if (kJson.code === 0 && Array.isArray(kJson.data)) {
+              candlestickSeries.setData(kJson.data);
+          } else {
+              console.error('K线数据解析失败:', kJson);
+          }
 
-            formattedMarkers.sort((a, b) => new Date(a.time) - new Date(b.time));
-            candlestickSeries.setMarkers(formattedMarkers);
-        }
+          // B. 加载标注数据
+          const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
+          const mJson = await mResponse.json();
 
-    } catch (error) {
-        console.error('加载数据失败:', error);
-        alert('数据加载失败，详细错误请查看控制台');
-    }
-}
-  // 初始加载一次
+          if (mJson.code === 0 && Array.isArray(mJson.data)) {
+              const formattedMarkers = mJson.data.map(item => {
+                  // 处理时间格式，确保兼容 YYYY-MM-DD
+                  const markerDate = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
+
+                  return {
+                      time: markerDate,
+                      position: 'aboveBar',
+                      color: item.user.includes('猫姐') ? '#f68410' : '#2196F3',
+                      shape: 'circle',
+                      text: (item.user || '分析师') + ': ' + (item.content || '').substring(0, 15) + '...',
+                  };
+              });
+
+              // 必须按时间从小到大排序，否则 TradingView 会报错
+              formattedMarkers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+
+              candlestickSeries.setMarkers(formattedMarkers);
+          } else {
+              console.warn('标注数据为空或接口异常:', mJson);
+          }
+
+      } catch (error) {
+          console.error('网络请求或逻辑处理异常:', error);
+          alert('数据加载异常，请打开 F12 查看 Console');
+      }
+  }
+
+  // --- 4. 执行流程 ---
+
+  // 第一步：构建图表实例
+  initChart();
+
+  // 第二步：初始加载 Mock 或真实数据
   loadData();
 
-  // 响应式处理
+  // 第三步：窗口自适应
   window.addEventListener('resize', () => {
       chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
   });
+
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RsAlpha - 投研 K 线复盘系统</title>
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica; background-color: #131722; color: white; }
+    #controls { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+    #chart-container { width: 100%; height: 600px; border: 1px solid #363c4e; border-radius: 4px; }
+    input { padding: 8px; border-radius: 4px; border: 1px solid #363c4e; background: #2a2e39; color: white; }
+    button { padding: 8px 16px; background: #2962ff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #1e88e5; }
+    .info { color: #b2b5be; font-size: 14px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<div id="controls">
+  <input type="text" id="tickerInput" placeholder="输入标的代码 (如 TSLA)" value="TSLA">
+  <button onclick="loadData()">加载数据</button>
+  <span class="info">※ 数据源自 Discord 频道实时提取</span>
+</div>
+
+<div id="chart-container"></div>
+
+<script>
+  // --- 1. 初始化变量 ---
+  let chart;
+  let candlestickSeries;
+  const chartContainer = document.getElementById('chart-container');
+
+  // --- 2. 初始化图表函数 ---
+  function initChart() {
+      // 适配 4.x 版本的配置结构
+      chart = LightweightCharts.createChart(chartContainer, {
+          layout: {
+              background: { color: '#131722' }, // 4.x 新写法
+              textColor: '#d1d4dc',
+          },
+          grid: {
+              vertLines: { color: '#334158' },
+              horzLines: { color: '#334158' },
+          },
+          crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+          timeScale: { borderColor: '#485c7b', timeVisible: true },
+      });
+
+      // 使用 addSeries 替代旧的 addCandlestickSeries
+      candlestickSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+          upColor: '#26a69a',
+          downColor: '#ef5350',
+          borderVisible: false,
+          wickUpColor: '#26a69a',
+          wickDownColor: '#ef5350',
+      });
+  }
+
+  // --- 3. 加载数据的函数 ---
+  async function loadData() {
+      const ticker = document.getElementById('tickerInput').value.toUpperCase();
+      if (!ticker || !candlestickSeries) return;
+
+      console.log(`正在请求 ${ticker} 的数据...`);
+
+      try {
+          // A. 加载 K 线数据
+          const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
+          const kJson = await kResponse.json();
+
+          if (kJson.code === 0 && Array.isArray(kJson.data)) {
+              candlestickSeries.setData(kJson.data);
+          } else {
+              console.error('K线数据解析失败:', kJson);
+          }
+
+          // B. 加载标注数据
+          const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
+          const mJson = await mResponse.json();
+
+          if (mJson.code === 0 && Array.isArray(mJson.data)) {
+              const formattedMarkers = mJson.data.map(item => {
+                  // 处理时间格式，确保兼容 YYYY-MM-DD
+                  const markerDate = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
+
+                  return {
+                      time: markerDate,
+                      position: 'aboveBar',
+                      color: item.user.includes('猫姐') ? '#f68410' : '#2196F3',
+                      shape: 'circle',
+                      text: (item.user || '分析师') + ': ' + (item.content || '').substring(0, 15) + '...',
+                  };
+              });
+
+              // 必须按时间从小到大排序，否则 TradingView 会报错
+              formattedMarkers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+
+              candlestickSeries.setMarkers(formattedMarkers);
+          } else {
+              console.warn('标注数据为空或接口异常:', mJson);
+          }
+
+      } catch (error) {
+          console.error('网络请求或逻辑处理异常:', error);
+          alert('数据加载异常，请打开 F12 查看 Console');
+      }
+  }
+
+  // --- 4. 执行流程 ---
+
+  // 第一步：构建图表实例
+  initChart();
+
+  // 第二步：初始加载 Mock 或真实数据
+  loadData();
+
+  // 第三步：窗口自适应
+  window.addEventListener('resize', () => {
+      chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
+  });
+
 </script>
 </body>
 </html>
