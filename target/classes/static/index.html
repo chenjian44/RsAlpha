@@ -48,41 +48,44 @@
   });
 
   // 2. 加载数据的函数
-  async function loadData() {
-      const ticker = document.getElementById('tickerInput').value.toUpperCase();
-      if (!ticker) return;
+async function loadData() {
+    const ticker = document.getElementById('tickerInput').value.toUpperCase();
+    if (!ticker) return;
 
-      try {
-          // A. 获取 K 线数据 (你需要一个提供 K 线数据的接口，或者对接第三方 API)
-          // 这里假设你后端有一个 api/kline 接口
-          const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
-          const kData = await kResponse.json();
-          candlestickSeries.setData(kData);
+    try {
+        // --- 修复 K 线数据加载 ---
+        const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
+        const kJson = await kResponse.json();
 
-          // B. 获取你的投研日报标注数据 (你刚才写的接口)
-          const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
-          const rawMarkers = await mResponse.json();
+        // 关键点：这里要传入 kJson.data，因为它才是数组
+        if (kJson.code === 0 && Array.isArray(kJson.data)) {
+            candlestickSeries.setData(kJson.data);
+        } else {
+            console.error('K线数据格式错误:', kJson);
+        }
 
-          // C. 转换格式以适应 TradingView Markers
-          const formattedMarkers = rawMarkers.data.map(item => ({
-              time: item.timestamp.split(' ')[0], // 取日期部分 YYYY-MM-DD
-              position: 'aboveBar',
-              color: item.user.includes('猫姐') ? '#f68410' : '#2196F3',
-              shape: 'circle',
-              text: item.user + ': ' + item.content.substring(0, 15) + '...',
-          }));
+        // --- 修复 Marker 数据加载 ---
+        const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
+        const mJson = await mResponse.json();
 
-          // 按时间排序（TradingView 要求 markers 必须按时间升序）
-          formattedMarkers.sort((a, b) => new Date(a.time) - new Date(b.time));
+        if (mJson.code === 0 && Array.isArray(mJson.data)) {
+            const formattedMarkers = mJson.data.map(item => ({
+                time: item.timestamp.split(' ')[0],
+                position: 'aboveBar',
+                color: item.user.includes('猫姐') ? '#f68410' : '#2196F3',
+                shape: 'circle',
+                text: item.user + ': ' + item.content.substring(0, 15) + '...',
+            }));
 
-          candlestickSeries.setMarkers(formattedMarkers);
+            formattedMarkers.sort((a, b) => new Date(a.time) - new Date(b.time));
+            candlestickSeries.setMarkers(formattedMarkers);
+        }
 
-      } catch (error) {
-          console.error('加载数据失败:', error);
-          alert('数据加载失败，请检查后端接口');
-      }
-  }
-
+    } catch (error) {
+        console.error('加载数据失败:', error);
+        alert('数据加载失败，详细错误请查看控制台');
+    }
+}
   // 初始加载一次
   loadData();
 
