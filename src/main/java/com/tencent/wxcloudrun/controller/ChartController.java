@@ -35,12 +35,12 @@ public class ChartController {
         List<String> dates = new ArrayList<>();
 
         // 收集过去7天的日期
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 30; i++) {
             LocalDate date = today.minusDays(i);
             dates.add(date.format(formatter));
         }
 
-        // 批量查询过去7天的情感数据
+        // 批量查询过去30天的情感数据
         List<BloggerSentiment> sentiments = bloggerSentimentService.getSentimentsByTickerAndDates(ticker, dates);
 
         // 处理查询结果
