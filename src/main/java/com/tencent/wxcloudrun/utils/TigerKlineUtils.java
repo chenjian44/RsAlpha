@@ -74,6 +74,8 @@ public class TigerKlineUtils {
         if (!klineList.isEmpty()) {
 //            yearlyKlineCache.put(cacheKey, new CacheEntry<>(klineList, System.currentTimeMillis() + CACHE_EXPIRE_MILLIS));
 //            log.info("Yearly Kline data cached for symbol: {}", symbol);
+
+
         }
 
         return klineList;
