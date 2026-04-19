@@ -34,9 +34,8 @@ public class DcChannelMessageScheduler {
         this.dailySummaryService = dailySummaryService;
     }
 
-    @Scheduled(cron = "0 10 12 * * ?", zone = "Asia/Shanghai")
+    @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Shanghai")
     public void scheduledProcessChannelMessages() {
-        log.info("Starting scheduled task: processChannelMessages at 11:40 北京时间");
 
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);

@@ -60,7 +60,7 @@ public class DcChannelMessageController {
                 LocalDate beginLocalDate = LocalDate.parse(beginDate, DateTimeFormatter.ISO_DATE);
                 beginTime = Timestamp.valueOf(beginLocalDate.atStartOfDay());
             } else {
-                LocalDate yesterday = LocalDate.now().minusDays(1);
+                LocalDate yesterday = LocalDate.now().minusDays(2);
                 beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
             }
             
