@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -75,8 +76,23 @@ public class ChartController {
                     uniqueMarkerKeys.add(uniqueKey);
                     // 构建标记内容
                     String content = buildMarkerContent(sentiment);
-                    // 构建时间戳（使用日期 + 固定时间）
-                    String timestamp = sentiment.getDate() + " 10:00:00";
+                    // 1. 获取原始日期字符串 (假设格式为 "YYYY-MM-DD")
+                    String rawDateStr = sentiment.getDate();
+                    LocalDate date = LocalDate.parse(rawDateStr);
+
+                    // 2. 判断并平移周末到周五
+                    DayOfWeek dayOfWeek = date.getDayOfWeek();
+                    if (dayOfWeek == DayOfWeek.SATURDAY) {
+                        // 如果是周六，往前推1天
+                        date = date.minusDays(1);
+                    } else if (dayOfWeek == DayOfWeek.SUNDAY) {
+                        // 如果是周日，往前推2天
+                        date = date.minusDays(2);
+                    }
+
+                    // 3. 构建最终的时间戳（使用清洗后的日期 + 固定时间）
+                    // date.toString() 会默认输出 "YYYY-MM-DD" 格式
+                    String timestamp = date.toString() + " 10:00:00";
                     // 添加到标记列表
                     markers.add(createMarkerMap(timestamp, sentiment.getBlogger(), content, sentiment.getHorizon()));
                 }
