@@ -1,10 +1,13 @@
 package com.tencent.wxcloudrun.scheduler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tencent.wxcloudrun.model.BloggerSentiment;
 import com.tencent.wxcloudrun.model.DailySummary;
 import com.tencent.wxcloudrun.model.DcChannelMessage;
+import com.tencent.wxcloudrun.service.BloggerSentimentService;
 import com.tencent.wxcloudrun.service.DailySummaryService;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
+import com.tencent.wxcloudrun.utils.BloggerSentimentParser;
 import com.tencent.wxcloudrun.utils.FeishuUtils;
 import com.tencent.wxcloudrun.utils.PromptUtils;
 import com.tencent.wxcloudrun.utils.YunwuApiUtils;
@@ -27,11 +30,15 @@ public class DcChannelMessageScheduler {
 
     private final DcChannelMessageService dcChannelMessageService;
     private final DailySummaryService dailySummaryService;
+    private final BloggerSentimentService bloggerSentimentService;
 
     @Autowired
-    public DcChannelMessageScheduler(DcChannelMessageService dcChannelMessageService, DailySummaryService dailySummaryService) {
+    public DcChannelMessageScheduler(DcChannelMessageService dcChannelMessageService, 
+                                    DailySummaryService dailySummaryService, 
+                                    BloggerSentimentService bloggerSentimentService) {
         this.dcChannelMessageService = dcChannelMessageService;
         this.dailySummaryService = dailySummaryService;
+        this.bloggerSentimentService = bloggerSentimentService;
     }
 
     @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Shanghai")
@@ -110,6 +117,17 @@ public class DcChannelMessageScheduler {
                 }
 
                 allSummaries.append(taskDate).append(" 频道分析\n").append(assistantResponse);
+
+                // Parse and save blogger sentiments
+                List<BloggerSentiment> sentiments = BloggerSentimentParser.parseReport(assistantResponse, dateStr);
+                for (BloggerSentiment sentiment : sentiments) {
+                    try {
+                        bloggerSentimentService.saveSentiment(sentiment);
+                        log.info("Saved sentiment: {} - {} - {}", sentiment.getDate(), sentiment.getTicker(), sentiment.getBlogger());
+                    } catch (Exception e) {
+                        log.error("Failed to save sentiment: {}", e.getMessage());
+                    }
+                }
             }
 
             if (saveToDatabase && allSummaries.length() > 0) {

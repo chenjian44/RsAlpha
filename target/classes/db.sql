@@ -29,3 +29,17 @@ CREATE TABLE IF NOT EXISTS `daily_summaries` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_date` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='每日总结表';
+
+CREATE TABLE IF NOT EXISTS `blogger_sentiments` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` varchar(10) NOT NULL COMMENT '日期，格式：YYYY-MM-DD',
+  `ticker` varchar(20) NOT NULL COMMENT '股票代码',
+  `blogger` varchar(100) NOT NULL COMMENT '大V名字',
+  `sentiment_score` int(11) NOT NULL COMMENT '情绪量化分值',
+  `horizon` varchar(100) DEFAULT NULL COMMENT '交易周期',
+  `strategy` text COMMENT '详细策略',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_date_ticker_blogger` (`date`, `ticker`, `blogger`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='大V情绪分析表';
