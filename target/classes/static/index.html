@@ -41,7 +41,7 @@
 <div id="controls">
   <input type="text" id="tickerInput" placeholder="输入标的代码 (如 SPY)" value="SPY">
   <button id="loadBtn">加载共振数据</button>
-  <span class="info">※ K线：红涨绿跌 | 圆点：🟢看多 🟡中性 🔴看空 (点击K线上带有圆点的日期查看研报详情)</span>
+  <span class="info">※ K线：红涨绿跌 | 圆点：🟢多 🟡平 🔴空 (点击K线查看详情)</span>
 </div>
 
 <div id="chart-container"></div>
@@ -95,9 +95,13 @@
                   const markers = [];
 
                   mJson.data.forEach(item => {
-                      const rawTime = item.timestamp || item.date || '';
-                      const dateStr = rawTime.length >= 10 ? rawTime.substring(0, 10) : rawTime;
+                      // 1. 提取 YYYY-MM-DD
+                      const rawTimestamp = item.timestamp || '';
+                      const dateStr = rawTimestamp.length >= 10 ? rawTimestamp.substring(0, 10) : rawTimestamp;
+                      // 提取时分秒 HH:mm:ss
+                      const timeStr = rawTimestamp.includes(' ') ? rawTimestamp.split(' ')[1] : '';
 
+                      // 2. 情绪识别逻辑
                       let sentiment = 1;
                       if (item.sentiment_score !== undefined) {
                           sentiment = item.sentiment_score;
@@ -116,34 +120,42 @@
                       const cleanHorizon = (item.horizon || '未定周期').trim();
                       const cleanContent = (item.content || item.strategy || '').trim();
 
+                      // 💡 3. 构建唯一指纹：名字 + 内容 + 原始时间戳(精确到秒)
+                      // 只有这三者完全一样，前端才认为是后端吐出来的重复脏数据
+                      const fingerprint = `${cleanUser}|${cleanContent}|${rawTimestamp}`;
+
                       const newOpinion = {
                           user: cleanUser,
                           horizon: cleanHorizon,
                           content: cleanContent,
-                          sentiment: sentiment
+                          sentiment: sentiment,
+                          time: timeStr,
+                          fingerprint: fingerprint
                       };
 
                       if (!dailyOpinions[dateStr]) dailyOpinions[dateStr] = [];
 
-                      // 指纹去重：防止后端脏数据导致完全一样的卡片重复出现
-                      const isDuplicate = dailyOpinions[dateStr].some(existing =>
-                          existing.user === newOpinion.user && existing.content === newOpinion.content
+                      // 💡 4. 精准去重逻辑
+                      const isExactDuplicate = dailyOpinions[dateStr].some(existing =>
+                          existing.fingerprint === fingerprint
                       );
 
-                      if (!isDuplicate) {
+                      if (!isExactDuplicate) {
                           dailyOpinions[dateStr].push(newOpinion);
                       }
                   });
 
-                  // 💡 核心修复区：不再强制合并！为每一个观点都画一个独立的点。
+                  // 5. 渲染图表 Markers
                   Object.keys(dailyOpinions).forEach(date => {
                       const opinions = dailyOpinions[date];
 
+                      // 我们希望同一天的多条信号都能在 K 线上体现出来
+                      // LightweightCharts 会自动堆叠相同时间的 markers
                       opinions.forEach(op => {
-                          let mColor = '#fbc02d'; // 默认黄
+                          let mColor = '#fbc02d'; // 黄
                           let mPos = 'inBar';
-                          if (op.sentiment === 1) { mColor = '#26a69a'; mPos = 'belowBar'; } // 绿 (在K线下方)
-                          else if (op.sentiment === -1) { mColor = '#ef5350'; mPos = 'aboveBar'; } // 红 (在K线上方)
+                          if (op.sentiment === 1) { mColor = '#26a69a'; mPos = 'belowBar'; }
+                          else if (op.sentiment === -1) { mColor = '#ef5350'; mPos = 'aboveBar'; }
 
                           markers.push({
                               time: date,
@@ -154,15 +166,15 @@
                       });
                   });
 
-                  // LightweightCharts 要求 markers 必须按时间严格排序
                   markers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
                   candleSeries.setMarkers(markers);
               }
           } catch (err) {
-              console.error("[RsAlpha] 加载网络请求异常:", err);
+              console.error("[RsAlpha] 数据加载异常:", err);
           }
       }
 
+      // 6. 点击事件处理
       chart.subscribeClick((param) => {
           if (!param || !param.time) return;
 
@@ -180,6 +192,7 @@
           if (dailyOpinions[clickedDate]) {
               let opinions = dailyOpinions[clickedDate];
 
+              // 按情绪排序：看涨在前，看空在后
               opinions.sort((a, b) => b.sentiment - a.sentiment);
 
               document.getElementById('modalTitle').innerHTML =
@@ -189,20 +202,24 @@
 
               opinions.forEach(op => {
                   let borderClass = 'border-neutral';
-                  let sentimentText = '<span class="color-neutral">🟡 观望 / 中性防守</span>';
+                  let sentimentText = '<span class="color-neutral">🟡 观望 / 中性</span>';
 
                   if (op.sentiment === 1) {
                       borderClass = 'border-bull';
-                      sentimentText = '<span class="color-bull">🟢 乐观 / 坚定看多</span>';
+                      sentimentText = '<span class="color-bull">🟢 乐观 / 看多</span>';
                   } else if (op.sentiment === -1) {
                       borderClass = 'border-bear';
-                      sentimentText = '<span class="color-bear">🔴 悲观 / 提示看空</span>';
+                      sentimentText = '<span class="color-bear">🔴 悲观 / 看空</span>';
                   }
 
                   htmlStr += `
                     <div class="opinion-card ${borderClass}">
                         <div class="opinion-header">
-                            <span style="font-size:15px;">🎯 <b>${op.user}</b> <span style="color:#787b86;font-size:13px;font-weight:normal;margin-left:5px;">[${op.horizon}]</span></span>
+                            <span style="font-size:15px;">🎯 <b>${op.user}</b>
+                                <span style="color:#787b86;font-size:13px;font-weight:normal;margin-left:5px;">
+                                    [${op.horizon}] ${op.time}
+                                </span>
+                            </span>
                             ${sentimentText}
                         </div>
                         <div style="margin-top: 8px;">${op.content}</div>
@@ -216,10 +233,7 @@
       });
 
       document.getElementById('loadBtn').addEventListener('click', loadData);
-      document.getElementById('tickerInput').addEventListener('keypress', function (e) {
-          if (e.key === 'Enter') loadData();
-      });
-
+      document.getElementById('tickerInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') loadData(); });
       window.addEventListener('resize', () => chart.resize(container.clientWidth, container.clientHeight));
       loadData();
   });

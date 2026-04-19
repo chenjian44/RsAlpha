@@ -8,7 +8,6 @@
   <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
 
   <style>
-    /* 基础样式 (明亮主题) */
     body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica; background-color: #ffffff; color: #333333; }
     #controls { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
     #chart-container { width: 100%; height: 600px; border: 1px solid #e0e3eb; border-radius: 4px; position: relative; }
@@ -18,33 +17,20 @@
     button:hover { background: #1e88e5; }
     .info { color: #787b86; font-size: 14px; margin-left: 10px; }
 
-    /* 详情弹窗 (Modal) 样式 */
-    #infoModal {
-        display: none; 
-        position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; 
-        background-color: rgba(0,0,0,0.4); 
-        backdrop-filter: blur(2px); /* 毛玻璃效果 */
-        align-items: center; justify-content: center;
-    }
-    .modal-content {
-        background-color: #ffffff; padding: 24px; border-radius: 12px; width: 500px; max-width: 90%; max-height: 80vh; overflow-y: auto;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #e0e3eb;
-    }
+    #infoModal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); backdrop-filter: blur(2px); align-items: center; justify-content: center; }
+    .modal-content { background-color: #ffffff; padding: 24px; border-radius: 12px; width: 500px; max-width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #e0e3eb; }
     .close-btn { color: #999; float: right; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 24px; transition: color 0.2s; }
     .close-btn:hover { color: #333; }
     .modal-date { font-size: 20px; font-weight: 600; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #f0f3fa; padding-bottom: 12px; color: #191919; }
-    
-    /* 弹窗内每条观点的卡片样式 */
+
     .opinion-card { padding: 16px; margin-bottom: 12px; border-radius: 8px; background: #f8f9fa; border-left: 4px solid #ccc; font-size: 14px; line-height: 1.6; color: #333; }
     .opinion-card:last-child { margin-bottom: 0; }
     .opinion-header { font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-    
-    /* 情绪颜色定义 */
-    .color-bull { color: #26a69a; } /* 绿: 看涨 */
-    .color-neutral { color: #fbc02d; } /* 黄: 中性 */
-    .color-bear { color: #ef5350; } /* 红: 看空 */
-    
-    /* 卡片左侧边框颜色 */
+
+    .color-bull { color: #26a69a; }
+    .color-neutral { color: #fbc02d; }
+    .color-bear { color: #ef5350; }
+
     .border-bull { border-left-color: #26a69a; }
     .border-neutral { border-left-color: #fbc02d; }
     .border-bear { border-left-color: #ef5350; }
@@ -55,7 +41,7 @@
 <div id="controls">
   <input type="text" id="tickerInput" placeholder="输入标的代码 (如 SPY)" value="SPY">
   <button id="loadBtn">加载共振数据</button>
-  <span class="info">※ K线：红涨绿跌 | 圆点：🟢看多 🟡中性 🔴看空 (点击K线上带有圆点的日期查看研报详情)</span>
+  <span class="info">※ K线：红涨绿跌 | 圆点：🟢多 🟡平 🔴空 (点击K线查看详情)</span>
 </div>
 
 <div id="chart-container"></div>
@@ -74,48 +60,34 @@
       const container = document.getElementById('chart-container');
       const modal = document.getElementById('infoModal');
       const closeModal = document.getElementById('closeModal');
-      
-      // 全局字典，用于存储按日期分组的投研观点
+
       let dailyOpinions = {};
 
-      // 1. 初始化图表 (明亮主题)
       const chart = LightweightCharts.createChart(container, {
           layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#191919' },
           grid: { vertLines: { color: '#f0f3fa' }, horzLines: { color: '#f0f3fa' } },
           timeScale: { borderColor: '#e0e3eb', timeVisible: true },
       });
 
-      // 2. 初始化 K 线系列 (红涨绿跌配置)
       const candleSeries = chart.addCandlestickSeries({
-          upColor: '#ef5350', 
-          downColor: '#26a69a', 
-          borderVisible: false, 
-          wickUpColor: '#ef5350', 
-          wickDownColor: '#26a69a',
+          upColor: '#ef5350', downColor: '#26a69a', borderVisible: false, wickUpColor: '#ef5350', wickDownColor: '#26a69a',
       });
 
-      // 弹窗关闭逻辑绑定
       closeModal.onclick = () => modal.style.display = "none";
       window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
 
-      // 3. 核心 API 数据加载与清洗逻辑
       async function loadData() {
           const ticker = document.getElementById('tickerInput').value.toUpperCase().trim();
           if (!ticker) return;
-          dailyOpinions = {}; // 每次加载新股票时清空字典
+          dailyOpinions = {};
 
           try {
-              // A. 加载 K 线数据
-              // 注意：请确保你的 Spring Boot 后端正常提供此接口
               const kRes = await fetch(`/api/charts/kline?symbol=${ticker}`);
               const kJson = await kRes.json();
               if (kJson.code === 0 && Array.isArray(kJson.data)) {
                   candleSeries.setData(kJson.data);
-              } else {
-                  console.warn("[RsAlpha] K线数据返回异常或为空");
               }
 
-              // B. 加载研报标注数据
               const mRes = await fetch(`/api/charts/markers?ticker=${ticker}`);
               const mJson = await mRes.json();
 
@@ -123,68 +95,89 @@
                   const markers = [];
 
                   mJson.data.forEach(item => {
-                      // 提取纯日期 YYYY-MM-DD
-                      const dateStr = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
-                      
-                      // 智能语义提取情绪分值 (应对后端缺少 sentiment_score 的情况)
-                      let sentiment = 1; // 默认看涨
+                      // 1. 提取 YYYY-MM-DD
+                      const rawTimestamp = item.timestamp || '';
+                      const dateStr = rawTimestamp.length >= 10 ? rawTimestamp.substring(0, 10) : rawTimestamp;
+                      // 提取时分秒 HH:mm:ss
+                      const timeStr = rawTimestamp.includes(' ') ? rawTimestamp.split(' ')[1] : '';
+
+                      // 2. 情绪识别逻辑
+                      let sentiment = 1;
                       if (item.sentiment_score !== undefined) {
                           sentiment = item.sentiment_score;
                       } else if (item.content) {
                           const contentStr = item.content.toLowerCase();
                           if (contentStr.includes('看跌') || contentStr.includes('看空') || contentStr.includes('风险') || contentStr.includes('减仓')) {
-                              sentiment = -1; // 红色看空
+                              sentiment = -1;
                           } else if (contentStr.includes('中性') || contentStr.includes('观望') || contentStr.includes('防守')) {
-                              sentiment = 0;  // 黄色中性
+                              sentiment = 0;
                           } else if (contentStr.includes('看涨') || contentStr.includes('看多') || contentStr.includes('加仓')) {
-                              sentiment = 1;  // 绿色看多
+                              sentiment = 1;
                           }
                       }
-                      
-                      // 将数据塞入当天的数据槽位中
+
+                      const cleanUser = (item.user || item.blogger || '分析师').trim();
+                      const cleanHorizon = (item.horizon || '未定周期').trim();
+                      const cleanContent = (item.content || item.strategy || '').trim();
+
+                      // 💡 3. 构建唯一指纹：名字 + 内容 + 原始时间戳(精确到秒)
+                      // 只有这三者完全一样，前端才认为是后端吐出来的重复脏数据
+                      const fingerprint = `${cleanUser}|${cleanContent}|${rawTimestamp}`;
+
+                      const newOpinion = {
+                          user: cleanUser,
+                          horizon: cleanHorizon,
+                          content: cleanContent,
+                          sentiment: sentiment,
+                          time: timeStr,
+                          fingerprint: fingerprint
+                      };
+
                       if (!dailyOpinions[dateStr]) dailyOpinions[dateStr] = [];
-                      dailyOpinions[dateStr].push({
-                          user: item.user || item.blogger || '分析师',
-                          horizon: item.horizon || '未定周期',
-                          content: item.content || item.strategy || '',
-                          sentiment: sentiment 
-                      });
+
+                      // 💡 4. 精准去重逻辑
+                      const isExactDuplicate = dailyOpinions[dateStr].some(existing =>
+                          existing.fingerprint === fingerprint
+                      );
+
+                      if (!isExactDuplicate) {
+                          dailyOpinions[dateStr].push(newOpinion);
+                      }
                   });
 
-                  // 生成图表底部的极简小圆点
+                  // 5. 渲染图表 Markers
                   Object.keys(dailyOpinions).forEach(date => {
                       const opinions = dailyOpinions[date];
-                      
-                      // 找出当天的最高情绪，决定小圆点的颜色和位置
-                      const maxSentiment = Math.max(...opinions.map(o => o.sentiment));
-                      
-                      let mColor = '#fbc02d'; // 黄
-                      let mPos = 'inBar';
-                      if (maxSentiment === 1) { mColor = '#26a69a'; mPos = 'belowBar'; } // 绿 (在K线下方)
-                      else if (maxSentiment === -1) { mColor = '#ef5350'; mPos = 'aboveBar'; } // 红 (在K线上方)
 
-                      markers.push({
-                          time: date,
-                          position: mPos,
-                          color: mColor,
-                          shape: 'circle',
+                      // 我们希望同一天的多条信号都能在 K 线上体现出来
+                      // LightweightCharts 会自动堆叠相同时间的 markers
+                      opinions.forEach(op => {
+                          let mColor = '#fbc02d'; // 黄
+                          let mPos = 'inBar';
+                          if (op.sentiment === 1) { mColor = '#26a69a'; mPos = 'belowBar'; }
+                          else if (op.sentiment === -1) { mColor = '#ef5350'; mPos = 'aboveBar'; }
+
+                          markers.push({
+                              time: date,
+                              position: mPos,
+                              color: mColor,
+                              shape: 'circle',
+                          });
                       });
                   });
 
-                  // 按时间排序后渲染到图表
                   markers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
                   candleSeries.setMarkers(markers);
               }
-          } catch (err) { 
-              console.error("[RsAlpha] 加载网络请求异常:", err); 
+          } catch (err) {
+              console.error("[RsAlpha] 数据加载异常:", err);
           }
       }
 
-      // 4. 监听图表点击事件 (呼出分析弹窗)
+      // 6. 点击事件处理
       chart.subscribeClick((param) => {
           if (!param || !param.time) return;
 
-          // 抹平不同环境下的时间格式差异
           let clickedDate = param.time;
           if (typeof param.time === 'object' && param.time.year) {
               const y = param.time.year;
@@ -196,32 +189,37 @@
               clickedDate = dateObj.toISOString().split('T')[0];
           }
 
-          // 如果当天有研报数据，则构造并呼出弹窗
           if (dailyOpinions[clickedDate]) {
               let opinions = dailyOpinions[clickedDate];
 
-              // 排序规则：看涨(1)在上，中性(0)居中，看空(-1)垫底
+              // 按情绪排序：看涨在前，看空在后
               opinions.sort((a, b) => b.sentiment - a.sentiment);
 
-              document.getElementById('modalTitle').innerText = `${clickedDate} 投研共振详情`;
+              document.getElementById('modalTitle').innerHTML =
+                  `${clickedDate} 投研共振详情 <span style="font-size:14px; color:#787b86; font-weight:normal; margin-left:10px;">(共 ${opinions.length} 条观点)</span>`;
+
               let htmlStr = '';
-              
+
               opinions.forEach(op => {
                   let borderClass = 'border-neutral';
-                  let sentimentText = '<span class="color-neutral">🟡 观望 / 中性防守</span>';
-                  
+                  let sentimentText = '<span class="color-neutral">🟡 观望 / 中性</span>';
+
                   if (op.sentiment === 1) {
                       borderClass = 'border-bull';
-                      sentimentText = '<span class="color-bull">🟢 乐观 / 坚定看多</span>';
+                      sentimentText = '<span class="color-bull">🟢 乐观 / 看多</span>';
                   } else if (op.sentiment === -1) {
                       borderClass = 'border-bear';
-                      sentimentText = '<span class="color-bear">🔴 悲观 / 提示看空</span>';
+                      sentimentText = '<span class="color-bear">🔴 悲观 / 看空</span>';
                   }
 
                   htmlStr += `
                     <div class="opinion-card ${borderClass}">
                         <div class="opinion-header">
-                            <span style="font-size:15px;">🎯 <b>${op.user}</b> <span style="color:#787b86;font-size:13px;font-weight:normal;margin-left:5px;">[${op.horizon}]</span></span>
+                            <span style="font-size:15px;">🎯 <b>${op.user}</b>
+                                <span style="color:#787b86;font-size:13px;font-weight:normal;margin-left:5px;">
+                                    [${op.horizon}] ${op.time}
+                                </span>
+                            </span>
                             ${sentimentText}
                         </div>
                         <div style="margin-top: 8px;">${op.content}</div>
@@ -234,17 +232,9 @@
           }
       });
 
-      // 5. 绑定事件与自适应大小
       document.getElementById('loadBtn').addEventListener('click', loadData);
-      
-      // 支持按回车键直接搜索
-      document.getElementById('tickerInput').addEventListener('keypress', function (e) {
-          if (e.key === 'Enter') loadData();
-      });
-
+      document.getElementById('tickerInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') loadData(); });
       window.addEventListener('resize', () => chart.resize(container.clientWidth, container.clientHeight));
-      
-      // 初始化执行一次加载
       loadData();
   });
 </script>

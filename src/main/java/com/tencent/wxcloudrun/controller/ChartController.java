@@ -49,6 +49,8 @@ public class ChartController {
         if (sentiments != null && !sentiments.isEmpty()) {
             // 使用 Set 来存储唯一的标记键，实现去重
             Set<String> uniqueMarkerKeys = new HashSet<>();
+            // 使用 Map 来跟踪每个日期的分钟计数，确保当天的时间按分钟递增
+            Map<String, Integer> dateMinuteCounter = new HashMap<>();
             
             for (BloggerSentiment sentiment : sentiments) {
                 // 生成唯一键：日期-博主-策略-看多看空标记-标的
@@ -73,8 +75,18 @@ public class ChartController {
                     uniqueMarkerKeys.add(uniqueKey);
                     // 构建标记内容
                     String content = buildMarkerContent(sentiment);
-                    // 构建时间戳（使用日期 + 固定时间）
-                    String timestamp = sentiment.getDate() + " 10:00:00";
+                    // 构建时间戳（使用日期 + 递增的分钟）
+                    String date = sentiment.getDate();
+                    // 获取当前日期的分钟计数，如果不存在则从 0 开始
+                    int minute = dateMinuteCounter.getOrDefault(date, 0);
+                    // 计算小时和分钟
+                    int hour = 10 + minute / 60; // 从 10 点开始
+                    int min = minute % 60;
+                    // 格式化为时间字符串
+                    String timeStr = String.format("%02d:%02d:00", hour, min);
+                    String timestamp = date + " " + timeStr;
+                    // 更新分钟计数
+                    dateMinuteCounter.put(date, minute + 1);
                     // 添加到标记列表
                     markers.add(createMarkerMap(timestamp, sentiment.getBlogger(), content, sentiment.getHorizon()));
                 }
