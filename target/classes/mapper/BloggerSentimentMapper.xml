@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tencent.wxcloudrun.dao.BloggerSentimentMapper">
+
+    <insert id="insert" parameterType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        INSERT INTO blogger_sentiments (date, ticker, blogger, sentiment_score, horizon, strategy, created_at, updated_at)
+        VALUES (#{date}, #{ticker}, #{blogger}, #{sentimentScore}, #{horizon}, #{strategy}, NOW(), NOW())
+        ON DUPLICATE KEY UPDATE
+        sentiment_score = #{sentimentScore},
+        horizon = #{horizon},
+        strategy = #{strategy},
+        updated_at = NOW()
+    </insert>
+
+    <select id="getByDate" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_sentiments
+        WHERE date = #{date}
+        ORDER BY ticker, blogger
+    </select>
+
+    <select id="getByTickerAndDate" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_sentiments
+        WHERE ticker = #{ticker}
+        AND date = #{date}
+        ORDER BY blogger
+    </select>
+
+    <select id="getByTickerAndDates" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_sentiments
+        WHERE ticker = #{ticker}
+        AND date IN
+        <foreach item="date" collection="dates" open="(" separator="," close=")">
+            #{date}
+        </foreach>
+        ORDER BY date DESC, blogger
+    </select>
+
+    <select id="getByDateAndTickerAndBlogger" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_sentiments
+        WHERE date = #{date}
+        AND ticker = #{ticker}
+        AND blogger = #{blogger}
+    </select>
+
+    <update id="update" parameterType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        UPDATE blogger_sentiments
+        SET sentiment_score = #{sentimentScore},
+            horizon = #{horizon},
+            strategy = #{strategy},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+</mapper>

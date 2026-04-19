@@ -11,6 +11,7 @@ import com.tigerbrokers.stock.openapi.client.struct.enums.KType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalField;
@@ -39,14 +40,36 @@ public class TigerKlineUtils {
         }
     }
 
+import java.io.InputStream;
+import java.util.Properties;
+import com.tigerbrokers.stock.openapi.client.config.ClientConfig;
+import com.tigerbrokers.stock.openapi.client.https.client.TigerHttpClient;
+
+// ...
+
     public static synchronized TigerHttpClient getTigerClient() {
         if (tigerClient == null) {
             try {
                 ClientConfig config = ClientConfig.DEFAULT_CONFIG;
-                config.configFilePath = "src/main/resources/";
+
+                Properties props = new Properties();
+                try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("tiger_openapi_config.properties")) {
+                    if (is == null) {
+                        throw new RuntimeException("找不到 tiger_openapi_config.properties");
+                    }
+                    props.load(is);
+                }
+
+                // 读取基础配置
+                config.tigerId = props.getProperty("tiger_id");
+                config.defaultAccount = props.getProperty("account");
+
+                // 🎯 核心：明确读取 pk8 这个字段赋值给 privateKey
+                config.privateKey = props.getProperty("private_key_pk8");
+
                 tigerClient = TigerHttpClient.getInstance().clientConfig(config);
             } catch (Exception e) {
-                log.error("Failed to initialize Tiger API client: {}", e.getMessage(), e);
+                log.error("老虎证券客户端初始化失败: {}", e.getMessage(), e);
             }
         }
         return tigerClient;
