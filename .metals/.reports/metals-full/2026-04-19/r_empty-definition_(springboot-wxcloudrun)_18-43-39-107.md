@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java:_empty_/Set#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+empty definition using pc, found symbol in pc: _empty_/Set#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 1692
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -14,10 +25,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 @RestController
@@ -48,7 +57,7 @@ public class ChartController {
         // 处理查询结果
         if (sentiments != null && !sentiments.isEmpty()) {
             // 使用 Set 来存储唯一的标记键，实现去重
-            Set<String> uniqueMarkerKeys = new HashSet<>();
+            @@Set<String> uniqueMarkerKeys = new HashSet<>();
             
             for (BloggerSentiment sentiment : sentiments) {
                 // 生成唯一键：日期-博主-策略-看多看空标记-标的
@@ -127,3 +136,10 @@ public class ChartController {
         return map;
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/Set#

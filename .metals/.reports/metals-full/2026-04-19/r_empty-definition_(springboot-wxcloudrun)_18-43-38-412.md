@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java:_empty_/`<any>`#contains#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+empty definition using pc, found symbol in pc: _empty_/`<any>`#contains#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 2670
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -14,10 +25,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 @RestController
@@ -69,7 +78,7 @@ public class ChartController {
                     sentiment.getTicker());
                 
                 // 只有当键不存在时，才添加标记
-                if (!uniqueMarkerKeys.contains(uniqueKey)) {
+                if (!uniqueMarkerKeys.@@contains(uniqueKey)) {
                     uniqueMarkerKeys.add(uniqueKey);
                     // 构建标记内容
                     String content = buildMarkerContent(sentiment);
@@ -127,3 +136,10 @@ public class ChartController {
         return map;
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/`<any>`#contains#
