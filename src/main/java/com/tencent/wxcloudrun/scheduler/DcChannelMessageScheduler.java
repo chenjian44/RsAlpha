@@ -34,7 +34,7 @@ public class DcChannelMessageScheduler {
         this.dailySummaryService = dailySummaryService;
     }
 
-    @Scheduled(cron = "0 0 10 * * ?")
+    @Scheduled(cron = "0 40 11 * * ?")
     public void scheduledProcessChannelMessages() {
         log.info("Starting scheduled task: processChannelMessages at 10:00 AM");
 
