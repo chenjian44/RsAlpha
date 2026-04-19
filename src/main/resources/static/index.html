@@ -8,13 +8,14 @@
   <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
 
   <style>
-    body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica; background-color: #131722; color: white; }
+    /* 修改1：全局样式改为白底黑字，边框和输入框改为浅色系 */
+    body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica; background-color: #ffffff; color: #333333; }
     #controls { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
-    #chart-container { width: 100%; height: 600px; border: 1px solid #363c4e; border-radius: 4px; }
-    input { padding: 8px; border-radius: 4px; border: 1px solid #363c4e; background: #2a2e39; color: white; }
+    #chart-container { width: 100%; height: 600px; border: 1px solid #e0e3eb; border-radius: 4px; }
+    input { padding: 8px; border-radius: 4px; border: 1px solid #d1d4dc; background: #ffffff; color: #333333; }
     button { padding: 8px 16px; background: #2962ff; color: white; border: none; border-radius: 4px; cursor: pointer; }
     button:hover { background: #1e88e5; }
-    .info { color: #b2b5be; font-size: 14px; margin-top: 10px; }
+    .info { color: #787b86; font-size: 14px; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -28,32 +29,34 @@
 <div id="chart-container"></div>
 
 <script>
-  // 使用 DOMContentLoaded 确保页面加载完毕后再执行所有逻辑
   document.addEventListener('DOMContentLoaded', () => {
 
       const container = document.getElementById('chart-container');
       if (!container) return;
 
-      // 1. 创建图表实例 (严格按照 4.1.1 语法)
+      // 1. 创建图表实例
       const chart = LightweightCharts.createChart(container, {
           layout: {
-              background: { type: 'solid', color: '#131722' },
-              textColor: '#d1d4dc',
+              // 修改2：图表背景改为白色，文字改为深色
+              background: { type: 'solid', color: '#ffffff' },
+              textColor: '#191919',
           },
           grid: {
-              vertLines: { color: '#334158' },
-              horzLines: { color: '#334158' },
+              // 修改3：网格线改为极浅的灰色
+              vertLines: { color: '#f0f3fa' },
+              horzLines: { color: '#f0f3fa' },
           },
-          timeScale: { borderColor: '#485c7b', timeVisible: true },
+          timeScale: { borderColor: '#e0e3eb', timeVisible: true },
       });
 
-      // 2. 添加 K线系列 (这个 API 在 4.1.1 中绝对可用)
+      // 2. 添加 K线系列
       const candleSeries = chart.addCandlestickSeries({
-          upColor: '#26a69a',
-          downColor: '#ef5350',
+          // 修改4：实现红涨绿跌 (原先的颜色互换)
+          upColor: '#ef5350',      // 上涨为红色
+          downColor: '#26a69a',    // 下跌为绿色
           borderVisible: false,
-          wickUpColor: '#26a69a',
-          wickDownColor: '#ef5350',
+          wickUpColor: '#ef5350',  // 上涨的影线为红色
+          wickDownColor: '#26a69a',// 下跌的影线为绿色
       });
 
       // 3. 核心加载逻辑
