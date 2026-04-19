@@ -59,6 +59,12 @@ public class TigerKlineUtils {
             log.warn("Only 1 year of data is supported, using 1 year instead of {}", years);
         }
 
+        // 检查并添加.US后缀
+        if (!symbol.contains(".")) {
+            symbol = symbol + ".US";
+            log.info("Added .US suffix to symbol: {}", symbol);
+        }
+
         String cacheKey = symbol;
         CacheEntry<List<Map<String, Object>>> cachedEntry = yearlyKlineCache.get(cacheKey);
 
