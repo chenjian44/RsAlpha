@@ -40,7 +40,7 @@
 <body>
 
 <div id="controls">
-  <input type="text" id="tickerInput" placeholder="输入标的代码 (如 MSFT)" value="MSFT">
+  <input type="text" id="tickerInput" placeholder="输入标的代码 (如 SPY)" value="SPY">
   <button id="loadBtn">加载共振数据</button>
   <span class="info">※ K线：红涨绿跌 | 圆点：🟢多 🟡平 🔴空 (点击K线查看详情)</span>
 </div>
@@ -96,27 +96,22 @@
                   const markers = [];
 
                   mJson.data.forEach(item => {
-                      // 1. 提取 YYYY-MM-DD 和具体时间
+                      // 1. 提取 YYYY-MM-DD 和时间
                       const rawTimestamp = item.timestamp || '';
                       const dateStr = rawTimestamp.length >= 10 ? rawTimestamp.substring(0, 10) : rawTimestamp;
                       const timeStr = rawTimestamp.includes(' ') ? rawTimestamp.split(' ')[1] : '';
 
-                      // 2. 💡 修复：更智能的情绪识别优先级
+                      // 2. 情绪识别逻辑
                       let sentiment = 1;
                       if (item.sentiment_score !== undefined) {
                           sentiment = item.sentiment_score;
                       } else if (item.content) {
                           const contentStr = item.content.toLowerCase();
-                          // 优先判断明确的看涨/看跌，防止被“减仓”等行为词汇干扰
-                          if (contentStr.includes('看涨') || contentStr.includes('看多')) {
-                              sentiment = 1;
-                          } else if (contentStr.includes('看跌') || contentStr.includes('看空')) {
+                          if (contentStr.includes('看跌') || contentStr.includes('看空') || contentStr.includes('风险') || contentStr.includes('减仓')) {
                               sentiment = -1;
                           } else if (contentStr.includes('中性') || contentStr.includes('观望') || contentStr.includes('防守')) {
                               sentiment = 0;
-                          } else if (contentStr.includes('风险') || contentStr.includes('减仓')) {
-                              sentiment = -1;
-                          } else if (contentStr.includes('加仓')) {
+                          } else if (contentStr.includes('看涨') || contentStr.includes('看多') || contentStr.includes('加仓')) {
                               sentiment = 1;
                           }
                       }
@@ -125,8 +120,8 @@
                       const cleanHorizon = (item.horizon || '未定周期').trim();
                       const cleanContent = (item.content || item.strategy || '').trim();
 
-                      // 💡 3. 终极去重升级：彻底弃用 rawTimestamp！
-                      // 仅对“博主名字+文本内容”进行 MD5 加密生成指纹
+                      // 💡 3. 终极去重升级：完全抛弃时间戳，仅对“博主+核心策略内容”进行 MD5 加密
+                      // 只要同一个人在同一天发了同样的内容，就算后端接口时间戳变了，MD5值也是绝对一样的
                       const fingerprint = md5(`${cleanUser}|${cleanContent}`);
 
                       const newOpinion = {
@@ -135,16 +130,17 @@
                           content: cleanContent,
                           sentiment: sentiment,
                           time: timeStr,
-                          fingerprint: fingerprint // 存入MD5指纹
+                          fingerprint: fingerprint
                       };
 
                       if (!dailyOpinions[dateStr]) dailyOpinions[dateStr] = [];
 
-                      // 💡 4. 精准 MD5 去重
+                      // 💡 4. 精准比对 MD5 值
                       const isExactDuplicate = dailyOpinions[dateStr].some(existing =>
                           existing.fingerprint === fingerprint
                       );
 
+                      // 只有当这个 MD5 指纹在今天没出现过时，才放进数组里
                       if (!isExactDuplicate) {
                           dailyOpinions[dateStr].push(newOpinion);
                       }
@@ -188,14 +184,8 @@
               const d = String(param.time.day).padStart(2, '0');
               clickedDate = `${y}-${m}-${d}`;
           } else if (typeof param.time === 'number') {
-              // 兼容 Unix 时间戳，防止时区解析错误
               const dateObj = new Date(param.time * 1000);
-              const y = dateObj.getFullYear();
-              const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-              const d = String(dateObj.getDate()).padStart(2, '0');
-              clickedDate = `${y}-${m}-${d}`;
-          } else if (typeof param.time === 'string') {
-              clickedDate = param.time.substring(0, 10);
+              clickedDate = dateObj.toISOString().split('T')[0];
           }
 
           if (dailyOpinions[clickedDate]) {
