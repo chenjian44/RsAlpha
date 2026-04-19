@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:_empty_/ApiResponse#ok#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: _empty_/ApiResponse#ok#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 3292
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -70,7 +81,7 @@ public class DcChannelMessageController {
             }
 
             log.info("Batch message processing completed. Success: {}, Failed: {}", successCount, failCount);
-            return ApiResponse.ok("批量处理完成: 成功 {0} 条, 失败 {1} 条".replace("{0}", String.valueOf(successCount)).replace("{1}", String.valueOf(failCount)));
+            return ApiResponse.@@ok("批量处理完成: 成功 {0} 条, 失败 {1} 条".replace("{0}", String.valueOf(successCount)).replace("{1}", String.valueOf(failCount)));
         } catch (Exception e) {
             log.error("Failed to process batch messages: {}", e.getMessage());
             return ApiResponse.error("批量处理失败: " + e.getMessage());
@@ -114,3 +125,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/ApiResponse#ok#

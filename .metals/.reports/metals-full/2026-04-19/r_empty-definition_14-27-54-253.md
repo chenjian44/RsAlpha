@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:_empty_/DcChannelMessageRequest#getContent#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getContent#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 1845
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -37,7 +48,7 @@ public class DcChannelMessageController {
     public ApiResponse receiveMessage(@RequestBody DcChannelMessageRequest request) {
         try {
             log.info("Saving message to database, channelId: {}, channelName: {}, user: {}, content:{}",
-                    request.getChannelId(), request.getChannelName(), request.getUser(),request.getContent());
+                    request.getChannelId(), request.getChannelName(), request.getUser(),request.@@getContent());
             dcChannelMessageService.saveMessage(request);
             log.info("Message saved successfully");
             return ApiResponse.ok();
@@ -114,3 +125,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getContent#

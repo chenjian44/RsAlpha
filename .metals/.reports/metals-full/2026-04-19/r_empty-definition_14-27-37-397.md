@@ -1,7 +1,18 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 128
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
-import com.tencent.wxcloudrun.dto.DcChannelMessageBatchRequest;
+import com.tencent.wxcloudrun.dto.@@DcChannelMessageBatchRequest;
 import com.tencent.wxcloudrun.dto.DcChannelMessageRequest;
 import com.tencent.wxcloudrun.scheduler.DcChannelMessageScheduler;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
@@ -114,3 +125,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest#

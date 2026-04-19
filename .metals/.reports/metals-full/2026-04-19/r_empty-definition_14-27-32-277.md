@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:java/lang/Throwable#getMessage().
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: java/lang/Throwable#getMessage().
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 2160
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -43,7 +54,7 @@ public class DcChannelMessageController {
             return ApiResponse.ok();
         } catch (Exception e) {
             log.error("Failed to save message: {}", e.getMessage());
-            return ApiResponse.error("保存消息失败: " + e.getMessage());
+            return ApiResponse.error("保存消息失败: " + e.@@getMessage());
         }
     }
 
@@ -114,3 +125,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: java/lang/Throwable#getMessage().

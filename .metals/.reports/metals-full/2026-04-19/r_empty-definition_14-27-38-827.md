@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:_empty_/Logger#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: _empty_/Logger#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 955
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -22,7 +33,7 @@ import java.time.format.DateTimeFormatter;
 @RestController
 public class DcChannelMessageController {
 
-    private static final Logger log = LoggerFactory.getLogger(DcChannelMessageController.class);
+    private static final @@Logger log = LoggerFactory.getLogger(DcChannelMessageController.class);
     private final DcChannelMessageService dcChannelMessageService;
     private final DcChannelMessageScheduler dcChannelMessageScheduler;
 
@@ -114,3 +125,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/Logger#

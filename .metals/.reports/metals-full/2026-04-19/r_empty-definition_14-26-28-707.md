@@ -1,7 +1,17 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:_empty_/PostMapping#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: _empty_/PostMapping#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 2133
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
-import com.tencent.wxcloudrun.dto.DcChannelMessageBatchRequest;
 import com.tencent.wxcloudrun.dto.DcChannelMessageRequest;
 import com.tencent.wxcloudrun.scheduler.DcChannelMessageScheduler;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
@@ -47,37 +57,7 @@ public class DcChannelMessageController {
         }
     }
 
-    @PostMapping("/api/dc-channel-message/batch")
-    public ApiResponse receiveBatchMessage(@RequestBody DcChannelMessageBatchRequest request) {
-        try {
-            if (request.getMessages() == null || request.getMessages().isEmpty()) {
-                return ApiResponse.error("消息列表为空");
-            }
-
-            int successCount = 0;
-            int failCount = 0;
-
-            for (DcChannelMessageRequest message : request.getMessages()) {
-                try {
-                    log.info("Saving message to database, channelId: {}, channelName: {}, user: {}",
-                            message.getChannelId(), message.getChannelName(), message.getUser());
-                    dcChannelMessageService.saveMessage(message);
-                    successCount++;
-                } catch (Exception e) {
-                    failCount++;
-                    log.error("Failed to save message: {}", e.getMessage());
-                }
-            }
-
-            log.info("Batch message processing completed. Success: {}, Failed: {}", successCount, failCount);
-            return ApiResponse.ok("批量处理完成: 成功 {0} 条, 失败 {1} 条".replace("{0}", String.valueOf(successCount)).replace("{1}", String.valueOf(failCount)));
-        } catch (Exception e) {
-            log.error("Failed to process batch messages: {}", e.getMessage());
-            return ApiResponse.error("批量处理失败: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/api/dc-channel-message/trigger")
+    @@@PostMapping("/api/dc-channel-message/trigger")
     public ApiResponse triggerProcessChannelMessages() {
         try {
             LocalDate today = LocalDate.now();
@@ -114,3 +94,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/PostMapping#

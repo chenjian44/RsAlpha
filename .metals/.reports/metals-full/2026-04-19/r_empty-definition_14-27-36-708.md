@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:_empty_/DcChannelMessageBatchRequest#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 2298
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -48,7 +59,7 @@ public class DcChannelMessageController {
     }
 
     @PostMapping("/api/dc-channel-message/batch")
-    public ApiResponse receiveBatchMessage(@RequestBody DcChannelMessageBatchRequest request) {
+    public ApiResponse receiveBatchMessage(@RequestBody @@DcChannelMessageBatchRequest request) {
         try {
             if (request.getMessages() == null || request.getMessages().isEmpty()) {
                 return ApiResponse.error("消息列表为空");
@@ -114,3 +125,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest#

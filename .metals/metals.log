@@ -62,3 +62,357 @@
 2026.04.19 13:53:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java. Using fallback presentation compiler.
 4月 19, 2026 1:53:27 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
 警告: Unmatched cancel notification for request id 38
+4月 19, 2026 1:56:17 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 19, 2026 2:01:18 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 19, 2026 2:06:17 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 19, 2026 2:11:18 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 19, 2026 2:16:17 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 19, 2026 2:21:17 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 19, 2026 2:26:17 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.19 14:26:24 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 14:26:24 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:24 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:24 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:24 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:25 INFO  empty definition using pc, found symbol in pc: java/time/LocalDate#now(). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-25-849.md")
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:25 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:25 INFO  empty definition using pc, found symbol in pc: java/time/LocalDate#minusDays(). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-26-137.md")
+2026.04.19 14:26:25 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:26 INFO  empty definition using pc, found symbol in pc: java/time/LocalDate#minusDays(). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-26-137.md")
+2026.04.19 14:26:26 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:26 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:26 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:26 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:26:26 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:26 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:26 INFO  empty definition using pc, found symbol in pc: java/time/LocalDate# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-209.md")
+2026.04.19 14:26:26 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  empty definition using pc, found symbol in pc: java/time/LocalDate# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-209.md")
+2026.04.19 14:26:26 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  empty definition using pc, found symbol in pc: java/time/LocalDate# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-209.md")
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+4月 19, 2026 2:26:28 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 79
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:28 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:28 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:28 INFO  empty definition using pc, found symbol in pc: _empty_/PostMapping# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-28-707.md")
+2026.04.19 14:26:28 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:28 INFO  empty definition using pc, found symbol in pc: java/time/LocalDate# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-209.md")
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:28 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:29 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getChannelName# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-29-440.md")
+2026.04.19 14:26:29 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageRequest.java
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageRequest.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:29 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-30-137.md")
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  empty definition using pc, found symbol in pc: _empty_/PostMapping# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-28-707.md")
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:29 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:26:29 INFO  empty definition using pc, found symbol in pc: _empty_/RequestBody# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-30-408.md")
+2026.04.19 14:26:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:26:30 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java
+2026.04.19 14:26:30 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java
+2026.04.19 14:26:30 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java
+2026.04.19 14:26:30 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java
+2026.04.19 14:26:30 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java. Using fallback presentation compiler.
+2026.04.19 14:26:30 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java. Using fallback presentation compiler.
+2026.04.19 14:26:30 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java. Using fallback presentation compiler.
+2026.04.19 14:26:30 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java. Using fallback presentation compiler.
+2026.04.19 14:26:41 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java
+2026.04.19 14:26:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java
+2026.04.19 14:26:42 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java. Using fallback presentation compiler.
+2026.04.19 14:26:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java
+2026.04.19 14:26:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java
+2026.04.19 14:26:42 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java. Using fallback presentation compiler.
+2026.04.19 14:26:42 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java. Using fallback presentation compiler.
+2026.04.19 14:26:42 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java. Using fallback presentation compiler.
+2026.04.19 14:27:00 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:31 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse#error# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-31-897.md")
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+4月 19, 2026 2:27:32 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 110
+2026.04.19 14:27:31 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+4月 19, 2026 2:27:32 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 117
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:31 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:31 INFO  empty definition using pc, found symbol in pc: java/lang/Throwable#getMessage(). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-32-277.md")
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:32 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest#getMessages# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-32-499.md")
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest#getMessages# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-32-499.md")
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:32 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest#getMessages#isEmpty# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-025.md")
+2026.04.19 14:27:32 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:32 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse#error# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-31-897.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest#getMessages# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-32-499.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/Logger#info# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-528.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getChannelId# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-684.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getChannelName# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-29-440.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getUser# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-959.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageService#saveMessage# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-079.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/Logger#error# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-223.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: java/lang/Throwable#getMessage(). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-32-277.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/Logger#info# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-528.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse#ok# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-578.md")
+2026.04.19 14:27:33 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:33 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:33 INFO  empty definition using pc, found symbol in pc: java/lang/String#replace(+1). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-702.md")
+2026.04.19 14:27:35 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:35 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:35 INFO  empty definition using pc, found symbol in pc: java/lang/String#valueOf(+5). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-35-293.md")
+2026.04.19 14:27:35 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:35 INFO  empty definition using pc, found symbol in pc: java/lang/String#replace(+1). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-702.md")
+2026.04.19 14:27:35 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:35 INFO  empty definition using pc, found symbol in pc: java/lang/String#valueOf(+5). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-35-293.md")
+2026.04.19 14:27:35 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:35 INFO  empty definition using pc, found symbol in pc: _empty_/Logger#error# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-223.md")
+2026.04.19 14:27:35 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: java/lang/Throwable#getMessage(). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-32-277.md")
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse#error# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-31-897.md")
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-708.md")
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-30-137.md")
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: java/lang/Exception# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-963.md")
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: java/lang/Exception# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-963.md")
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:37 INFO  empty definition using pc, found symbol in pc: com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-37-397.md")
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:36 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:36 INFO  empty definition using pc, found symbol in pc: com/tencent/wxcloudrun/dto/DcChannelMessageRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-37-589.md")
+2026.04.19 14:27:36 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  empty definition using pc, found symbol in pc: _empty_/PostMapping# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-28-707.md")
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  empty definition using pc, found symbol in pc: _empty_/RequestBody# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-30-408.md")
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:37 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:37 INFO  empty definition using pc, found symbol in pc: _empty_/Logger# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-38-827.md")
+2026.04.19 14:27:37 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:38 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:38 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageService# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-39-173.md")
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:38 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:39 INFO  empty definition using pc, found symbol in pc: java/lang/String# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-40-076.md")
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:40 INFO  empty definition using pc, found symbol in pc: java/lang/String# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-40-076.md")
+2026.04.19 14:27:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:39 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:27:44 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:44 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest#getMessages#isEmpty# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-025.md")
+2026.04.19 14:27:44 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:44 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-708.md")
+2026.04.19 14:27:44 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:44 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:44 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-708.md")
+2026.04.19 14:27:45 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-708.md")
+2026.04.19 14:27:45 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageBatchRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-708.md")
+2026.04.19 14:27:45 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java
+2026.04.19 14:27:44 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:44 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java]
+2026.04.19 14:27:45 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-45-643.md")
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:45 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java]
+2026.04.19 14:27:45 INFO  empty definition using pc, found symbol in pc: java/util/List# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-45-758.md")
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java]
+2026.04.19 14:27:47 INFO  empty definition using pc, found symbol in pc: lombok/Data# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-47-344.md")
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  empty definition using pc, found symbol in pc: java/util/List# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-45-758.md")
+2026.04.19 14:27:47 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java. Using fallback presentation compiler.
+2026.04.19 14:27:47 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dto/DcChannelMessageBatchRequest.java]
+2026.04.19 14:27:47 INFO  empty definition using pc, found symbol in pc: _empty_/Data# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-47-965.md")
+2026.04.19 14:27:49 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:49 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 14:27:49 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:49 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:49 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:49 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:50 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:50 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:50 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:52 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:52 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:52 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/config/ApiResponse.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/config/ApiResponse.java
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/Logger#info# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-528.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getChannelId# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-684.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getChannelName# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-29-440.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getUser# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-959.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java]
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageRequest#getContent# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-54-253.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageService#saveMessage# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-079.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/Logger#info# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-33-528.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse#ok# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-578.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:53 INFO  empty definition using pc, found symbol in pc: _empty_/Logger#error# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-34-223.md")
+2026.04.19 14:27:53 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  empty definition using pc, found symbol in pc: java/lang/Throwable#getMessage(). (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-32-277.md")
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  empty definition using pc, found symbol in pc: java/lang/Exception# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-36-963.md")
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  empty definition using pc, found symbol in pc: _empty_/DcChannelMessageService# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-39-173.md")
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  empty definition using pc, found symbol in pc: _empty_/Logger# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-27-38-827.md")
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")
+2026.04.19 14:27:55 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:55 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 14:27:54 INFO  empty definition using pc, found symbol in pc: _empty_/ApiResponse# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-19/r_empty-definition_14-26-27-017.md")

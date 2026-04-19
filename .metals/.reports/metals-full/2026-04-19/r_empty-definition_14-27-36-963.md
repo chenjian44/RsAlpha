@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java:java/lang/Exception#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+empty definition using pc, found symbol in pc: java/lang/Exception#
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+
+offset: 2993
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -63,7 +74,7 @@ public class DcChannelMessageController {
                             message.getChannelId(), message.getChannelName(), message.getUser());
                     dcChannelMessageService.saveMessage(message);
                     successCount++;
-                } catch (Exception e) {
+                } catch (@@Exception e) {
                     failCount++;
                     log.error("Failed to save message: {}", e.getMessage());
                 }
@@ -114,3 +125,10 @@ public class DcChannelMessageController {
         }
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: java/lang/Exception#
