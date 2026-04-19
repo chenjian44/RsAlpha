@@ -1,3 +1,14 @@
+error id: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java:java/util/Map#put#
+file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+empty definition using pc, found symbol in pc: java/util/Map#put#
+found definition using semanticdb; symbol java/util/Map#put().
+empty definition using fallback
+non-local guesses:
+
+offset: 4640
+uri: file://<WORKSPACE>/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+text:
+```scala
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -76,7 +87,7 @@ public class ChartController {
                     // 构建时间戳（使用日期 + 固定时间）
                     String timestamp = sentiment.getDate() + " 10:00:00";
                     // 添加到标记列表
-                    markers.add(createMarkerMap(timestamp, sentiment.getBlogger(), content, sentiment.getHorizon()));
+                    markers.add(createMarkerMap(timestamp, sentiment.getBlogger(), content));
                 }
             }
         }
@@ -119,12 +130,19 @@ public class ChartController {
         }
     }
 
-    private Map<String, Object> createMarkerMap(String ts, String user, String content, String horizon) {
+    private Map<String, Object> createMarkerMap(String ts, String user, String content) {
         Map<String, Object> map = new HashMap<>();
         map.put("timestamp", ts);
         map.put("user", user);
+        map.@@put("")
         map.put("content", content);
-        map.put("horizon", horizon);
         return map;
     }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: java/util/Map#put#
