@@ -289,3 +289,6 @@
 1 个警告.
 2026.04.19 17:35:05 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
 2026.04.19 17:35:05 INFO  time: compiled springboot-wxcloudrun in 2.53s
+4月 19, 2026 5:38:05 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.19 17:41:39 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/TigerKlineUtils.java

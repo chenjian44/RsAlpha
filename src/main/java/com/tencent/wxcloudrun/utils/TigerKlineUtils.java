@@ -45,7 +45,6 @@ public class TigerKlineUtils {
                 ClientConfig config = ClientConfig.DEFAULT_CONFIG;
                 config.configFilePath = "src/main/resources/";
                 tigerClient = TigerHttpClient.getInstance().clientConfig(config);
-                log.info("Tiger API client initialized successfully with direct configuration");
             } catch (Exception e) {
                 log.error("Failed to initialize Tiger API client: {}", e.getMessage(), e);
             }
