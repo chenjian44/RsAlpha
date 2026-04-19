@@ -8,6 +8,7 @@
 /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/DailySummaryServiceImpl.java
 /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/BloggerSentimentParser.java
 /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/CounterService.java
+/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/TigerKlineUtils.java
 /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/DcChannelMessageService.java
 /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dao/CountersMapper.java
 /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/DailySummaryService.java
