@@ -40,13 +40,6 @@ public class TigerKlineUtils {
         }
     }
 
-import java.io.InputStream;
-import java.util.Properties;
-import com.tigerbrokers.stock.openapi.client.config.ClientConfig;
-import com.tigerbrokers.stock.openapi.client.https.client.TigerHttpClient;
-
-// ...
-
     public static synchronized TigerHttpClient getTigerClient() {
         if (tigerClient == null) {
             try {
