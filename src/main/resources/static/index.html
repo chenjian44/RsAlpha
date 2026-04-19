@@ -150,104 +150,97 @@
 <div id="chart-container"></div>
 
 <script>
-  // --- 1. 声明全局变量 (确保只声明一次) ---
-  var chartInstance = null;
-  var candlestickSeries = null;
-  const chartContainer = document.getElementById('chart-container');
+  // 使用匿名函数包裹，防止变量污染全局作用域
+  (function() {
+      // 1. 内部变量声明
+      let chartObj = null;
+      let candleSeries = null;
+      const container = document.getElementById('chart-container');
 
-  // --- 2. 初始化图表函数 ---
-  function initChart() {
-      // 如果已经初始化过，先销毁（防止重复创建）
-      if (chartInstance !== null) {
-          chartContainer.innerHTML = '';
+      // 2. 初始化图表逻辑
+      function init() {
+          if (!container) return;
+
+          // 创建图表实例
+          chartObj = LightweightCharts.createChart(container, {
+              layout: {
+                  background: { color: '#131722' },
+                  textColor: '#d1d4dc',
+              },
+              grid: {
+                  vertLines: { color: '#334158' },
+                  horzLines: { color: '#334158' },
+              },
+              crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+              timeScale: { borderColor: '#485c7b', timeVisible: true },
+          });
+
+          // 核心修复：4.x 版本必须这样添加并赋值
+          candleSeries = chartObj.addSeries(LightweightCharts.CandlestickSeries, {
+              upColor: '#26a69a',
+              downColor: '#ef5350',
+              borderVisible: false,
+              wickUpColor: '#26a69a',
+              wickDownColor: '#ef5350',
+          });
+
+          // 初始化完成后加载数据
+          window.loadData();
       }
 
-      chartInstance = LightweightCharts.createChart(chartContainer, {
-          layout: {
-              background: { color: '#131722' },
-              textColor: '#d1d4dc',
-          },
-          grid: {
-              vertLines: { color: '#334158' },
-              horzLines: { color: '#334158' },
-          },
-          crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-          timeScale: { borderColor: '#485c7b', timeVisible: true },
+      // 3. 将加载函数暴露给 window，方便按钮调用
+      window.loadData = async function() {
+          const tickerInput = document.getElementById('tickerInput');
+          if (!tickerInput || !candleSeries) return;
+
+          const ticker = tickerInput.value.toUpperCase();
+          console.log(`[RsAlpha] 正在请求标的: ${ticker}`);
+
+          try {
+              // A. 请求 K 线
+              const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
+              const kJson = await kResponse.json();
+              if (kJson.code === 0 && Array.isArray(kJson.data)) {
+                  candleSeries.setData(kJson.data);
+              }
+
+              // B. 请求标注
+              const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
+              const mJson = await mResponse.json();
+              if (mJson.code === 0 && Array.isArray(mJson.data)) {
+                  const formattedMarkers = mJson.data.map(item => {
+                      const markerDate = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
+                      return {
+                          time: markerDate,
+                          position: 'aboveBar',
+                          color: (item.user && item.user.includes('猫姐')) ? '#f68410' : '#2196F3',
+                          shape: 'circle',
+                          text: (item.user || '分析师') + ': ' + (item.content || '').substring(0, 15),
+                      };
+                  });
+
+                  // 严格排序
+                  formattedMarkers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+
+                  // 调用 setMarkers
+                  candleSeries.setMarkers(formattedMarkers);
+                  console.log(`[RsAlpha] Markers 渲染成功, 数量: ${formattedMarkers.length}`);
+              }
+          } catch (e) {
+              console.error("[RsAlpha] 数据加载异常:", e);
+          }
+      };
+
+      // 4. 响应式监听
+      window.addEventListener('resize', () => {
+          if (chartObj) {
+              chartObj.resize(container.clientWidth, container.clientHeight);
+          }
       });
 
-      // 重点：使用正确的 Series 创建方式
-      candlestickSeries = chartInstance.addSeries(LightweightCharts.CandlestickSeries, {
-          upColor: '#26a69a',
-          downColor: '#ef5350',
-          borderVisible: false,
-          wickUpColor: '#26a69a',
-          wickDownColor: '#ef5350',
-      });
-  }
-
-  // --- 3. 加载数据的函数 ---
-  async function loadData() {
-      const tickerInput = document.getElementById('tickerInput');
-      const ticker = tickerInput.value.toUpperCase();
-
-      if (!ticker || !candlestickSeries) return;
-
-      console.log(`正在请求 ${ticker} 的数据...`);
-
-      try {
-          // A. 加载 K 线数据
-          const kResponse = await fetch(`/api/charts/kline?symbol=${ticker}`);
-          const kJson = await kResponse.json();
-
-          if (kJson.code === 0 && Array.isArray(kJson.data)) {
-              candlestickSeries.setData(kJson.data);
-          }
-
-          // B. 加载标注数据
-          const mResponse = await fetch(`/api/charts/markers?ticker=${ticker}`);
-          const mJson = await mResponse.json();
-
-          if (mJson.code === 0 && Array.isArray(mJson.data)) {
-              const formattedMarkers = mJson.data.map(item => {
-                  const markerDate = item.timestamp.includes(' ') ? item.timestamp.split(' ')[0] : item.timestamp;
-                  return {
-                      time: markerDate,
-                      position: 'aboveBar',
-                      color: (item.user && item.user.includes('猫姐')) ? '#f68410' : '#2196F3',
-                      shape: 'circle',
-                      text: (item.user || '分析师') + ': ' + (item.content || '').substring(0, 15),
-                  };
-              });
-
-              // 排序：这是 setMarkers 成功的关键
-              formattedMarkers.sort((a, b) => {
-                  return new Date(a.time).getTime() - new Date(b.time).getTime();
-              });
-
-              // 关键调用
-              candlestickSeries.setMarkers(formattedMarkers);
-              console.log("Markers 设置成功:", formattedMarkers.length);
-          }
-
-      } catch (error) {
-          console.error('逻辑处理异常:', error);
-      }
-  }
-
-  // --- 4. 启动逻辑 ---
-
-  // 确保 DOM 加载完成后再初始化
-  document.addEventListener('DOMContentLoaded', () => {
-      initChart();
-      loadData();
-  });
-
-  // 响应式
-  window.addEventListener('resize', () => {
-      if (chartInstance) {
-          chartInstance.resize(chartContainer.clientWidth, chartContainer.clientHeight);
-      }
-  });
+      // 5. 启动
+      init();
+  })();
 </script>
 </body>
 </html>
