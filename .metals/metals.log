@@ -1,0 +1,64 @@
+2026.04.19 13:46:33 INFO  Started: Metals version 1.6.7 in folders '/Users/chenjian/Documents/RsAlpha' for client Trae CN 1.107.1.
+2026.04.19 13:46:33 INFO  Memory monitor started
+2026.04.19 13:46:34 WARN  Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026.04.19 13:49:39 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java
+2026.04.19 13:49:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java
+2026.04.19 13:49:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java
+2026.04.19 13:49:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 13:49:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java
+2026.04.19 13:49:42 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java
+2026.04.19 13:49:42 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java. Using fallback presentation compiler.
+2026.04.19 13:49:42 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java
+2026.04.19 13:49:43 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 13:49:43 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java
+2026.04.19 13:49:43 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java. Using fallback presentation compiler.
+2026.04.19 13:49:43 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 13:51:03 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java
+2026.04.19 13:51:04 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 13:51:04 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java
+2026.04.19 13:51:04 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java. Using fallback presentation compiler.
+2026.04.19 13:51:04 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java
+2026.04.19 13:51:04 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java
+2026.04.19 13:51:04 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 13:51:05 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java. Using fallback presentation compiler.
+2026.04.19 13:51:05 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java. Using fallback presentation compiler.
+2026.04.19 13:51:05 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java. Using fallback presentation compiler.
+4月 19, 2026 1:51:18 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.19 13:51:34 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 13:52:40 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java
+2026.04.19 13:52:40 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java
+2026.04.19 13:52:40 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java
+2026.04.19 13:52:40 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java
+2026.04.19 13:52:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 13:52:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java. Using fallback presentation compiler.
+2026.04.19 13:52:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java. Using fallback presentation compiler.
+2026.04.19 13:52:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java. Using fallback presentation compiler.
+2026.04.19 13:52:40 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java. Using fallback presentation compiler.
+2026.04.19 13:52:57 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java
+2026.04.19 13:52:57 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.19 13:52:57 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DcChannelMessage.java. Using fallback presentation compiler.
+2026.04.19 13:52:57 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java
+2026.04.19 13:52:57 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java
+2026.04.19 13:52:57 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java
+2026.04.19 13:52:57 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.19 13:52:57 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/EmojiUtil.java. Using fallback presentation compiler.
+2026.04.19 13:52:57 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/model/DailySummary.java. Using fallback presentation compiler.
+2026.04.19 13:52:57 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/AIResponseController.java. Using fallback presentation compiler.
+2026.04.19 13:53:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java. Using fallback presentation compiler.
+2026.04.19 13:53:27 WARN  no build target for: /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java
+2026.04.19 13:53:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java. Using fallback presentation compiler.
+2026.04.19 13:53:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java. Using fallback presentation compiler.
+2026.04.19 13:53:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java. Using fallback presentation compiler.
+2026.04.19 13:53:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/DcChannelMessageScheduler.java. Using fallback presentation compiler.
+4月 19, 2026 1:53:27 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 38

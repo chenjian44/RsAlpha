@@ -47,35 +47,36 @@ public class DcChannelMessageController {
     }
 
     @PostMapping("/api/dc-channel-message/trigger")
-    public ApiResponse triggerProcessChannelMessages(
-            @RequestParam(required = false) String beginDate,
-            @RequestParam(required = false) String endDate) {
+    public ApiResponse triggerProcessChannelMessages() {
         try {
-            log.info("Manually triggering processChannelMessages task with beginDate: {}, endDate: {}", beginDate, endDate);
-            
-            Timestamp beginTime;
-            Timestamp endTime;
-            
-            if (beginDate != null && !beginDate.isEmpty()) {
-                LocalDate beginLocalDate = LocalDate.parse(beginDate, DateTimeFormatter.ISO_DATE);
-                beginTime = Timestamp.valueOf(beginLocalDate.atStartOfDay());
-            } else {
-                LocalDate yesterday = LocalDate.now().minusDays(2);
-                beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
+            LocalDate today = LocalDate.now();
+            LocalDate oneMonthAgo = today.minusDays(30);
+            LocalDate yesterday = today.minusDays(1);
+
+            log.info("Manually triggering processChannelMessages task for backfill, from {} to {}", oneMonthAgo, yesterday);
+
+            int successCount = 0;
+            int failCount = 0;
+
+            for (LocalDate date = oneMonthAgo; !date.isAfter(yesterday); date = date.plusDays(1)) {
+                LocalDate nextDate = date.plusDays(1);
+
+                Timestamp beginTime = Timestamp.valueOf(date.atStartOfDay());
+                Timestamp endTime = Timestamp.valueOf(nextDate.atTime(LocalTime.of(9, 0)));
+
+                log.info("Processing date: {}, time range: {} to {}", date, beginTime, endTime);
+
+                try {
+                    dcChannelMessageScheduler.processChannelMessages(beginTime, endTime);
+                    successCount++;
+                } catch (Exception e) {
+                    failCount++;
+                    log.error("Failed to process date: {}, error: {}", date, e.getMessage());
+                }
             }
-            
-            if (endDate != null && !endDate.isEmpty()) {
-                LocalDate endLocalDate = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
-                endTime = Timestamp.valueOf(endLocalDate.atTime(LocalTime.MAX));
-            } else {
-                endTime = Timestamp.valueOf(LocalDateTime.now());
-            }
-            
-            log.info("Time range - beginTime: {}, endTime: {}", beginTime, endTime);
-            
-            dcChannelMessageScheduler.processChannelMessages(beginTime, endTime);
-            log.info("processChannelMessages task triggered successfully");
-            return ApiResponse.ok();
+
+            log.info("Backfill completed. Success: {}, Failed: {}", successCount, failCount);
+            return ApiResponse.ok("回跑完成: 成功 {0} 天, 失败 {1} 天".replace("{0}", String.valueOf(successCount)).replace("{1}", String.valueOf(failCount)));
         } catch (Exception e) {
             log.error("Failed to trigger processChannelMessages task: {}", e.getMessage(), e);
             return ApiResponse.error("触发任务失败: " + e.getMessage());

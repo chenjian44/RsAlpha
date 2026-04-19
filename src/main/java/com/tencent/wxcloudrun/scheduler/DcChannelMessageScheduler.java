@@ -54,12 +54,13 @@ public class DcChannelMessageScheduler {
         try {
             log.info("Query time range - begin: {}, end: {}", beginTime, endTime);
 
+            LocalDate taskDate = endTime.toLocalDateTime().toLocalDate();
+            String dateStr = taskDate.format(DateTimeFormatter.ISO_DATE);
+
             List<String> channelIds = dcChannelMessageService.getAllChannelIdsByTimeRange(beginTime, endTime);
             log.info("Found {} distinct channelIds in time range", channelIds.size());
 
             StringBuilder allSummaries = new StringBuilder();
-            LocalDate today = LocalDate.now();
-            String dateStr = today.format(DateTimeFormatter.ISO_DATE);
             StringBuilder messagesContent = new StringBuilder();
 
             for (String channelId : channelIds) {
@@ -100,7 +101,7 @@ public class DcChannelMessageScheduler {
             String assistantResponse = YunwuApiUtils.getAssistantResponse(response);
 
             if (!assistantResponse.isEmpty()) {
-                String title = String.format("%s 频道分析报告", today);
+                String title = String.format("%s 频道分析报告", taskDate);
                 boolean pushSuccess = FeishuUtils.sendRichTextMessage(title, assistantResponse);
                 if (pushSuccess) {
                     log.info("Feishu push successful");
@@ -108,7 +109,7 @@ public class DcChannelMessageScheduler {
                     log.error("Feishu push failed for : {}", title);
                 }
 
-                allSummaries.append(today).append(" 频道分析\n").append(assistantResponse);
+                allSummaries.append(taskDate).append(" 频道分析\n").append(assistantResponse);
             }
 
             if (saveToDatabase && allSummaries.length() > 0) {
