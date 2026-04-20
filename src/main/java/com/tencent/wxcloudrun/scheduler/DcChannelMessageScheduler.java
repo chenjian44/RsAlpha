@@ -42,7 +42,7 @@ public class DcChannelMessageScheduler {
     }
 
 
-    @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Shanghai")
+    @Scheduled(cron = "0 30 8 * * ?", zone = "Asia/Shanghai")
     public void scheduledProcessChannelMessages() {
 
         LocalDate today = LocalDate.now();
