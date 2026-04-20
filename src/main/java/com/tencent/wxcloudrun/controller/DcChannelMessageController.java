@@ -81,7 +81,7 @@ public class DcChannelMessageController {
     public ApiResponse triggerProcessChannelMessages() {
         try {
             LocalDate today = LocalDate.now();
-            LocalDate oneMonthAgo = today.minusDays(30);
+            LocalDate oneMonthAgo = today.minusDays(19);
             LocalDate yesterday = today.minusDays(1);
 
             log.info("Manually triggering processChannelMessages task for backfill, from {} to {}", oneMonthAgo, yesterday);
