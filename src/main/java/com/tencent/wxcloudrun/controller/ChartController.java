@@ -79,7 +79,7 @@ public class ChartController {
                     // 1. 获取原始日期字符串 (假设格式为 "YYYY-MM-DD")
                     String rawDateStr = sentiment.getDate();
                     LocalDate date = LocalDate.parse(rawDateStr);
-
+                    date = date.minusDays(1);
                     // 2. 判断并平移周末到周五
                     DayOfWeek dayOfWeek = date.getDayOfWeek();
                     if (dayOfWeek == DayOfWeek.SATURDAY) {
