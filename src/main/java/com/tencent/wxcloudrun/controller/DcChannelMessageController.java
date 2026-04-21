@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
@@ -80,20 +79,19 @@ public class DcChannelMessageController {
     @PostMapping("/api/dc-channel-message/trigger")
     public ApiResponse triggerProcessChannelMessages() {
         try {
-            LocalDate today = LocalDate.now();
-            LocalDate oneMonthAgo = today.minusDays(1);
-            LocalDate yesterday = today.minusDays(1);
+            LocalDate startDate = LocalDate.of(2026, 1, 1);
+            LocalDate endDate = LocalDate.of(2026, 4, 19);
 
-            log.info("Manually triggering processChannelMessages task for backfill, from {} to {}", oneMonthAgo, yesterday);
+            log.info("Manually triggering processChannelMessages task for backfill, from {} to {}", startDate, endDate);
 
             int successCount = 0;
             int failCount = 0;
 
-            for (LocalDate date = oneMonthAgo; !date.isAfter(yesterday); date = date.plusDays(1)) {
+            for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
                 LocalDate nextDate = date.plusDays(1);
 
                 Timestamp beginTime = Timestamp.valueOf(date.atStartOfDay());
-                Timestamp endTime = Timestamp.valueOf(nextDate.atTime(LocalTime.of(9, 0)));
+                Timestamp endTime = Timestamp.valueOf(nextDate.atStartOfDay());
 
                 log.info("Processing date: {}, time range: {} to {}", date, beginTime, endTime);
 

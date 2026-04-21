@@ -32,19 +32,14 @@ public class ChartController {
     public ApiResponse getMarkers(@RequestParam String ticker) {
         List<Map<String, Object>> markers = new ArrayList<>();
 
-        // 获取当前日期和过去7天的日期
+        // 获取当前日期和起始日期 (2026年1月1日)
         LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        List<String> dates = new ArrayList<>();
+        LocalDate startDate = LocalDate.of(2026, 1, 1);
+        String startTime = startDate.toString();
+        String endTime = today.toString();
 
-        // 收集过去7天的日期
-        for (int i = 0; i < 30; i++) {
-            LocalDate date = today.minusDays(i);
-            dates.add(date.format(formatter));
-        }
-
-        // 批量查询过去30天的情感数据
-        List<BloggerSentiment> sentiments = bloggerSentimentService.getSentimentsByTickerAndDates(ticker, dates);
+        // 范围查询从2026年1月1日到今天的情感数据
+        List<BloggerSentiment> sentiments = bloggerSentimentService.getSentimentsByTickerAndTimeRange(ticker, startTime, endTime);
 
         // 处理查询结果
         if (sentiments != null && !sentiments.isEmpty()) {

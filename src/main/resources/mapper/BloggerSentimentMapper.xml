@@ -41,6 +41,15 @@
         ORDER BY date DESC, blogger
     </select>
 
+    <select id="getByTickerAndTimeRange" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_sentiments
+        WHERE ticker = #{ticker}
+        AND date >= #{startTime}
+        AND date <= #{endTime}
+        ORDER BY date DESC, blogger
+    </select>
+
     <select id="getByDateAndTickerAndBlogger" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
         SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
         FROM blogger_sentiments
