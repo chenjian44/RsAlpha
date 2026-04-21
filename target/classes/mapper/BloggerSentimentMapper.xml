@@ -45,8 +45,8 @@
         SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
         FROM blogger_sentiments
         WHERE ticker = #{ticker}
-        AND date >= #{startTime}
-        AND date <= #{endTime}
+        AND date <![CDATA[ >= ]]> #{startTime}
+        AND date <![CDATA[ <= ]]> #{endTime}
         ORDER BY date DESC, blogger
     </select>
 

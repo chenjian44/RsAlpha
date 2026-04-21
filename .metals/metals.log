@@ -125,3 +125,5 @@
 4月 21, 2026 10:05:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 信息: Unsupported notification method: $/setTrace
 2026.04.21 22:06:50 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+4月 21, 2026 10:10:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
