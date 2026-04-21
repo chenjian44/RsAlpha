@@ -95,6 +95,8 @@ public class DcChannelMessageController {
 
                 log.info("Processing date: {}, time range: {} to {}", date, beginTime, endTime);
 
+
+
                 try {
                     dcChannelMessageScheduler.processChannelMessages(beginTime, endTime);
                     successCount++;
