@@ -80,7 +80,7 @@ public class DcChannelMessageController {
     public ApiResponse triggerProcessChannelMessages() {
         try {
             LocalDate startDate = LocalDate.of(2026, 1, 1);
-            LocalDate endDate = LocalDate.of(2026, 4, 19);
+            LocalDate endDate = LocalDate.of(2026, 1, 1);
 
             log.info("Manually triggering processChannelMessages task for backfill, from {} to {}", startDate, endDate);
 

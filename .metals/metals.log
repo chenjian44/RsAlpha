@@ -127,3 +127,25 @@
 2026.04.21 22:06:50 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
 4月 21, 2026 10:10:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:15:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:20:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:25:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:30:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:35:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:40:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:45:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:50:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 10:55:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.21 22:56:53 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.21 22:56:54 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.21 22:56:53 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.21 22:56:54 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
