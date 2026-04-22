@@ -149,3 +149,141 @@
 2026.04.21 22:56:54 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
 2026.04.21 22:56:53 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
 2026.04.21 22:56:54 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.04.21 22:56:56 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+4月 21, 2026 11:00:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 11:05:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 11:10:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 11:15:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 11:15:53 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 11:20:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 21, 2026 11:25:22 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.22 21:26:49 INFO  Shutting down server
+2026.04.22 21:26:49 INFO  Memory monitor stopped
+2026.04.22 21:26:49 INFO  shutting down Metals
+2026.04.22 21:26:49 INFO  Shut down connection with build server.
+2026.04.22 21:27:17 INFO  Started: Metals version 1.6.7 in folders '/Users/chenjian/Documents/RsAlpha' for client Trae CN 1.107.1.
+2026.04.22 21:27:17 INFO  Memory monitor started
+2026.04.22 21:27:23 WARN  Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026.04.22 21:27:24 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+4月 22, 2026 9:27:26 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 2
+2026.04.22 21:27:26 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.22 21:27:27 INFO  Attempting to connect to the build server...
+2026.04.22 21:27:27 INFO  Found a Bloop server running
+2026.04.22 21:27:27 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/chenjian/Documents/RsAlpha/.metals/bsp.trace.json or /Users/chenjian/Library/Caches/org.scalameta.metals/bsp.trace.json
+2026.04.22 21:27:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.22 21:27:27 INFO  time: Connected to build server in 0.93s
+2026.04.22 21:27:27 INFO  Connected to Build server: Bloop v2.0.19
+2026.04.22 21:27:27 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+2026.04.22 21:27:29 INFO  time: Imported build in 0.14s
+4月 22, 2026 9:27:29 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 11
+2026.04.22 21:27:29 INFO  no build target found for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java. Using fallback presentation compiler.
+4月 22, 2026 9:27:29 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 5
+4月 22, 2026 9:27:29 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 12
+4月 22, 2026 9:27:30 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 14
+2026.04.22 21:27:53 WARN  Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026.04.22 21:27:59 INFO  time: indexed workspace in 29s
+2026.04.22 21:27:59 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.22 21:28:03 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:28:03 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:28:03 INFO  time: compiled springboot-wxcloudrun in 4.56s
+4月 22, 2026 9:30:24 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 22, 2026 9:32:21 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 88
+4月 22, 2026 9:32:23 下午 org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+警告: Unmatched cancel notification for request id 93
+2026.04.22 21:33:14 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.22 21:33:15 INFO  empty definition using pc, found symbol in pc: com/tencent/wxcloudrun/service/BloggerSentimentService#getSentimentsByTickerAndTimeRange# (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-04-21/r_empty-definition_(springboot-wxcloudrun)_21-57-39-632.md")
+2026.04.22 21:33:18 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:33:18 WARN  javac exited with exit code 1
+2026.04.22 21:33:18 INFO  time: compiled springboot-wxcloudrun in 4.45s
+2026.04.22 21:33:30 INFO  compiling springboot-wxcloudrun (2 java sources)
+2026.04.22 21:33:33 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:33:33 WARN  javac exited with exit code 1
+2026.04.22 21:33:33 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:33:33 INFO  time: compiled springboot-wxcloudrun in 2.49s
+2026.04.22 21:34:05 INFO  compiling springboot-wxcloudrun (3 java sources)
+2026.04.22 21:34:08 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:34:08 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:34:08 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:34:08 INFO  time: compiled springboot-wxcloudrun in 3.75s
+2026.04.22 21:34:08 INFO  compiling springboot-wxcloudrun (2 java sources)
+2026.04.22 21:34:11 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerSentimentServiceImpl.java
+2026.04.22 21:34:11 WARN  javac exited with exit code 1
+2026.04.22 21:34:11 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:34:11 INFO  time: compiled springboot-wxcloudrun in 2.62s
+2026.04.22 21:34:17 INFO  compiling springboot-wxcloudrun (4 java sources)
+2026.04.22 21:34:20 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:34:20 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:34:20 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerSentimentServiceImpl.java
+2026.04.22 21:34:20 INFO  time: compiled springboot-wxcloudrun in 2.47s
+2026.04.22 21:34:20 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.22 21:34:22 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:34:22 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:34:22 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerSentimentServiceImpl.java
+2026.04.22 21:34:22 INFO  time: compiled springboot-wxcloudrun in 2.38s
+2026.04.22 21:34:44 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.22 21:34:45 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:34:45 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:34:45 INFO  time: compiled springboot-wxcloudrun in 1.92s
+2026.04.22 21:34:45 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.22 21:34:47 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:34:47 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:34:47 INFO  time: compiled springboot-wxcloudrun in 1.73s
+2026.04.22 21:35:09 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.22 21:35:12 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:35:12 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:35:12 INFO  time: compiled springboot-wxcloudrun in 2.18s
+2026.04.22 21:35:12 INFO  compiling springboot-wxcloudrun (3 java sources)
+2026.04.22 21:35:14 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerSentimentServiceImpl.java
+2026.04.22 21:35:14 WARN  javac exited with exit code 1
+2026.04.22 21:35:14 INFO  time: compiled springboot-wxcloudrun in 2.17s
+2026.04.22 21:35:22 INFO  compiling springboot-wxcloudrun (2 java sources)
+4月 22, 2026 9:35:24 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.22 21:35:24 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:35:24 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:35:24 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerSentimentServiceImpl.java
+2026.04.22 21:35:24 INFO  time: compiled springboot-wxcloudrun in 2.25s
+2026.04.22 21:35:24 INFO  compiling springboot-wxcloudrun (2 java sources)
+2026.04.22 21:35:27 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:35:27 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:35:27 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerSentimentServiceImpl.java
+2026.04.22 21:35:27 INFO  time: compiled springboot-wxcloudrun in 2.2s
+2026.04.22 21:35:33 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:33 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.22 21:35:33 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:33 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:34 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:34 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:34 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:35 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:35 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:36 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:36 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:37 WARN  Could not load snapshot text for /Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.22 21:35:37 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.22 21:35:37 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.22 21:35:37 INFO  time: compiled springboot-wxcloudrun in 4.67s

@@ -50,12 +50,34 @@
         ORDER BY date DESC, blogger
     </select>
 
+    <select id="getByTickerAndTimeRangeWithBloggers" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_sentiments
+        WHERE ticker = #{ticker}
+        AND date <![CDATA[ >= ]]> #{startTime}
+        AND date <![CDATA[ <= ]]> #{endTime}
+        <if test="bloggers != null and bloggers.size() > 0">
+            AND blogger IN
+            <foreach item="blogger" collection="bloggers" open="(" separator="," close=")">
+                #{blogger}
+            </foreach>
+        </if>
+        ORDER BY date DESC, blogger
+    </select>
+
     <select id="getByDateAndTickerAndBlogger" resultType="com.tencent.wxcloudrun.model.BloggerSentiment">
         SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, created_at as createdAt, updated_at as updatedAt
         FROM blogger_sentiments
         WHERE date = #{date}
         AND ticker = #{ticker}
         AND blogger = #{blogger}
+    </select>
+
+    <select id="getDistinctBloggersByTicker" resultType="String">
+        SELECT DISTINCT blogger
+        FROM blogger_sentiments
+        WHERE ticker = #{ticker}
+        ORDER BY blogger
     </select>
 
     <update id="update" parameterType="com.tencent.wxcloudrun.model.BloggerSentiment">

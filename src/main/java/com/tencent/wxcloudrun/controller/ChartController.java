@@ -29,7 +29,7 @@ public class ChartController {
     private BloggerSentimentService bloggerSentimentService;
 
     @GetMapping("/markers")
-    public ApiResponse getMarkers(@RequestParam String ticker) {
+    public ApiResponse getMarkers(@RequestParam String ticker, @RequestParam(required = false) List<String> bloggers) {
         List<Map<String, Object>> markers = new ArrayList<>();
 
         // 获取当前日期和起始日期 (2026年1月1日)
@@ -38,8 +38,8 @@ public class ChartController {
         String startTime = startDate.toString();
         String endTime = today.toString();
 
-        // 范围查询从2026年1月1日到今天的情感数据
-        List<BloggerSentiment> sentiments = bloggerSentimentService.getSentimentsByTickerAndTimeRange(ticker, startTime, endTime);
+        // 范围查询从2026年1月1日到今天的情感数据，支持按blogger筛选
+        List<BloggerSentiment> sentiments = bloggerSentimentService.getSentimentsByTickerAndTimeRange(ticker, startTime, endTime, bloggers);
 
         // 处理查询结果
         if (sentiments != null && !sentiments.isEmpty()) {
@@ -120,6 +120,16 @@ public class ChartController {
         }
         
         return content.toString();
+    }
+
+    @GetMapping("/bloggers")
+    public ApiResponse getBloggers(@RequestParam String ticker) {
+        try {
+            List<String> bloggers = bloggerSentimentService.getDistinctBloggersByTicker(ticker);
+            return ApiResponse.ok(bloggers);
+        } catch (Exception e) {
+            return ApiResponse.error("获取博主列表失败: " + e.getMessage());
+        }
     }
 
     @GetMapping("/kline")

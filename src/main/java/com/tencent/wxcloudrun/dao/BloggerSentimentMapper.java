@@ -18,6 +18,10 @@ public interface BloggerSentimentMapper {
 
     List<BloggerSentiment> getByTickerAndTimeRange(String ticker, String startTime, String endTime);
 
+    List<BloggerSentiment> getByTickerAndTimeRangeWithBloggers(String ticker, String startTime, String endTime, List<String> bloggers);
+
+    List<String> getDistinctBloggersByTicker(String ticker);
+
     BloggerSentiment getByDateAndTickerAndBlogger(String date, String ticker, String blogger);
 
     void update(BloggerSentiment sentiment);

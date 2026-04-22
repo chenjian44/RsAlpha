@@ -66,6 +66,16 @@
     .badge-bull { background: #d1fae5; color: #059669; }
     .badge-bear { background: #fee2e2; color: #dc2626; }
     .badge-neutral { background: #fef3c7; color: #d97706; }
+
+    /* Blogger 多选样式 */
+    .blogger-panel { flex-grow: 1; display: flex; flex-direction: column; max-height: 300px; }
+    .blogger-select-all { padding: 8px 0; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748b; }
+    .blogger-select-all input { width: auto; padding: 0; }
+    #blogger-list { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; max-height: 240px; }
+    .blogger-checkbox-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s; font-size: 13px; }
+    .blogger-checkbox-item:hover { background: #f1f5f9; border-color: #cbd5e1; }
+    .blogger-checkbox-item input { width: auto; padding: 0; margin: 0; cursor: pointer; }
+    .blogger-checkbox-item.selected { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
   </style>
 </head>
 <body>
@@ -83,6 +93,17 @@
     <div class="panel list-panel">
       <div class="search-title">⭐ 核心资产池</div>
       <div id="quick-tags">
+      </div>
+    </div>
+
+    <div class="panel blogger-panel">
+      <div class="search-title">👥 大V筛选</div>
+      <div class="blogger-select-all">
+        <input type="checkbox" id="selectAllBloggers" checked>
+        <label for="selectAllBloggers">全选 / 反选</label>
+      </div>
+      <div id="blogger-list">
+        <div style="color: #94a3b8; font-size: 13px; text-align: center; padding: 20px;">请先选择标的加载数据</div>
       </div>
     </div>
   </div>
@@ -111,9 +132,13 @@
       const closeModal = document.getElementById('closeModal');
       const tickerInput = document.getElementById('tickerInput');
       const quickTagsContainer = document.getElementById('quick-tags');
+      const bloggerListContainer = document.getElementById('blogger-list');
+      const selectAllCheckbox = document.getElementById('selectAllBloggers');
 
       let dailyOpinions = {};
       let validTradingDays = [];
+      let allBloggers = [];
+      let selectedBloggers = [];
 
       // 💡 1. 扩充后的 10 大核心资产 (加入 BRK)
       const coreAssets = [
@@ -151,44 +176,73 @@
           });
       }
 
-      const chart = LightweightCharts.createChart(container, {
-          layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#334155' },
-          grid: { vertLines: { color: '#f1f5f9' }, horzLines: { color: '#f1f5f9' } },
-          timeScale: { borderColor: '#e2e8f0', timeVisible: true },
-      });
-
-      const candleSeries = chart.addCandlestickSeries({
-          upColor: '#ef4444', downColor: '#10b981', borderVisible: false, wickUpColor: '#ef4444', wickDownColor: '#10b981',
-      });
-
-      // 💡 高级适配：自适应 Flex 布局的 ResizeObserver
-      new ResizeObserver(entries => {
-          if (entries.length === 0 || entries[0].target !== container) return;
-          const newRect = entries[0].contentRect;
-          chart.applyOptions({ height: newRect.height, width: newRect.width });
-      }).observe(container);
-
-      closeModal.onclick = () => modal.style.display = "none";
-      window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
-
-      function getClosestTradingDay(targetDateStr) {
-          if (!validTradingDays.length) return targetDateStr;
-          if (validTradingDays.includes(targetDateStr)) return targetDateStr;
-          let closestDate = targetDateStr;
-          for (let i = validTradingDays.length - 1; i >= 0; i--) {
-              if (validTradingDays[i] <= targetDateStr) {
-                  closestDate = validTradingDays[i];
-                  break;
+      async function loadBloggers(ticker) {
+          try {
+              const bRes = await fetch(`/api/charts/bloggers?ticker=${ticker}`);
+              const bJson = await bRes.json();
+              if (bJson.code === 0 && Array.isArray(bJson.data)) {
+                  allBloggers = bJson.data;
+                  selectedBloggers = [...allBloggers];
+                  renderBloggerList();
               }
+          } catch (err) {
+              console.error("[RsAlpha] 加载博主列表异常:", err);
           }
-          return closestDate;
       }
 
-      async function loadData() {
+      function renderBloggerList() {
+          if (allBloggers.length === 0) {
+              bloggerListContainer.innerHTML = '<div style="color: #94a3b8; font-size: 13px; text-align: center; padding: 20px;">暂无博主数据</div>';
+              return;
+          }
+          bloggerListContainer.innerHTML = '';
+          allBloggers.forEach(blogger => {
+              const div = document.createElement('div');
+              div.className = 'blogger-checkbox-item' + (selectedBloggers.includes(blogger) ? ' selected' : '');
+              div.innerHTML = `
+                  <input type="checkbox" value="${blogger}" ${selectedBloggers.includes(blogger) ? 'checked' : ''}>
+                  <span>${blogger}</span>
+              `;
+              const checkbox = div.querySelector('input');
+              checkbox.addEventListener('change', (e) => {
+                  if (e.target.checked) {
+                      if (!selectedBloggers.includes(blogger)) {
+                          selectedBloggers.push(blogger);
+                      }
+                  } else {
+                      selectedBloggers = selectedBloggers.filter(b => b !== blogger);
+                  }
+                  div.classList.toggle('selected', selectedBloggers.includes(blogger));
+                  updateSelectAllState();
+                  loadDataWithSelectedBloggers();
+              });
+              div.addEventListener('click', (e) => {
+                  if (e.target !== checkbox) {
+                      checkbox.checked = !checkbox.checked;
+                      checkbox.dispatchEvent(new Event('change'));
+                  }
+              });
+              bloggerListContainer.appendChild(div);
+          });
+      }
+
+      function updateSelectAllState() {
+          selectAllCheckbox.checked = selectedBloggers.length === allBloggers.length;
+      }
+
+      selectAllCheckbox.addEventListener('change', (e) => {
+          if (e.target.checked) {
+              selectedBloggers = [...allBloggers];
+          } else {
+              selectedBloggers = [];
+          }
+          renderBloggerList();
+          loadDataWithSelectedBloggers();
+      });
+
+      async function loadDataWithSelectedBloggers() {
           const ticker = tickerInput.value.toUpperCase().trim();
           if (!ticker) return;
-
-          updateActiveTag(ticker);
 
           dailyOpinions = {};
           validTradingDays = [];
@@ -205,7 +259,12 @@
                   });
               }
 
-              const mRes = await fetch(`/api/charts/markers?ticker=${ticker}`);
+              let markersUrl = `/api/charts/markers?ticker=${ticker}`;
+              if (selectedBloggers.length > 0 && selectedBloggers.length < allBloggers.length) {
+                  markersUrl += '&bloggers=' + selectedBloggers.join('&bloggers=');
+              }
+
+              const mRes = await fetch(markersUrl);
               const mJson = await mRes.json();
 
               if (mJson.code === 0 && Array.isArray(mJson.data)) {
@@ -280,6 +339,49 @@
                   candleSeries.setMarkers(markers);
               }
           } catch (err) { console.error("[RsAlpha] 数据加载异常:", err); }
+      }
+
+      const chart = LightweightCharts.createChart(container, {
+          layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#334155' },
+          grid: { vertLines: { color: '#f1f5f9' }, horzLines: { color: '#f1f5f9' } },
+          timeScale: { borderColor: '#e2e8f0', timeVisible: true },
+      });
+
+      const candleSeries = chart.addCandlestickSeries({
+          upColor: '#ef4444', downColor: '#10b981', borderVisible: false, wickUpColor: '#ef4444', wickDownColor: '#10b981',
+      });
+
+      // 💡 高级适配：自适应 Flex 布局的 ResizeObserver
+      new ResizeObserver(entries => {
+          if (entries.length === 0 || entries[0].target !== container) return;
+          const newRect = entries[0].contentRect;
+          chart.applyOptions({ height: newRect.height, width: newRect.width });
+      }).observe(container);
+
+      closeModal.onclick = () => modal.style.display = "none";
+      window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
+
+      function getClosestTradingDay(targetDateStr) {
+          if (!validTradingDays.length) return targetDateStr;
+          if (validTradingDays.includes(targetDateStr)) return targetDateStr;
+          let closestDate = targetDateStr;
+          for (let i = validTradingDays.length - 1; i >= 0; i--) {
+              if (validTradingDays[i] <= targetDateStr) {
+                  closestDate = validTradingDays[i];
+                  break;
+              }
+          }
+          return closestDate;
+      }
+
+      async function loadData() {
+          const ticker = tickerInput.value.toUpperCase().trim();
+          if (!ticker) return;
+
+          updateActiveTag(ticker);
+
+          await loadBloggers(ticker);
+          await loadDataWithSelectedBloggers();
       }
 
       chart.subscribeClick((param) => {
