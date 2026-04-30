@@ -9,76 +9,73 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 
   <style>
-    /* 基础样式与莫兰迪色系 */
-    body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; color: #334155; height: 100vh; box-sizing: border-box; }
-    .app-container { display: flex; gap: 20px; height: 100%; }
+    /* 基础样式与专业级分栏布局 */
+    body { margin: 0; padding: 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #333333; height: 100vh; box-sizing: border-box; }
+    .app-container { display: flex; gap: 16px; height: 100%; }
 
     /* 左侧控制台 */
-    .sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
-    .panel { background: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); padding: 20px; border: none; }
+    .sidebar { width: 260px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
+    .panel { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; padding: 16px; }
 
-    #controls { display: flex; flex-direction: column; gap: 14px; }
-    .search-title { font-size: 14px; font-weight: 700; color: #475569; letter-spacing: 0.5px; }
-    input[type="text"] { padding: 12px 14px; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8fafc; outline: none; transition: all 0.2s; font-weight: 600; font-size: 15px; text-transform: uppercase; color: #0f172a; }
-    input[type="text"]:focus { border-color: #94a3b8; background: #ffffff; box-shadow: 0 0 0 3px rgba(226, 232, 240, 0.5); }
-    button { padding: 12px 16px; background: #1e293b; color: white; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s; font-weight: 600; font-size: 14px; letter-spacing: 0.5px; }
-    button:hover { background: #0f172a; }
+    #controls { display: flex; flex-direction: column; gap: 12px; }
+    .search-title { font-size: 13px; font-weight: 700; color: #64748b; letter-spacing: 0.5px; }
+    input { padding: 10px 12px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none; transition: border 0.2s; font-weight: 600; font-size: 14px; text-transform: uppercase; }
+    input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+    button { padding: 10px 16px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s; font-weight: 600; font-size: 14px; }
+    button:hover { background: #1d4ed8; }
 
-    /* 核心资产池 - 胶囊按钮 */
+    /* 💡 核心改动：10大核心资产 2列网格排版 */
     .list-panel { flex-grow: 1; display: flex; flex-direction: column; }
-    #quick-tags { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
+    #quick-tags { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
     .tag-btn {
-        padding: 10px 0; text-align: center; border-radius: 9999px; background: #f1f5f9; color: #64748b;
-        font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s ease;
+        padding: 10px 0; text-align: center; border-radius: 8px; background: #f8fafc; color: #475569;
+        font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid #e2e8f0; transition: all 0.2s ease;
     }
-    .tag-btn:hover { background: #e2e8f0; color: #334155; }
-    .tag-btn.active { background: #1e293b; color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-
-    /* Blogger 多选样式 - 隐藏原生Checkbox */
-    .blogger-panel { flex-grow: 1; display: flex; flex-direction: column; max-height: 320px; }
-    .blogger-select-all { padding: 10px 0; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748b; font-weight: 500; }
-    #blogger-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; max-height: 240px; padding-right: 4px; }
-    #blogger-list::-webkit-scrollbar { width: 4px; }
-    #blogger-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    .blogger-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: 10px; background: #f8fafc; cursor: pointer; transition: all 0.2s; font-size: 14px; font-weight: 500; color: #475569; }
-    .blogger-item:hover { background: #f1f5f9; }
-    .blogger-item.selected { background: #eff6ff; color: #1d4ed8; }
-    .blogger-item input { display: none; }
-    .check-icon { font-size: 12px; font-weight: bold; }
+    .tag-btn:hover { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
+    .tag-btn.active { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; box-shadow: inset 0 0 0 1px #bfdbfe; }
 
     /* 右侧主图表区 */
-    .main-content { flex-grow: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-    .chart-header { padding: 16px 24px; border-radius: 16px; background: #fff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: none; display: flex; align-items: center; }
-    .info { color: #64748b; font-size: 14px; font-weight: 500; }
-    .legend-bull { color: #F6465D; font-weight: 700; }
-    .legend-bear { color: #0ECB81; font-weight: 700; }
-    #chart-container { flex-grow: 1; border-radius: 16px; background: #fff; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); position: relative; }
+    .main-content { flex-grow: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .chart-header { padding: 14px 20px; border-radius: 12px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; display: flex; align-items: center; }
+    .info { color: #64748b; font-size: 13.5px; font-weight: 500; }
+    #chart-container { flex-grow: 1; border-radius: 12px; background: #fff; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.03); position: relative; }
 
-    /* 弹窗样式保留原有优秀设计，微调阴影和圆角 */
-    #infoModal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(6px); align-items: center; justify-content: center; }
-    .modal-content { background-color: #ffffff; padding: 32px; border-radius: 20px; width: 600px; max-width: 92%; max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: none; }
+    /* 弹窗样式 */
+    #infoModal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
+    .modal-content { background-color: #ffffff; padding: 28px; border-radius: 16px; width: 560px; max-width: 92%; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.12); border: 1px solid #e2e8f0; }
     .modal-content::-webkit-scrollbar { width: 6px; }
+    .modal-content::-webkit-scrollbar-track { background: transparent; }
     .modal-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    .close-btn { color: #94a3b8; float: right; font-size: 28px; cursor: pointer; line-height: 24px; transition: color 0.2s; }
-    .close-btn:hover { color: #0f172a; }
-    .modal-date { font-size: 24px; font-weight: 800; margin: 0 0 24px 0; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px; color: #0f172a; display: flex; align-items: baseline; gap: 12px; }
-    .modal-subtitle { font-size: 14px; color: #64748b; font-weight: 500; }
-    .opinion-card { padding: 20px; margin-bottom: 16px; border-radius: 14px; background: #f8fafc; border: 1px solid #f1f5f9; border-left-width: 4px; transition: transform 0.2s; }
-    .opinion-card:hover { transform: translateX(2px); }
+    .close-btn { color: #94a3b8; float: right; font-size: 24px; cursor: pointer; line-height: 24px; transition: color 0.2s; }
+    .close-btn:hover { color: #334155; }
+    .modal-date { font-size: 22px; font-weight: 700; margin: 0 0 24px 0; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px; color: #0f172a; display: flex; align-items: baseline; gap: 10px; }
+    .modal-subtitle { font-size: 13px; color: #64748b; font-weight: 400; }
+    .opinion-card { padding: 20px; margin-bottom: 16px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-left-width: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+    .opinion-card:last-child { margin-bottom: 0; }
     .opinion-header { font-weight: bold; padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-    .border-bull { border-left-color: #F6465D; }
+    .border-bull { border-left-color: #10b981; }
     .border-neutral { border-left-color: #f59e0b; }
-    .border-bear { border-left-color: #0ECB81; }
+    .border-bear { border-left-color: #ef4444; }
     .post-item { margin-bottom: 16px; }
     .post-item:last-child { margin-bottom: 0; }
     .post-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
     .post-time { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; color: #64748b; }
-    .post-content { font-size: 14px; line-height: 1.6; color: #334155; text-align: justify; }
-    .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    .post-content { font-size: 13.5px; line-height: 1.65; color: #334155; text-align: justify; }
+    .badge { padding: 3px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
     .badge-horizon { background: #e2e8f0; color: #475569; }
-    .badge-bull { background: rgba(246, 70, 93, 0.1); color: #F6465D; }
-    .badge-bear { background: rgba(14, 203, 129, 0.1); color: #0ECB81; }
+    .badge-bull { background: #d1fae5; color: #059669; }
+    .badge-bear { background: #fee2e2; color: #dc2626; }
     .badge-neutral { background: #fef3c7; color: #d97706; }
+
+    /* Blogger 多选样式 */
+    .blogger-panel { flex-grow: 1; display: flex; flex-direction: column; max-height: 300px; }
+    .blogger-select-all { padding: 8px 0; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748b; }
+    .blogger-select-all input { width: auto; padding: 0; }
+    #blogger-list { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; max-height: 240px; }
+    .blogger-checkbox-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s; font-size: 13px; }
+    .blogger-checkbox-item:hover { background: #f1f5f9; border-color: #cbd5e1; }
+    .blogger-checkbox-item input { width: auto; padding: 0; margin: 0; cursor: pointer; }
+    .blogger-checkbox-item.selected { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
   </style>
 </head>
 <body>
@@ -95,24 +92,25 @@
 
     <div class="panel list-panel">
       <div class="search-title">⭐ 核心资产池</div>
-      <div id="quick-tags"></div>
+      <div id="quick-tags">
+      </div>
     </div>
 
     <div class="panel blogger-panel">
       <div class="search-title">👥 大V筛选</div>
       <div class="blogger-select-all">
         <input type="checkbox" id="selectAllBloggers" checked>
-        <label for="selectAllBloggers" style="cursor: pointer;">全选 / 反选全部追踪源</label>
+        <label for="selectAllBloggers">全选 / 反选</label>
       </div>
       <div id="blogger-list">
-        <div style="color: #94a3b8; font-size: 13px; text-align: center; padding: 30px 0;">请先选择标的加载数据</div>
+        <div style="color: #94a3b8; font-size: 13px; text-align: center; padding: 20px;">请先选择标的加载数据</div>
       </div>
     </div>
   </div>
 
   <div class="main-content">
     <div class="chart-header">
-      <span class="info">※ 顶部 K线：<span class="legend-bull">红涨</span><span class="legend-bear">绿跌</span> | 底部 共振强度：高度代表大V发声量，颜色代表情绪导向 (点击行情区间可查看策略详情)</span>
+      <span class="info">※ K线：红涨绿跌 | 圆点代表发声大V数量 (点击K线带有圆点的日期查看复盘详情)</span>
     </div>
     <div id="chart-container"></div>
   </div>
@@ -142,8 +140,16 @@
       let allBloggers = [];
       let selectedBloggers = [];
 
-      const coreAssets = ['SPY', 'QQQ', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'META', 'TSLA', 'BRK'];
+      // 💡 1. 扩充后的 10 大核心资产 (加入 BRK)
+      const coreAssets = [
+          'SPY', 'QQQ',
+          'AAPL', 'MSFT',
+          'GOOGL', 'AMZN',
+          'NVDA', 'META',
+          'TSLA', 'BRK'
+      ];
 
+      // 💡 2. 动态生成 2 列网格的快捷按钮
       coreAssets.forEach(symbol => {
           const span = document.createElement('span');
           span.className = 'tag-btn';
@@ -155,12 +161,18 @@
               updateActiveTag(symbol);
               loadData();
           });
+
           quickTagsContainer.appendChild(span);
       });
 
       function updateActiveTag(currentSymbol) {
-          document.querySelectorAll('.tag-btn').forEach(tag => {
-              tag.classList.toggle('active', tag.dataset.symbol === currentSymbol);
+          const tags = document.querySelectorAll('.tag-btn');
+          tags.forEach(tag => {
+              if (tag.dataset.symbol === currentSymbol) {
+                  tag.classList.add('active');
+              } else {
+                  tag.classList.remove('active');
+              }
           });
       }
 
@@ -173,34 +185,42 @@
                   selectedBloggers = [...allBloggers];
                   renderBloggerList();
               }
-          } catch (err) { console.error("[RsAlpha] 加载博主异常:", err); }
+          } catch (err) {
+              console.error("[RsAlpha] 加载博主列表异常:", err);
+          }
       }
 
       function renderBloggerList() {
           if (allBloggers.length === 0) {
-              bloggerListContainer.innerHTML = '<div style="color: #94a3b8; font-size: 13px; text-align: center; padding: 20px;">暂无数据</div>';
+              bloggerListContainer.innerHTML = '<div style="color: #94a3b8; font-size: 13px; text-align: center; padding: 20px;">暂无博主数据</div>';
               return;
           }
           bloggerListContainer.innerHTML = '';
           allBloggers.forEach(blogger => {
               const div = document.createElement('div');
-              const isSelected = selectedBloggers.includes(blogger);
-              div.className = 'blogger-item' + (isSelected ? ' selected' : '');
-
+              div.className = 'blogger-checkbox-item' + (selectedBloggers.includes(blogger) ? ' selected' : '');
               div.innerHTML = `
+                  <input type="checkbox" value="${blogger}" ${selectedBloggers.includes(blogger) ? 'checked' : ''}>
                   <span>${blogger}</span>
-                  <span class="check-icon" style="color: ${isSelected ? '#1d4ed8' : 'transparent'}">✔</span>
               `;
-
-              div.addEventListener('click', () => {
-                  if (selectedBloggers.includes(blogger)) {
-                      selectedBloggers = selectedBloggers.filter(b => b !== blogger);
+              const checkbox = div.querySelector('input');
+              checkbox.addEventListener('change', (e) => {
+                  if (e.target.checked) {
+                      if (!selectedBloggers.includes(blogger)) {
+                          selectedBloggers.push(blogger);
+                      }
                   } else {
-                      selectedBloggers.push(blogger);
+                      selectedBloggers = selectedBloggers.filter(b => b !== blogger);
                   }
+                  div.classList.toggle('selected', selectedBloggers.includes(blogger));
                   updateSelectAllState();
-                  renderBloggerList();
                   loadDataWithSelectedBloggers();
+              });
+              div.addEventListener('click', (e) => {
+                  if (e.target !== checkbox) {
+                      checkbox.checked = !checkbox.checked;
+                      checkbox.dispatchEvent(new Event('change'));
+                  }
               });
               bloggerListContainer.appendChild(div);
           });
@@ -211,7 +231,11 @@
       }
 
       selectAllCheckbox.addEventListener('change', (e) => {
-          selectedBloggers = e.target.checked ? [...allBloggers] : [];
+          if (e.target.checked) {
+              selectedBloggers = [...allBloggers];
+          } else {
+              selectedBloggers = [];
+          }
           renderBloggerList();
           loadDataWithSelectedBloggers();
       });
@@ -228,7 +252,11 @@
               const kJson = await kRes.json();
               if (kJson.code === 0 && Array.isArray(kJson.data)) {
                   candleSeries.setData(kJson.data);
-                  validTradingDays = kJson.data.map(item => typeof item.time === 'object' ? `${item.time.year}-${String(item.time.month).padStart(2, '0')}-${String(item.time.day).padStart(2, '0')}` : item.time);
+                  validTradingDays = kJson.data.map(item => {
+                      if (typeof item.time === 'string') return item.time;
+                      if (typeof item.time === 'object') return `${item.time.year}-${String(item.time.month).padStart(2, '0')}-${String(item.time.day).padStart(2, '0')}`;
+                      return item.time;
+                  });
               }
 
               let markersUrl = `/api/charts/markers?ticker=${ticker}`;
@@ -240,116 +268,141 @@
               const mJson = await mRes.json();
 
               if (mJson.code === 0 && Array.isArray(mJson.data)) {
+                  const markers = [];
+
                   mJson.data.forEach(item => {
                       const rawTimestamp = item.timestamp || '';
-                      const rawDateStr = rawTimestamp.substring(0, 10);
+                      const rawDateStr = rawTimestamp.length >= 10 ? rawTimestamp.substring(0, 10) : rawTimestamp;
+                      const timeStr = rawTimestamp.includes(' ') ? rawTimestamp.split(' ')[1] : '';
+
                       const alignDateStr = getClosestTradingDay(rawDateStr);
 
                       let sentiment = 1;
-                      if (item.sentiment_score !== undefined) sentiment = item.sentiment_score;
-                      else if (item.content) {
-                          const str = item.content.toLowerCase();
-                          if (str.includes('跌') || str.includes('空') || str.includes('风险')) sentiment = -1;
-                          else if (str.includes('中性') || str.includes('观望')) sentiment = 0;
+                      if (item.sentiment_score !== undefined) {
+                          sentiment = item.sentiment_score;
+                      } else if (item.content) {
+                          const contentStr = item.content.toLowerCase();
+                          if (contentStr.includes('看跌') || contentStr.includes('看空') || contentStr.includes('风险') || contentStr.includes('减仓')) {
+                              sentiment = -1;
+                          } else if (contentStr.includes('中性') || contentStr.includes('观望') || contentStr.includes('防守')) {
+                              sentiment = 0;
+                          } else if (contentStr.includes('看涨') || contentStr.includes('看多') || contentStr.includes('加仓')) {
+                              sentiment = 1;
+                          }
                       }
 
+                      const cleanUser = (item.user || item.blogger || '分析师').trim();
+                      const cleanHorizon = (item.horizon || '未定周期').trim();
+                      const cleanContent = (item.content || item.strategy || '').trim();
+
+                      const fingerprint = md5(`${cleanUser}|${cleanContent}`);
+
                       const newOpinion = {
-                          user: (item.user || item.blogger || '分析师').trim(),
-                          horizon: (item.horizon || '未定周期').trim(),
-                          content: (item.content || item.strategy || '').trim(),
+                          user: cleanUser,
+                          horizon: cleanHorizon,
+                          content: cleanContent,
                           sentiment: sentiment,
                           originalDate: rawDateStr,
-                          time: rawTimestamp.split(' ')[1] || '',
-                          fingerprint: md5(`${item.user}|${item.content}`)
+                          time: timeStr,
+                          fingerprint: fingerprint
                       };
 
                       if (!dailyOpinions[alignDateStr]) dailyOpinions[alignDateStr] = [];
-                      if (!dailyOpinions[alignDateStr].some(e => e.fingerprint === newOpinion.fingerprint)) {
-                          dailyOpinions[alignDateStr].push(newOpinion);
-                      }
+                      const isExactDuplicate = dailyOpinions[alignDateStr].some(existing => existing.fingerprint === fingerprint);
+                      if (!isExactDuplicate) dailyOpinions[alignDateStr].push(newOpinion);
                   });
 
-                  // 💡 构建副图指标：计算每日共振强度和情绪倾向
-                  const resonanceData = [];
                   Object.keys(dailyOpinions).forEach(date => {
                       const opinions = dailyOpinions[date];
-                      let sentimentScore = 0;
-                      opinions.forEach(op => sentimentScore += op.sentiment);
+                      const bloggerGroups = {};
+                      opinions.forEach(op => {
+                          if (!bloggerGroups[op.user]) bloggerGroups[op.user] = [];
+                          bloggerGroups[op.user].push(op);
+                      });
 
-                      // 根据综合得分决定柱子颜色
-                      let barColor = 'rgba(203, 213, 225, 0.6)'; // 中性偏灰
-                      if (sentimentScore > 0) barColor = 'rgba(246, 70, 93, 0.7)'; // 偏多 (红)
-                      else if (sentimentScore < 0) barColor = 'rgba(14, 203, 129, 0.7)'; // 偏空 (绿)
+                      Object.keys(bloggerGroups).forEach(bloggerName => {
+                          const posts = bloggerGroups[bloggerName];
+                          let aggregateSentiment = 1;
+                          if (posts.some(p => p.sentiment === -1)) aggregateSentiment = -1;
+                          else if (posts.some(p => p.sentiment === 0)) aggregateSentiment = 0;
 
-                      resonanceData.push({
-                          time: date,
-                          value: opinions.length, // 高度代表发声总数
-                          color: barColor
+                          let mColor = '#f59e0b';
+                          let mPos = 'inBar';
+                          if (aggregateSentiment === 1) { mColor = '#10b981'; mPos = 'belowBar'; }
+                          else if (aggregateSentiment === -1) { mColor = '#ef4444'; mPos = 'aboveBar'; }
+
+                          markers.push({ time: date, position: mPos, color: mColor, shape: 'circle' });
                       });
                   });
 
-                  resonanceData.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
-                  volumeSeries.setData(resonanceData);
+                  markers.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+                  candleSeries.setMarkers(markers);
               }
-          } catch (err) { console.error("[RsAlpha] 加载异常:", err); }
+          } catch (err) { console.error("[RsAlpha] 数据加载异常:", err); }
       }
 
-      // 💡 图表配置：更干净的背景、网格线和莫兰迪色K线
       const chart = LightweightCharts.createChart(container, {
-          layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#64748b' },
-          grid: { vertLines: { color: '#f8fafc' }, horzLines: { color: '#f8fafc' } },
-          timeScale: { borderColor: '#f1f5f9', timeVisible: true },
-          crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
+          layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#334155' },
+          grid: { vertLines: { color: '#f1f5f9' }, horzLines: { color: '#f1f5f9' } },
+          timeScale: { borderColor: '#e2e8f0', timeVisible: true },
       });
 
       const candleSeries = chart.addCandlestickSeries({
-          upColor: '#F6465D', downColor: '#0ECB81', borderVisible: false,
-          wickUpColor: '#F6465D', wickDownColor: '#0ECB81',
+          upColor: '#ef4444', downColor: '#10b981', borderVisible: false, wickUpColor: '#ef4444', wickDownColor: '#10b981',
       });
 
-      // 💡 新增副图：共振强度柱状图 (放置在底部 20% 区域)
-      const volumeSeries = chart.addHistogramSeries({
-          priceFormat: { type: 'volume' },
-          priceScaleId: '', // 无需独立刻度，叠加显示
-          scaleMargins: { top: 0.8, bottom: 0 },
-      });
-
+      // 💡 高级适配：自适应 Flex 布局的 ResizeObserver
       new ResizeObserver(entries => {
-          if (!entries.length) return;
-          const rect = entries[0].contentRect;
-          chart.applyOptions({ height: rect.height, width: rect.width });
+          if (entries.length === 0 || entries[0].target !== container) return;
+          const newRect = entries[0].contentRect;
+          chart.applyOptions({ height: newRect.height, width: newRect.width });
       }).observe(container);
 
       closeModal.onclick = () => modal.style.display = "none";
-      window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; }
+      window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; }
 
       function getClosestTradingDay(targetDateStr) {
-          if (!validTradingDays.length || validTradingDays.includes(targetDateStr)) return targetDateStr;
+          if (!validTradingDays.length) return targetDateStr;
+          if (validTradingDays.includes(targetDateStr)) return targetDateStr;
+          let closestDate = targetDateStr;
           for (let i = validTradingDays.length - 1; i >= 0; i--) {
-              if (validTradingDays[i] <= targetDateStr) return validTradingDays[i];
+              if (validTradingDays[i] <= targetDateStr) {
+                  closestDate = validTradingDays[i];
+                  break;
+              }
           }
-          return targetDateStr;
+          return closestDate;
       }
 
       async function loadData() {
           const ticker = tickerInput.value.toUpperCase().trim();
           if (!ticker) return;
+
           updateActiveTag(ticker);
+
           await loadBloggers(ticker);
           await loadDataWithSelectedBloggers();
       }
 
       chart.subscribeClick((param) => {
           if (!param || !param.time) return;
+
           let clickedDate = param.time;
-          if (typeof param.time === 'object') {
-              clickedDate = `${param.time.year}-${String(param.time.month).padStart(2, '0')}-${String(param.time.day).padStart(2, '0')}`;
+          if (typeof param.time === 'object' && param.time.year) {
+              const y = param.time.year;
+              const m = String(param.time.month).padStart(2, '0');
+              const d = String(param.time.day).padStart(2, '0');
+              clickedDate = `${y}-${m}-${d}`;
+          } else if (typeof param.time === 'number') {
+              const dateObj = new Date(param.time * 1000);
+              clickedDate = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
           } else if (typeof param.time === 'string') {
               clickedDate = param.time.substring(0, 10);
           }
 
-          if (dailyOpinions[clickedDate] && dailyOpinions[clickedDate].length > 0) {
+          if (dailyOpinions[clickedDate]) {
               const opinions = dailyOpinions[clickedDate];
+
               const bloggerGroups = {};
               opinions.forEach(op => {
                   if (!bloggerGroups[op.user]) bloggerGroups[op.user] = [];
@@ -361,45 +414,70 @@
                   let aggSent = 1;
                   if (posts.some(p => p.sentiment === -1)) aggSent = -1;
                   else if (posts.some(p => p.sentiment === 0)) aggSent = 0;
-                  return { blogger, sentiment: aggSent, posts };
+                  posts.sort((a, b) => (a.originalDate + a.time).localeCompare(b.originalDate + b.time));
+                  return { blogger: blogger, sentiment: aggSent, posts: posts };
               });
+
               groupedArray.sort((a, b) => b.sentiment - a.sentiment);
 
               document.getElementById('modalTitle').innerHTML =
                   `${clickedDate} 投研复盘 <span class="modal-subtitle">汇聚 ${groupedArray.length} 位大V · 共 ${opinions.length} 条策略</span>`;
 
               let htmlStr = '';
+
               groupedArray.forEach(group => {
                   let borderClass = 'border-neutral';
                   let sentimentTitle = '<span style="color:#d97706; font-size:14px; font-weight:600;">🟡 偏中性</span>';
-                  if (group.sentiment === 1) { borderClass = 'border-bull'; sentimentTitle = '<span style="color:#F6465D; font-size:14px; font-weight:600;">🔴 偏乐观</span>'; }
-                  else if (group.sentiment === -1) { borderClass = 'border-bear'; sentimentTitle = '<span style="color:#0ECB81; font-size:14px; font-weight:600;">🟢 提示防守</span>'; }
+
+                  if (group.sentiment === 1) {
+                      borderClass = 'border-bull';
+                      sentimentTitle = '<span style="color:#059669; font-size:14px; font-weight:600;">🟢 偏乐观</span>';
+                  } else if (group.sentiment === -1) {
+                      borderClass = 'border-bear';
+                      sentimentTitle = '<span style="color:#dc2626; font-size:14px; font-weight:600;">🔴 提示防守</span>';
+                  }
+
+                  htmlStr += `<div class="opinion-card ${borderClass}">`;
 
                   htmlStr += `
-                    <div class="opinion-card ${borderClass}">
-                        <div class="opinion-header">
-                            <span style="font-size:16px; color:#0f172a;">🎯 <b>${group.blogger}</b> <span style="font-size:13px; color:#94a3b8; font-weight:500;">(${group.posts.length} 策略)</span></span>
-                            ${sentimentTitle}
-                        </div>`;
+                    <div class="opinion-header">
+                        <span style="font-size:16px; color:#0f172a;">
+                            <span style="margin-right:4px;">🎯</span> <b>${group.blogger}</b>
+                            <span style="font-size:12px; color:#94a3b8; font-weight:400; margin-left:4px;">(${group.posts.length} 条更新)</span>
+                        </span>
+                        ${sentimentTitle}
+                    </div>
+                  `;
 
                   group.posts.forEach((op, index) => {
                       let badgeHtml = '<span class="badge badge-neutral">🟡 观望</span>';
-                      if (op.sentiment === 1) badgeHtml = '<span class="badge badge-bull">🔴 看多</span>';
-                      else if (op.sentiment === -1) badgeHtml = '<span class="badge badge-bear">🟢 看空/减仓</span>';
+                      if (op.sentiment === 1) badgeHtml = '<span class="badge badge-bull">🟢 看多</span>';
+                      else if (op.sentiment === -1) badgeHtml = '<span class="badge badge-bear">🔴 看空/减仓</span>';
+
+                      let displayTime = op.time;
+                      if (op.originalDate !== clickedDate) {
+                          displayTime = `${op.originalDate.substring(5)} ${op.time}`;
+                      }
 
                       htmlStr += `
                         <div class="post-item">
                             <div class="post-meta">
-                                <span class="post-time">🕒 ${op.originalDate !== clickedDate ? op.originalDate.substring(5) + ' ' : ''}${op.time}</span>
+                                <span class="post-time">🕒 ${displayTime}</span>
                                 <span class="badge badge-horizon">⏱ ${op.horizon}</span>
                                 ${badgeHtml}
                             </div>
                             <div class="post-content">${op.content}</div>
-                        </div>`;
-                      if (index < group.posts.length - 1) htmlStr += `<hr style="border: none; border-top: 1px dashed #e2e8f0; margin: 16px 0;">`;
+                        </div>
+                      `;
+
+                      if (index < group.posts.length - 1) {
+                          htmlStr += `<hr style="border: none; border-top: 1px dashed #e2e8f0; margin: 16px 0;">`;
+                      }
                   });
+
                   htmlStr += `</div>`;
               });
+
               document.getElementById('modalBody').innerHTML = htmlStr;
               modal.style.display = "flex";
           }
@@ -408,8 +486,10 @@
       document.getElementById('loadBtn').addEventListener('click', loadData);
       document.getElementById('tickerInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') loadData(); });
 
+      // 💡 3. 初始化：打开页面自动加载 SPY 数据，并高亮 SPY 标签
       tickerInput.value = 'SPY';
       loadData();
+
   });
 </script>
 </body>
