@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>博主观点复盘 - RsAlpha</title>
+  <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .header {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    .header-nav a {
+      color: #64748b;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .header-nav a:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .header-nav a.active {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+
+    .controls {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border: 1px solid #e2e8f0;
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .control-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .control-group input,
+    .control-group select {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .control-group input:focus,
+    .control-group select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background: #64748b;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border: 1px solid #e2e8f0;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .stat-value.positive { color: #10b981; }
+    .stat-value.negative { color: #ef4444; }
+
+    .stat-sub {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #e2e8f0;
+      font-weight: 600;
+      font-size: 15px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .blogger-list {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .blogger-item {
+      padding: 14px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .blogger-item:hover {
+      background: #f8fafc;
+    }
+
+    .blogger-item.active {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+    }
+
+    .blogger-item:last-child {
+      border-bottom: none;
+    }
+
+    .blogger-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .blogger-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .blogger-stat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .accuracy-badge {
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .accuracy-high {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .accuracy-medium {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .accuracy-low {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .records-list {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .record-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.2s;
+    }
+
+    .record-item:hover {
+      background: #f8fafc;
+    }
+
+    .record-item:last-child {
+      border-bottom: none;
+    }
+
+    .record-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .record-date {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .record-sentiment {
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .sentiment-bull {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .sentiment-bear {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .sentiment-neutral {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .record-verdict {
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .verdict-correct {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .verdict-wrong {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .record-ticker {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .record-strategy {
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .record-price-info {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+
+    .price-item {
+      text-align: center;
+    }
+
+    .price-label {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .price-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .price-change {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .price-change.positive { color: #10b981; }
+    .price-change.negative { color: #ef4444; }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: #94a3b8;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      color: #64748b;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 博主观点复盘系统</h1>
+  <nav class="header-nav">
+    <a href="index.html">K线复盘</a>
+    <a href="blogger_review.html" class="active">观点复盘</a>
+  </nav>
+</div>
+
+<div class="controls">
+  <div class="control-group">
+    <label>选择标的</label>
+    <select id="tickerSelect">
+      <option value="SPY">SPY</option>
+      <option value="QQQ">QQQ</option>
+      <option value="AAPL">AAPL</option>
+      <option value="MSFT">MSFT</option>
+      <option value="GOOGL">GOOGL</option>
+      <option value="AMZN">AMZN</option>
+      <option value="NVDA">NVDA</option>
+      <option value="META">META</option>
+      <option value="TSLA">TSLA</option>
+      <option value="BRK">BRK</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>开始日期</label>
+    <input type="date" id="startDate">
+  </div>
+  <div class="control-group">
+    <label>结束日期</label>
+    <input type="date" id="endDate">
+  </div>
+  <button class="btn" id="loadBtn">加载数据</button>
+  <button class="btn btn-secondary" id="resetBtn">重置</button>
+</div>
+
+<div class="stats-grid" id="statsGrid">
+  <div class="stat-card">
+    <div class="stat-label">总观点数</div>
+    <div class="stat-value" id="totalOpinions">-</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">整体正确率</div>
+    <div class="stat-value" id="accuracyRate">-</div>
+    <div class="stat-sub" id="accuracySub">-</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">平均涨跌幅</div>
+    <div class="stat-value" id="avgChange">-</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">最大涨幅</div>
+    <div class="stat-value positive" id="maxGain">-</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">最大跌幅</div>
+    <div class="stat-value negative" id="maxLoss">-</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">看涨准确率</div>
+    <div class="stat-value" id="bullishAccuracy">-</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">看跌准确率</div>
+    <div class="stat-value" id="bearishAccuracy">-</div>
+  </div>
+</div>
+
+<div class="content-grid">
+  <div class="panel">
+    <div class="panel-header">👥 博主排名</div>
+    <div class="blogger-list" id="bloggerList">
+      <div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <div>请先选择标的并加载数据</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">📝 观点详情</div>
+    <div class="records-list" id="recordsList">
+      <div class="empty-state">
+        <div class="empty-state-icon">📊</div>
+        <div>选择博主查看其观点复盘详情</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const tickerSelect = document.getElementById('tickerSelect');
+  const startDateInput = document.getElementById('startDate');
+  const endDateInput = document.getElementById('endDate');
+  const loadBtn = document.getElementById('loadBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const bloggerList = document.getElementById('bloggerList');
+  const recordsList = document.getElementById('recordsList');
+
+  let allBloggers = [];
+  let selectedBlogger = null;
+  let reviewData = null;
+
+  const today = new Date();
+  const threeMonthsAgo = new Date();
+  threeMonthsAgo.setMonth(today.getMonth() - 3);
+
+  endDateInput.value = today.toISOString().split('T')[0];
+  startDateInput.value = threeMonthsAgo.toISOString().split('T')[0];
+
+  async function loadData() {
+    const ticker = tickerSelect.value;
+    const startDate = startDateInput.value;
+    const endDate = endDateInput.value;
+
+    bloggerList.innerHTML = '<div class="loading"><div class="spinner"></div>加载中...</div>';
+    recordsList.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div>选择博主查看其观点复盘详情</div></div>';
+
+    try {
+      const [reviewRes, summaryRes] = await Promise.all([
+        fetch(`/api/charts/blogger-review?ticker=${ticker}&startDate=${startDate}&endDate=${endDate}`),
+        fetch(`/api/charts/blogger-review/by-blogger?ticker=${ticker}`)
+      ]);
+
+      const reviewJson = await reviewRes.json();
+      const summaryJson = await summaryRes.json();
+
+      if (reviewJson.code === 0) {
+        reviewData = reviewJson.data;
+        updateStats(reviewData.summary);
+      }
+
+      if (summaryJson.code === 0) {
+        allBloggers = summaryJson.data;
+        renderBloggerList(allBloggers);
+      }
+    } catch (err) {
+      console.error('加载数据失败:', err);
+      bloggerList.innerHTML = '<div class="empty-state"><div class="empty-state-icon">❌</div><div>数据加载失败</div></div>';
+    }
+  }
+
+  function updateStats(summary) {
+    document.getElementById('totalOpinions').textContent = summary.total || 0;
+
+    const accuracy = summary.accuracyRate || 0;
+    const accuracyEl = document.getElementById('accuracyRate');
+    accuracyEl.textContent = accuracy + '%';
+    accuracyEl.className = 'stat-value ' + (accuracy >= 60 ? 'positive' : accuracy < 40 ? 'negative' : '');
+
+    document.getElementById('accuracySub').textContent = `正确: ${summary.correctCount || 0} | 错误: ${summary.wrongCount || 0}`;
+
+    const avgChange = summary.avgPriceChange || 0;
+    const avgChangeEl = document.getElementById('avgChange');
+    avgChangeEl.textContent = (avgChange >= 0 ? '+' : '') + avgChange + '%';
+    avgChangeEl.className = 'stat-value ' + (avgChange >= 0 ? 'positive' : 'negative');
+
+    document.getElementById('maxGain').textContent = '+' + (summary.maxGain || 0) + '%';
+    document.getElementById('maxLoss').textContent = (summary.maxLoss || 0) + '%';
+
+    document.getElementById('bullishAccuracy').textContent = (summary.bullishAccuracy || 0) + '%';
+    document.getElementById('bearishAccuracy').textContent = (summary.bearishAccuracy || 0) + '%';
+  }
+
+  function renderBloggerList(bloggers) {
+    if (!bloggers || bloggers.length === 0) {
+      bloggerList.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👤</div><div>暂无博主数据</div></div>';
+      return;
+    }
+
+    bloggerList.innerHTML = bloggers.map((b, idx) => {
+      const accuracy = b.accuracyRate || 0;
+      let accuracyClass = 'accuracy-low';
+      if (accuracy >= 60) accuracyClass = 'accuracy-high';
+      else if (accuracy >= 40) accuracyClass = 'accuracy-medium';
+
+      return `
+        <div class="blogger-item" data-blogger="${b.blogger}">
+          <div class="blogger-name">
+            <span style="color: #64748b; font-weight: 400; margin-right: 8px;">#${idx + 1}</span>
+            ${b.blogger}
+          </div>
+          <div class="blogger-stats">
+            <span class="blogger-stat">
+              <span>观点:</span>
+              <strong>${b.totalOpinions || 0}</strong>
+            </span>
+            <span class="blogger-stat">
+              胜率: <span class="accuracy-badge ${accuracyClass}">${accuracy}%</span>
+            </span>
+            <span class="blogger-stat">
+              平均: <strong style="color: ${(b.avgPriceChange || 0) >= 0 ? '#10b981' : '#ef4444'}">${(b.avgPriceChange || 0) >= 0 ? '+' : ''}${b.avgPriceChange || 0}%</strong>
+            </span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    bloggerList.querySelectorAll('.blogger-item').forEach(item => {
+      item.addEventListener('click', () => {
+        bloggerList.querySelectorAll('.blogger-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        selectedBlogger = item.dataset.blogger;
+        renderRecords(selectedBlogger);
+      });
+    });
+  }
+
+  function renderRecords(blogger) {
+    if (!reviewData || !reviewData.records) {
+      recordsList.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div>暂无记录</div></div>';
+      return;
+    }
+
+    const records = reviewData.records.filter(r => r.blogger === blogger);
+
+    if (records.length === 0) {
+      recordsList.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div>该博主暂无有效记录</div></div>';
+      return;
+    }
+
+    recordsList.innerHTML = records.map(r => {
+      const sentimentClass = r.sentimentScore > 0 ? 'sentiment-bull' : r.sentimentScore < 0 ? 'sentiment-bear' : 'sentiment-neutral';
+      const sentimentText = r.sentimentScore > 0 ? '🟢 看涨' : r.sentimentScore < 0 ? '🔴 看跌' : '🟡 中性';
+
+      const verdictClass = r.verificationResult.includes('正确') ? 'verdict-correct' : 'verdict-wrong';
+
+      const priceChange = r.priceChange || 0;
+      const changeClass = priceChange >= 0 ? 'positive' : 'negative';
+
+      return `
+        <div class="record-item">
+          <div class="record-header">
+            <div>
+              <div class="record-date">📅 ${r.date}</div>
+              <div class="record-ticker">${r.ticker} · ${r.horizon || '未定周期'}</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <span class="record-sentiment ${sentimentClass}">${sentimentText}</span>
+              <span class="record-verdict ${verdictClass}">${r.verificationResult}</span>
+            </div>
+          </div>
+          <div class="record-strategy">${r.strategy || '无详细策略描述'}</div>
+          <div class="record-price-info">
+            <div class="price-item">
+              <div class="price-label">观点时股价</div>
+              <div class="price-value">$${r.opinionPrice}</div>
+            </div>
+            <div class="price-item">
+              <div class="price-label">目标日期</div>
+              <div class="price-value">${r.targetDate}</div>
+            </div>
+            <div class="price-item">
+              <div class="price-label">目标股价</div>
+              <div class="price-value">$${r.targetPrice}</div>
+            </div>
+            <div class="price-item">
+              <div class="price-label">涨跌幅</div>
+              <div class="price-value price-change ${changeClass}">${priceChange >= 0 ? '+' : ''}${priceChange}%</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  loadBtn.addEventListener('click', loadData);
+
+  resetBtn.addEventListener('click', () => {
+    tickerSelect.value = 'SPY';
+    const defaultStart = new Date();
+    defaultStart.setMonth(today.getMonth() - 3);
+    startDateInput.value = defaultStart.toISOString().split('T')[0];
+    endDateInput.value = today.toISOString().split('T')[0];
+    selectedBlogger = null;
+    loadData();
+  });
+
+  loadData();
+});
+</script>
+
+</body>
+</html>

@@ -574,3 +574,31 @@
 2026.04.30 21:40:47 INFO  time: compiled springboot-wxcloudrun in 4.64s
 4月 30, 2026 9:43:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 信息: Unsupported notification method: $/setTrace
+4月 30, 2026 9:48:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 9:53:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.30 21:56:20 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.30 21:56:23 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.30 21:56:23 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.30 21:56:23 INFO  time: compiled springboot-wxcloudrun in 3.49s
+2026.04.30 21:56:56 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.30 21:57:02 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.30 21:57:02 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.30 21:57:02 INFO  time: compiled springboot-wxcloudrun in 6.29s
+4月 30, 2026 9:58:01 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.30 21:58:44 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.30 21:58:48 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.30 21:58:48 WARN  javac exited with exit code 1
+2026.04.30 21:58:48 INFO  time: compiled springboot-wxcloudrun in 3.71s
+2026.04.30 21:58:59 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.04.30 21:59:03 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.04.30 21:59:03 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.04.30 21:59:03 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/ChartController.java
+2026.04.30 21:59:03 INFO  time: compiled springboot-wxcloudrun in 4.22s
+4月 30, 2026 10:03:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
