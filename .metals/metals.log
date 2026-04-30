@@ -565,3 +565,6 @@
 信息: Unsupported notification method: $/setTrace
 4月 30, 2026 9:33:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 信息: Unsupported notification method: $/setTrace
+4月 30, 2026 9:38:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.04.30 21:40:43 INFO  compiling springboot-wxcloudrun (1 java source)
