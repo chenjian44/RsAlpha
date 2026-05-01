@@ -20,6 +20,7 @@ import java.util.List;
 public class BloggerRawPostScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(BloggerRawPostScheduler.class);
+    private static final int BATCH_SIZE = 100;
 
     private final DcChannelMessageService dcChannelMessageService;
     private final BloggerRawSentimentService bloggerRawSentimentService;
@@ -39,50 +40,45 @@ public class BloggerRawPostScheduler {
         Timestamp beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
         Timestamp endTime = Timestamp.valueOf(LocalDateTime.now());
 
-        processRawPosts(beginTime, endTime);
+        processRawPostsInBatches(beginTime, endTime);
     }
 
     public void processRawPosts(Timestamp beginTime, Timestamp endTime) {
+        processRawPostsInBatches(beginTime, endTime);
+    }
+
+    private void processRawPostsInBatches(Timestamp beginTime, Timestamp endTime) {
         try {
-            log.info("Starting to process raw posts - begin: {}, end: {}", beginTime, endTime);
+            log.info("Starting to process raw posts in batches - begin: {}, end: {}", beginTime, endTime);
 
-            List<String> channelIds = dcChannelMessageService.getAllChannelIdsByTimeRange(beginTime, endTime);
-            log.info("Found {} distinct channelIds in time range", channelIds.size());
+            int offset = 0;
+            int totalProcessedMessages = 0;
+            int totalSavedSentiments = 0;
 
-            int totalProcessed = 0;
-            int totalSaved = 0;
-
-            for (String channelId : channelIds) {
-                log.info("Processing channelId: {}", channelId);
-                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByChannelIdAndTimeRange(channelId, beginTime, endTime);
-                log.info("Retrieved {} messages for channelId: {}", messages.size(), channelId);
+            while (true) {
+                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByTimeRangeWithLimit(beginTime, endTime, offset, BATCH_SIZE);
+                log.info("Retrieved {} messages at offset {}", messages.size(), offset);
 
                 if (messages.isEmpty()) {
-                    continue;
+                    break;
                 }
 
                 List<BloggerRawSentiment> sentiments = BloggerRawPostParser.parseRawPosts(messages);
                 log.info("Parsed {} sentiments from {} messages", sentiments.size(), messages.size());
 
-                for (BloggerRawSentiment sentiment : sentiments) {
-                    try {
-                        bloggerRawSentimentService.saveSentiment(sentiment);
-                        totalSaved++;
-                        log.info("Saved raw sentiment: {} - {} - {} - {}",
-                                sentiment.getDate(),
-                                sentiment.getTicker(),
-                                sentiment.getBlogger(),
-                                sentiment.getSentimentScore());
-                    } catch (Exception e) {
-                        log.error("Failed to save raw sentiment: {}", e.getMessage());
-                    }
-                }
+                int savedCount = saveSentiments(sentiments);
+                totalSavedSentiments += savedCount;
+                totalProcessedMessages += messages.size();
 
-                totalProcessed += messages.size();
+                offset += BATCH_SIZE;
+
+                if (messages.size() < BATCH_SIZE) {
+                    break;
+                }
             }
 
             log.info("Raw post processing completed. Total messages processed: {}, Total sentiments saved: {}",
-                    totalProcessed, totalSaved);
+                    totalProcessedMessages, totalSavedSentiments);
 
         } catch (Exception e) {
             log.error("Error in raw post processing: {}", e.getMessage(), e);
@@ -101,20 +97,7 @@ public class BloggerRawPostScheduler {
             List<BloggerRawSentiment> sentiments = BloggerRawPostParser.parseRawPosts(messages);
             log.info("Parsed {} sentiments from {} messages", sentiments.size(), messages.size());
 
-            int totalSaved = 0;
-            for (BloggerRawSentiment sentiment : sentiments) {
-                try {
-                    bloggerRawSentimentService.saveSentiment(sentiment);
-                    totalSaved++;
-                    log.info("Saved raw sentiment: {} - {} - {} - {}",
-                            sentiment.getDate(),
-                            sentiment.getTicker(),
-                            sentiment.getBlogger(),
-                            sentiment.getSentimentScore());
-                } catch (Exception e) {
-                    log.error("Failed to save raw sentiment: {}", e.getMessage());
-                }
-            }
+            int totalSaved = saveSentiments(sentiments);
 
             log.info("Direct raw post processing completed. Total sentiments saved: {}", totalSaved);
 
@@ -126,12 +109,30 @@ public class BloggerRawPostScheduler {
     public void processRawPostsForDate(LocalDate date) {
         Timestamp beginTime = Timestamp.valueOf(date.atStartOfDay());
         Timestamp endTime = Timestamp.valueOf(date.plusDays(1).atStartOfDay());
-        processRawPosts(beginTime, endTime);
+        processRawPostsInBatches(beginTime, endTime);
     }
 
     public void processRawPostsForDateRange(LocalDate startDate, LocalDate endDate) {
         Timestamp beginTime = Timestamp.valueOf(startDate.atStartOfDay());
         Timestamp endTime = Timestamp.valueOf(endDate.plusDays(1).atStartOfDay());
-        processRawPosts(beginTime, endTime);
+        processRawPostsInBatches(beginTime, endTime);
+    }
+
+    private int saveSentiments(List<BloggerRawSentiment> sentiments) {
+        int savedCount = 0;
+        for (BloggerRawSentiment sentiment : sentiments) {
+            try {
+                bloggerRawSentimentService.saveSentiment(sentiment);
+                savedCount++;
+                log.debug("Saved raw sentiment: {} - {} - {} - {}",
+                        sentiment.getDate(),
+                        sentiment.getTicker(),
+                        sentiment.getBlogger(),
+                        sentiment.getSentimentScore());
+            } catch (Exception e) {
+                log.error("Failed to save raw sentiment: {}", e.getMessage());
+            }
+        }
+        return savedCount;
     }
 }

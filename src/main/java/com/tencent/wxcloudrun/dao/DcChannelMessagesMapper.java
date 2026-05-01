@@ -25,4 +25,10 @@ public interface DcChannelMessagesMapper {
             @Param("endTime") Timestamp endTime);
 
     List<DcChannelMessage> selectLatestMessages(@Param("limit") int limit);
+
+    List<DcChannelMessage> selectByTimeRangeWithLimit(
+            @Param("beginTime") Timestamp beginTime,
+            @Param("endTime") Timestamp endTime,
+            @Param("offset") int offset,
+            @Param("limit") int limit);
 }

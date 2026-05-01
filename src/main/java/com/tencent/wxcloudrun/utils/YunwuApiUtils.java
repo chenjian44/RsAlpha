@@ -168,14 +168,22 @@ public class YunwuApiUtils {
         }
     }
 
+    private static final int IMAGE_CONNECT_TIMEOUT = 30000;
+    private static final int IMAGE_READ_TIMEOUT = 60000;
+    private static final int IMAGE_MAX_RETRIES = 3;
+
     public static byte[] downloadImageAsBytes(String imageUrl) {
+        return downloadImageAsBytesWithRetry(imageUrl, IMAGE_MAX_RETRIES);
+    }
+
+    private static byte[] downloadImageAsBytesWithRetry(String imageUrl, int remainingRetries) {
         try {
-            log.info("Downloading image from: {}", imageUrl);
+            log.info("Downloading image from: {}, remaining retries: {}", imageUrl, remainingRetries);
             URL url = new URL(imageUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-            conn.setConnectTimeout(10000);
-            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(IMAGE_CONNECT_TIMEOUT);
+            conn.setReadTimeout(IMAGE_READ_TIMEOUT);
             conn.setDoInput(true);
 
             int responseCode = conn.getResponseCode();
@@ -191,10 +199,25 @@ public class YunwuApiUtils {
                 }
             } else {
                 log.error("Failed to download image, response code: {}", responseCode);
+                if (remainingRetries > 0) {
+                    log.info("Retrying image download, remaining retries: {}", remainingRetries - 1);
+                    Thread.sleep(1000);
+                    return downloadImageAsBytesWithRetry(imageUrl, remainingRetries - 1);
+                }
                 return null;
             }
         } catch (Exception e) {
             log.error("Error downloading image from {}: {}", imageUrl, e.getMessage());
+            if (remainingRetries > 0) {
+                log.info("Retrying image download after exception, remaining retries: {}", remainingRetries - 1);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+                return downloadImageAsBytesWithRetry(imageUrl, remainingRetries - 1);
+            }
+            log.warn("Max retries reached for image: {}, giving up", imageUrl);
             return null;
         }
     }

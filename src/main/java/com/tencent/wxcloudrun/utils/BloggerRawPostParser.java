@@ -82,8 +82,6 @@ public class BloggerRawPostParser {
             StringBuilder textContent = new StringBuilder();
             textContent.append("时间: ").append(msg.getTimestamp()).append("\n");
             textContent.append("频道: ").append(msg.getChannelName()).append("\n");
-            textContent.append("频道ID: ").append(msg.getChannelId()).append("\n");
-            textContent.append("user: ").append(msg.getUser()).append("\n");
             textContent.append("内容: ").append(mwi.contentWithoutImages).append("\n");
             textPart.put("text", textContent.toString());
             contentParts.add(textPart);

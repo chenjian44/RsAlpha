@@ -41,4 +41,13 @@
         ORDER BY timestamp DESC
         LIMIT #{limit}
     </select>
+
+    <select id="selectByTimeRangeWithLimit" resultType="com.tencent.wxcloudrun.model.DcChannelMessage">
+        SELECT id, channelId, channelName, timestamp, user, content, contentMd5, createdAt, updatedAt
+        FROM DcChannelMessages
+        WHERE timestamp <![CDATA[ >= ]]> #{beginTime}
+        AND timestamp <![CDATA[ <= ]]> #{endTime}
+        ORDER BY timestamp ASC
+        LIMIT #{offset}, #{limit}
+    </select>
 </mapper>

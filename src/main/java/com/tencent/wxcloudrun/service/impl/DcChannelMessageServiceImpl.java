@@ -71,4 +71,9 @@ public class DcChannelMessageServiceImpl implements DcChannelMessageService {
     public List<DcChannelMessage> getLatestMessages(int limit) {
         return dcChannelMessagesMapper.selectLatestMessages(limit);
     }
+
+    @Override
+    public List<DcChannelMessage> getMessagesByTimeRangeWithLimit(Timestamp beginTime, Timestamp endTime, int offset, int limit) {
+        return dcChannelMessagesMapper.selectByTimeRangeWithLimit(beginTime, endTime, offset, limit);
+    }
 }
