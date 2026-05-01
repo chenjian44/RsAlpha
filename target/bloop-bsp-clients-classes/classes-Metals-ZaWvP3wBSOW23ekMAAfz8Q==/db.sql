@@ -43,3 +43,24 @@ CREATE TABLE IF NOT EXISTS `blogger_sentiments` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_date_ticker_blogger` (`date`, `ticker`, `blogger`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='大V情绪分析表';
+
+CREATE TABLE IF NOT EXISTS `blogger_raw_sentiments` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` varchar(10) NOT NULL COMMENT '日期，格式：YYYY-MM-DD',
+  `ticker` varchar(20) NOT NULL COMMENT '股票代码',
+  `blogger` varchar(100) NOT NULL COMMENT '大V名字',
+  `sentiment_score` int(11) NOT NULL COMMENT '情绪量化分值',
+  `horizon` varchar(100) DEFAULT NULL COMMENT '交易周期',
+  `strategy` text COMMENT '详细策略',
+  `raw_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '原始帖子内容',
+  `channel_id` varchar(255) DEFAULT NULL COMMENT '频道ID',
+  `channel_name` varchar(255) DEFAULT NULL COMMENT '频道名称',
+  `message_time` timestamp NULL DEFAULT NULL COMMENT '原始消息时间',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_date_ticker_blogger_raw` (`date`, `ticker`, `blogger`),
+  KEY `idx_blogger` (`blogger`),
+  KEY `idx_ticker` (`ticker`),
+  KEY `idx_date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='大V原始帖子情感分析表';

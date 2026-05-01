@@ -16,4 +16,6 @@ public interface DcChannelMessageService {
     List<String> getAllChannelIds();
 
     List<String> getAllChannelIdsByTimeRange(Timestamp beginTime, Timestamp endTime);
+
+    List<DcChannelMessage> getLatestMessages(int limit);
 }

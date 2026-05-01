@@ -35,7 +35,6 @@ public class DcChannelMessageServiceImpl implements DcChannelMessageService {
             message.setChannelName(request.getChannelName());
             message.setTimestamp(Timestamp.valueOf(request.getTimestamp()));
             message.setUser(request.getUser());
-            // 过滤 content 中的 emoji
             String filteredContent = EmojiUtil.filterEmoji(request.getContent());
             message.setContent(filteredContent);
             message.setContentMd5(MD5Utils.getMD5(filteredContent));
@@ -66,5 +65,10 @@ public class DcChannelMessageServiceImpl implements DcChannelMessageService {
     @Override
     public List<String> getAllChannelIdsByTimeRange(Timestamp beginTime, Timestamp endTime) {
         return dcChannelMessagesMapper.selectDistinctChannelIdsByTimeRange(beginTime, endTime);
+    }
+
+    @Override
+    public List<DcChannelMessage> getLatestMessages(int limit) {
+        return dcChannelMessagesMapper.selectLatestMessages(limit);
     }
 }

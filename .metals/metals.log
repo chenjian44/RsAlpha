@@ -602,3 +602,242 @@
 2026.04.30 21:59:03 INFO  time: compiled springboot-wxcloudrun in 4.22s
 4月 30, 2026 10:03:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:08:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:13:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:18:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:23:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:28:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:33:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:38:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:43:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:48:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:53:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 10:58:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 11:03:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 11:08:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 11:13:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 11:18:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 11:23:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 11:28:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+4月 30, 2026 11:33:00 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 7:31:51 上午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 2:43:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 2:48:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 2:53:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 2:58:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:03:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:08:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:13:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:18:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:23:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:28:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:33:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:38:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:43:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:48:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:53:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 3:58:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:03:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:08:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:13:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:18:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:23:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:28:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:33:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:38:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:43:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:48:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:53:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 4:58:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 5:03:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 5:08:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 5:13:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 5:18:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 5:23:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 5:28:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 7:48:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 7:53:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 7:58:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 8:03:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 8:08:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 8:13:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 8:18:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 8:23:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+5月 01, 2026 8:28:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.05.01 20:30:01 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:30:07 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:30:07 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:30:07 INFO  time: compiled springboot-wxcloudrun in 6.15s
+2026.05.01 20:30:17 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:30:18 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dao/BloggerRawSentimentMapper.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-30-18-072.md")
+2026.05.01 20:30:18 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dao/BloggerRawSentimentMapper.java]
+2026.05.01 20:30:18 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/dao/BloggerRawSentimentMapper.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-30-18-072.md")
+2026.05.01 20:30:19 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:30:19 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:30:19 INFO  time: compiled springboot-wxcloudrun in 2.3s
+2026.05.01 20:30:19 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:30:22 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:30:22 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:30:22 INFO  time: compiled springboot-wxcloudrun in 2.72s
+2026.05.01 20:30:56 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/BloggerRawSentimentService.java]
+2026.05.01 20:30:56 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/BloggerRawSentimentService.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-30-56-784.md")
+2026.05.01 20:30:56 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/BloggerRawSentimentService.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-30-56-784.md")
+2026.05.01 20:30:56 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:30:59 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:30:59 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:30:59 INFO  time: compiled springboot-wxcloudrun in 2.69s
+2026.05.01 20:30:59 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:31:02 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:31:02 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:31:02 INFO  time: compiled springboot-wxcloudrun in 2.88s
+2026.05.01 20:31:17 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerRawSentimentServiceImpl.java]
+2026.05.01 20:31:17 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerRawSentimentServiceImpl.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-31-17-944.md")
+2026.05.01 20:31:17 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/service/impl/BloggerRawSentimentServiceImpl.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-31-17-944.md")
+2026.05.01 20:31:17 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:31:20 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:31:20 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:31:20 INFO  time: compiled springboot-wxcloudrun in 2.51s
+2026.05.01 20:31:20 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:31:22 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:31:22 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:31:22 INFO  time: compiled springboot-wxcloudrun in 2.35s
+2026.05.01 20:32:54 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/BloggerRawPostParser.java]
+2026.05.01 20:32:54 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/BloggerRawPostParser.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-32-54-940.md")
+2026.05.01 20:32:54 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:32:58 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:32:58 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:32:58 INFO  time: compiled springboot-wxcloudrun in 3.81s
+2026.05.01 20:32:58 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:33:02 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:33:02 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:33:02 INFO  time: compiled springboot-wxcloudrun in 3.54s
+5月 01, 2026 8:33:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.05.01 20:33:21 INFO  Created report: Optional[file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/BloggerRawPostScheduler.java]
+2026.05.01 20:33:21 INFO  QDox parse error in file:///Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/scheduler/BloggerRawPostScheduler.java (full report at: "/Users/chenjian/Documents/RsAlpha/.metals/.reports/metals-full/2026-05-01/r_qdox-error_(springboot-wxcloudrun)_20-33-21-440.md")
+2026.05.01 20:33:21 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:33:24 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:33:24 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:33:24 INFO  time: compiled springboot-wxcloudrun in 3.38s
+2026.05.01 20:33:24 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:33:27 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:33:27 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:33:27 INFO  time: compiled springboot-wxcloudrun in 2.89s
+5月 01, 2026 8:38:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.05.01 20:42:57 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:43:00 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:43:00 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:43:00 INFO  time: compiled springboot-wxcloudrun in 2.74s
+2026.05.01 20:43:00 INFO  compiling springboot-wxcloudrun (4 java sources)
+2026.05.01 20:43:03 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:43:03 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:43:03 INFO  time: compiled springboot-wxcloudrun in 2.63s
+2026.05.01 20:43:03 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:43:06 WARN  Unexpected javac output: 警告: [options] 未与 -source 8 一起设置引导类路径
+1 个警告.
+2026.05.01 20:43:06 WARN  javac: [options] 未与 -source 8 一起设置引导类路径
+2026.05.01 20:43:06 INFO  time: compiled springboot-wxcloudrun in 3s
+5月 01, 2026 8:43:11 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace
+2026.05.01 20:43:51 INFO  compiling springboot-wxcloudrun (1 java source)
+2026.05.01 20:43:56 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/BloggerRawPostParser.java
+2026.05.01 20:43:56 WARN  javac exited with exit code 1
+2026.05.01 20:43:56 INFO  time: compiled springboot-wxcloudrun in 4.78s
+2026.05.01 20:46:00 INFO  compiling springboot-wxcloudrun (2 java sources)
+2026.05.01 20:46:03 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.05.01 20:46:03 WARN  javac exited with exit code 1
+2026.05.01 20:46:03 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/utils/BloggerRawPostParser.java
+2026.05.01 20:46:03 INFO  time: compiled springboot-wxcloudrun in 3s
+2026.05.01 20:46:15 INFO  compiling springboot-wxcloudrun (3 java sources)
+2026.05.01 20:46:19 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.05.01 20:46:19 WARN  javac exited with exit code 1
+2026.05.01 20:46:19 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.05.01 20:46:19 INFO  time: compiled springboot-wxcloudrun in 3.59s
+2026.05.01 20:46:34 INFO  compiling springboot-wxcloudrun (4 java sources)
+2026.05.01 20:46:36 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.05.01 20:46:36 WARN  javac exited with exit code 1
+2026.05.01 20:46:36 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.05.01 20:46:36 INFO  time: compiled springboot-wxcloudrun in 2.56s
+2026.05.01 20:46:43 INFO  compiling springboot-wxcloudrun (5 java sources)
+2026.05.01 20:46:46 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.05.01 20:46:46 WARN  javac exited with exit code 1
+2026.05.01 20:46:46 WARN  Invalid text document uri received from build server: file:///Users/chenjian/Library/Caches/ScalaCli/bloop/%E8%AD%A6%E5%91%8A:%5Boptions%5D%20%E6%9C%AA%E4%B8%8E%20-source%208%20%E4%B8%80%E8%B5%B7%E8%AE%BE%E7%BD%AE%E5%BC%95%E5%AF%BC%E7%B1%BB%E8%B7%AF%E5%BE%84%0A/Users/chenjian/Documents/RsAlpha/src/main/java/com/tencent/wxcloudrun/controller/DcChannelMessageController.java
+2026.05.01 20:46:46 INFO  time: compiled springboot-wxcloudrun in 2.78s
+5月 01, 2026 8:48:12 下午 org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+信息: Unsupported notification method: $/setTrace

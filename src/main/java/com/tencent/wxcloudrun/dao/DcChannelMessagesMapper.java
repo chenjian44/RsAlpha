@@ -23,4 +23,6 @@ public interface DcChannelMessagesMapper {
     List<String> selectDistinctChannelIdsByTimeRange(
             @Param("beginTime") Timestamp beginTime,
             @Param("endTime") Timestamp endTime);
+
+    List<DcChannelMessage> selectLatestMessages(@Param("limit") int limit);
 }

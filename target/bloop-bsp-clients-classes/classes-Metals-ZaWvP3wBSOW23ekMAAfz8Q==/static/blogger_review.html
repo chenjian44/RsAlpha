@@ -385,6 +385,39 @@
     .price-change.positive { color: #10b981; }
     .price-change.negative { color: #ef4444; }
 
+    .quick-tags {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .tag-btn {
+      padding: 10px 0;
+      text-align: center;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #475569;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s ease;
+    }
+
+    .tag-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+
+    .tag-btn.active {
+      background: #eff6ff;
+      color: #2563eb;
+      border-color: #bfdbfe;
+      box-shadow: inset 0 0 0 1px #bfdbfe;
+    }
+
     .empty-state {
       padding: 60px 20px;
       text-align: center;
@@ -430,20 +463,10 @@
 </div>
 
 <div class="controls">
-  <div class="control-group">
-    <label>选择标的</label>
-    <select id="tickerSelect">
-      <option value="SPY">SPY</option>
-      <option value="QQQ">QQQ</option>
-      <option value="AAPL">AAPL</option>
-      <option value="MSFT">MSFT</option>
-      <option value="GOOGL">GOOGL</option>
-      <option value="AMZN">AMZN</option>
-      <option value="NVDA">NVDA</option>
-      <option value="META">META</option>
-      <option value="TSLA">TSLA</option>
-      <option value="BRK">BRK</option>
-    </select>
+  <div class="control-group" style="flex: 1; min-width: 200px;">
+    <label>🔍 标的检索</label>
+    <input type="text" id="tickerInput" class="search-input" placeholder="输入代码 (如 SPY)" value="SPY">
+    <div id="quick-tags" class="quick-tags"></div>
   </div>
   <div class="control-group">
     <label>开始日期</label>
@@ -513,13 +536,16 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const tickerSelect = document.getElementById('tickerSelect');
+  const tickerInput = document.getElementById('tickerInput');
+  const quickTagsContainer = document.getElementById('quick-tags');
   const startDateInput = document.getElementById('startDate');
   const endDateInput = document.getElementById('endDate');
   const loadBtn = document.getElementById('loadBtn');
   const resetBtn = document.getElementById('resetBtn');
   const bloggerList = document.getElementById('bloggerList');
   const recordsList = document.getElementById('recordsList');
+
+  const coreAssets = ['SPY', 'QQQ', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'META', 'TSLA', 'BRK'];
 
   let allBloggers = [];
   let selectedBlogger = null;
@@ -532,8 +558,38 @@ document.addEventListener('DOMContentLoaded', () => {
   endDateInput.value = today.toISOString().split('T')[0];
   startDateInput.value = threeMonthsAgo.toISOString().split('T')[0];
 
+  coreAssets.forEach(symbol => {
+    const span = document.createElement('span');
+    span.className = 'tag-btn';
+    span.innerText = symbol;
+    span.dataset.symbol = symbol;
+
+    span.addEventListener('click', () => {
+      tickerInput.value = symbol;
+      updateActiveTag(symbol);
+      loadData();
+    });
+
+    quickTagsContainer.appendChild(span);
+  });
+
+  function updateActiveTag(currentSymbol) {
+    const tags = document.querySelectorAll('.tag-btn');
+    tags.forEach(tag => {
+      if (tag.dataset.symbol === currentSymbol) {
+        tag.classList.add('active');
+      } else {
+        tag.classList.remove('active');
+      }
+    });
+  }
+
   async function loadData() {
-    const ticker = tickerSelect.value;
+    const ticker = tickerInput.value.toUpperCase().trim();
+    if (!ticker) return;
+
+    updateActiveTag(ticker);
+
     const startDate = startDateInput.value;
     const endDate = endDateInput.value;
 
@@ -691,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBtn.addEventListener('click', loadData);
 
   resetBtn.addEventListener('click', () => {
-    tickerSelect.value = 'SPY';
+    tickerInput.value = 'SPY';
     const defaultStart = new Date();
     defaultStart.setMonth(today.getMonth() - 3);
     startDateInput.value = defaultStart.toISOString().split('T')[0];
@@ -700,6 +756,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData();
   });
 
+  tickerInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      loadData();
+    }
+  });
+
+  updateActiveTag('SPY');
   loadData();
 });
 </script>

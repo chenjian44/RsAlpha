@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tencent.wxcloudrun.dao.BloggerRawSentimentMapper">
+
+    <insert id="insert" parameterType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        INSERT INTO blogger_raw_sentiments (date, ticker, blogger, sentiment_score, horizon, strategy, raw_content, channel_id, channel_name, message_time, created_at, updated_at)
+        VALUES (#{date}, #{ticker}, #{blogger}, #{sentimentScore}, #{horizon}, #{strategy}, #{rawContent}, #{channelId}, #{channelName}, #{messageTime}, NOW(), NOW())
+        ON DUPLICATE KEY UPDATE
+        sentiment_score = #{sentimentScore},
+        horizon = #{horizon},
+        strategy = #{strategy},
+        raw_content = #{rawContent},
+        updated_at = NOW()
+    </insert>
+
+    <select id="getByDate" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_raw_sentiments
+        WHERE date = #{date}
+        ORDER BY ticker, blogger
+    </select>
+
+    <select id="getByTickerAndDate" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_raw_sentiments
+        WHERE ticker = #{ticker}
+        AND date = #{date}
+        ORDER BY blogger
+    </select>
+
+    <select id="getByTickerAndTimeRange" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_raw_sentiments
+        WHERE ticker = #{ticker}
+        AND date <![CDATA[ >= ]]> #{startTime}
+        AND date <![CDATA[ <= ]]> #{endTime}
+        ORDER BY date DESC, blogger
+    </select>
+
+    <select id="getByTickerAndTimeRangeWithBloggers" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_raw_sentiments
+        WHERE ticker = #{ticker}
+        AND date <![CDATA[ >= ]]> #{startTime}
+        AND date <![CDATA[ <= ]]> #{endTime}
+        <if test="bloggers != null and bloggers.size() > 0">
+            AND blogger IN
+            <foreach item="blogger" collection="bloggers" open="(" separator="," close=")">
+                #{blogger}
+            </foreach>
+        </if>
+        ORDER BY date DESC, blogger
+    </select>
+
+    <select id="getByDateAndTickerAndBlogger" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_raw_sentiments
+        WHERE date = #{date}
+        AND ticker = #{ticker}
+        AND blogger = #{blogger}
+    </select>
+
+    <select id="getDistinctBloggersByTicker" resultType="String">
+        SELECT DISTINCT blogger
+        FROM blogger_raw_sentiments
+        WHERE ticker = #{ticker}
+        ORDER BY blogger
+    </select>
+
+    <update id="update" parameterType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        UPDATE blogger_raw_sentiments
+        SET sentiment_score = #{sentimentScore},
+            horizon = #{horizon},
+            strategy = #{strategy},
+            raw_content = #{rawContent},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <select id="getByBloggerAndDateRange" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_raw_sentiments
+        WHERE blogger = #{blogger}
+        AND date <![CDATA[ >= ]]> #{startTime}
+        AND date <![CDATA[ <= ]]> #{endTime}
+        ORDER BY date DESC
+    </select>
+
+    <select id="countByDateAndBlogger" resultType="int">
+        SELECT COUNT(*)
+        FROM blogger_raw_sentiments
+        WHERE date = #{date}
+        AND blogger = #{blogger}
+    </select>
+
+</mapper>

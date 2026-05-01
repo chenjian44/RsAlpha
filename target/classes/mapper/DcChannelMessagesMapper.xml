@@ -34,4 +34,11 @@
         AND timestamp <![CDATA[ <= ]]> #{endTime}
         ORDER BY channelId ASC
     </select>
+
+    <select id="selectLatestMessages" resultType="com.tencent.wxcloudrun.model.DcChannelMessage">
+        SELECT id, channelId, channelName, timestamp, user, content, contentMd5, createdAt, updatedAt
+        FROM DcChannelMessages
+        ORDER BY timestamp DESC
+        LIMIT #{limit}
+    </select>
 </mapper>

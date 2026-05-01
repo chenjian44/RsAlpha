@@ -3,6 +3,8 @@ package com.tencent.wxcloudrun.controller;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.DcChannelMessageBatchRequest;
 import com.tencent.wxcloudrun.dto.DcChannelMessageRequest;
+import com.tencent.wxcloudrun.model.DcChannelMessage;
+import com.tencent.wxcloudrun.scheduler.BloggerRawPostScheduler;
 import com.tencent.wxcloudrun.scheduler.DcChannelMessageScheduler;
 import com.tencent.wxcloudrun.service.DcChannelMessageService;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 public class DcChannelMessageController {
@@ -24,12 +27,15 @@ public class DcChannelMessageController {
     private static final Logger log = LoggerFactory.getLogger(DcChannelMessageController.class);
     private final DcChannelMessageService dcChannelMessageService;
     private final DcChannelMessageScheduler dcChannelMessageScheduler;
+    private final BloggerRawPostScheduler bloggerRawPostScheduler;
 
     @Autowired
     public DcChannelMessageController(DcChannelMessageService dcChannelMessageService,
-                                      DcChannelMessageScheduler dcChannelMessageScheduler) {
+                                      DcChannelMessageScheduler dcChannelMessageScheduler,
+                                      BloggerRawPostScheduler bloggerRawPostScheduler) {
         this.dcChannelMessageService = dcChannelMessageService;
         this.dcChannelMessageScheduler = dcChannelMessageScheduler;
+        this.bloggerRawPostScheduler = bloggerRawPostScheduler;
     }
 
     @PostMapping("/api/dc-channel-message")
@@ -95,8 +101,6 @@ public class DcChannelMessageController {
 
                 log.info("Processing date: {}, time range: {} to {}", date, beginTime, endTime);
 
-
-
                 try {
                     dcChannelMessageScheduler.processChannelMessages(beginTime, endTime);
                     successCount++;
@@ -110,6 +114,49 @@ public class DcChannelMessageController {
             return ApiResponse.ok("回跑完成: 成功 {0} 天, 失败 {1} 天".replace("{0}", String.valueOf(successCount)).replace("{1}", String.valueOf(failCount)));
         } catch (Exception e) {
             log.error("Failed to trigger processChannelMessages task: {}", e.getMessage(), e);
+            return ApiResponse.error("触发任务失败: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/api/dc-channel-message/trigger-raw-post")
+    public ApiResponse triggerRawPostProcessing(@RequestParam(required = false) Integer limit) {
+        try {
+            int queryLimit = limit != null && limit > 0 ? limit : 100;
+            log.info("Manually triggering raw post processing, limit: {}", queryLimit);
+
+            List<DcChannelMessage> latestMessages = dcChannelMessageService.getLatestMessages(queryLimit);
+            log.info("Retrieved {} messages from database", latestMessages.size());
+
+            if (latestMessages.isEmpty()) {
+                return ApiResponse.ok("没有查询到消息");
+            }
+
+            bloggerRawPostScheduler.processRawMessages(latestMessages);
+
+            log.info("Raw post processing triggered successfully for {} messages", latestMessages.size());
+            return ApiResponse.ok("原始帖子解析任务触发成功，共处理 {0} 条消息".replace("{0}", String.valueOf(latestMessages.size())));
+        } catch (Exception e) {
+            log.error("Failed to trigger raw post processing: {}", e.getMessage(), e);
+            return ApiResponse.error("触发任务失败: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/api/dc-channel-message/trigger-raw-post-by-date")
+    public ApiResponse triggerRawPostProcessingByDate(
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
+        try {
+            log.info("Manually triggering raw post processing by date, from {} to {}", startDate, endDate);
+
+            LocalDate start = LocalDate.parse(startDate);
+            LocalDate end = LocalDate.parse(endDate);
+
+            bloggerRawPostScheduler.processRawPostsForDateRange(start, end);
+
+            log.info("Raw post processing by date triggered successfully");
+            return ApiResponse.ok("原始帖子解析任务触发成功，日期范围: {0} 至 {1}".replace("{0}", startDate).replace("{1}", endDate));
+        } catch (Exception e) {
+            log.error("Failed to trigger raw post processing by date: {}", e.getMessage(), e);
             return ApiResponse.error("触发任务失败: " + e.getMessage());
         }
     }

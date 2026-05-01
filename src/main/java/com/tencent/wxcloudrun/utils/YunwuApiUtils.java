@@ -8,11 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class YunwuApiUtils {
 
@@ -94,6 +98,107 @@ public class YunwuApiUtils {
         }
     }
 
+    public static JSONObject callYunwuApiWithMultimodalContent(JSONArray contentParts, String model) {
+        try {
+            String apiKey = YunwuConfig.getApiKey();
+            String apiUrl = YunwuConfig.getApiUrl();
+            double temperature = YunwuConfig.getTemperature();
+
+            String maskedApiKey = apiKey.substring(0, 5) + "****" + apiKey.substring(apiKey.length() - 5);
+            log.info("API Key: {}", maskedApiKey);
+            log.info("API URL: {}", apiUrl);
+            log.info("Model: {} (multimodal)", model);
+
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("model", model);
+
+            JSONArray messages = new JSONArray();
+
+            JSONObject userMessageObj = new JSONObject();
+            userMessageObj.put("role", "user");
+            userMessageObj.put("content", contentParts);
+            messages.add(userMessageObj);
+
+            requestBody.put("messages", messages);
+            requestBody.put("temperature", temperature);
+
+            String requestBodyStr = requestBody.toJSONString();
+            log.info("Request body (multimodal): {}", requestBodyStr);
+
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Authorization", "Bearer " + apiKey);
+            conn.setRequestProperty("Content-Length", String.valueOf(requestBodyStr.getBytes(StandardCharsets.UTF_8).length));
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            conn.setInstanceFollowRedirects(false);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(requestBodyStr.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            int responseCode = conn.getResponseCode();
+            log.info("Response code: {}", responseCode);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode == 200 ? conn.getInputStream() : conn.getErrorStream(), StandardCharsets.UTF_8));
+
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            conn.disconnect();
+
+            String responseStr = response.toString();
+            log.info("Response: {}", responseStr);
+
+            return JSON.parseObject(responseStr);
+        } catch (Exception e) {
+            log.error("Error calling Yunwu API (multimodal): {}", e.getMessage(), e);
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("error", e.getMessage());
+            return errorResponse;
+        }
+    }
+
+    public static byte[] downloadImageAsBytes(String imageUrl) {
+        try {
+            log.info("Downloading image from: {}", imageUrl);
+            URL url = new URL(imageUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+            conn.setDoInput(true);
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                    byte[] buffer = new byte[8192];
+                    int bytesRead;
+                    while ((bytesRead = conn.getInputStream().read(buffer)) != -1) {
+                        baos.write(buffer, 0, bytesRead);
+                    }
+                    log.info("Downloaded {} bytes from image URL", baos.size());
+                    return baos.toByteArray();
+                }
+            } else {
+                log.error("Failed to download image, response code: {}", responseCode);
+                return null;
+            }
+        } catch (Exception e) {
+            log.error("Error downloading image from {}: {}", imageUrl, e.getMessage());
+            return null;
+        }
+    }
+
     public static String getAssistantResponse(JSONObject response) {
         if (response.containsKey("choices")) {
             JSONArray choices = response.getJSONArray("choices");
@@ -111,5 +216,21 @@ public class YunwuApiUtils {
             log.error("Yunwu API error: {}", response.getString("error"));
         }
         return "";
+    }
+
+    public static final Pattern IMAGE_URL_PATTERN = Pattern.compile(
+            "https?://[^\\s\\[\\]\\\"'<>]+(?:\\.jpg|\\.jpeg|\\.png|\\.gif|\\.webp|\\.svg)",
+            Pattern.CASE_INSENSITIVE
+    );
+
+    public static String extractImageUrls(String content) {
+        if (content == null || content.isEmpty()) {
+            return null;
+        }
+        Matcher matcher = IMAGE_URL_PATTERN.matcher(content);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
     }
 }
