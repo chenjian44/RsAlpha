@@ -21,6 +21,7 @@ public class BloggerRawPostParser {
     private static final Logger log = LoggerFactory.getLogger(BloggerRawPostParser.class);
     private static final int MAX_RETRIES = 3;
     private static final String SPECIFIED_MODEL = "gemini-3.1-pro-preview";
+    private static final boolean LLM_ENABLED = false;
 
     private static String promptTemplate = null;
 
@@ -59,12 +60,41 @@ public class BloggerRawPostParser {
         }
 
         boolean hasAnyImages = messagesWithImages.stream().anyMatch(m -> m.imageUrls != null && !m.imageUrls.isEmpty());
-        if (hasAnyImages) {
-            log.info("Found messages with images, using multimodal parsing");
-            return parseWithMultimodal(messagesWithImages);
+
+        if (LLM_ENABLED) {
+            if (hasAnyImages) {
+                log.info("Found messages with images, using multimodal parsing");
+                return parseWithMultimodal(messagesWithImages);
+            } else {
+                log.info("No images found, using text-only parsing");
+                return parseTextOnly(messagesWithImages);
+            }
         } else {
-            log.info("No images found, using text-only parsing");
-            return parseTextOnly(messagesWithImages);
+            log.info("LLM is disabled. Logging input for debugging only.");
+            logMessagesForDebug(messagesWithImages);
+            return allSentiments;
+        }
+    }
+
+    private static void logMessagesForDebug(List<MessageWithImages> messagesWithImages) {
+        for (MessageWithImages mwi : messagesWithImages) {
+            DcChannelMessage msg = mwi.message;
+            StringBuilder sb = new StringBuilder();
+            sb.append("=== DEBUG MESSAGE ===\n");
+            sb.append("时间: ").append(msg.getTimestamp()).append("\n");
+            sb.append("频道: ").append(msg.getChannelName()).append("\n");
+            sb.append("频道ID: ").append(msg.getChannelId()).append("\n");
+            sb.append("用户: ").append(msg.getUser()).append("\n");
+            sb.append("内容: ").append(mwi.contentWithoutImages).append("\n");
+            if (mwi.imageUrls != null && !mwi.imageUrls.isEmpty()) {
+                sb.append("图片数量: ").append(mwi.imageUrls.size()).append("\n");
+                for (String url : mwi.imageUrls) {
+                    sb.append("  - ").append(url).append("\n");
+                }
+            }
+            sb.append("====================");
+
+            log.info(sb.toString());
         }
     }
 
@@ -190,11 +220,8 @@ public class BloggerRawPostParser {
         StringBuilder postsContent = new StringBuilder();
         for (MessageWithImages mwi : messagesWithImages) {
             DcChannelMessage msg = mwi.message;
-            postsContent.append("---\n");
             postsContent.append("时间: ").append(msg.getTimestamp()).append("\n");
             postsContent.append("频道: ").append(msg.getChannelName()).append("\n");
-            postsContent.append("频道ID: ").append(msg.getChannelId()).append("\n");
-            postsContent.append("user: ").append(msg.getUser()).append("\n");
             postsContent.append("内容: ").append(mwi.contentWithoutImages).append("\n");
         }
 
