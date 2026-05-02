@@ -14,13 +14,14 @@ import org.springframework.stereotype.Component;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class BloggerRawPostScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(BloggerRawPostScheduler.class);
-    private static final int BATCH_SIZE = 100;
+    private static final int FETCH_BATCH_SIZE = 500;
 
     private final DcChannelMessageService dcChannelMessageService;
     private final BloggerRawSentimentService bloggerRawSentimentService;
@@ -40,45 +41,48 @@ public class BloggerRawPostScheduler {
         Timestamp beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
         Timestamp endTime = Timestamp.valueOf(LocalDateTime.now());
 
-        processRawPostsInBatches(beginTime, endTime);
+        processRawPosts(beginTime, endTime);
     }
 
     public void processRawPosts(Timestamp beginTime, Timestamp endTime) {
-        processRawPostsInBatches(beginTime, endTime);
-    }
-
-    private void processRawPostsInBatches(Timestamp beginTime, Timestamp endTime) {
         try {
-            log.info("Starting to process raw posts in batches - begin: {}, end: {}", beginTime, endTime);
+            log.info("Starting to fetch all raw messages - begin: {}, end: {}", beginTime, endTime);
 
+            List<DcChannelMessage> allMessages = new ArrayList<>();
             int offset = 0;
-            int totalProcessedMessages = 0;
-            int totalSavedSentiments = 0;
 
             while (true) {
-                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByTimeRangeWithLimit(beginTime, endTime, offset, BATCH_SIZE);
-                log.info("Retrieved {} messages at offset {}", messages.size(), offset);
+                List<DcChannelMessage> messages = dcChannelMessageService.getMessagesByTimeRangeWithLimit(
+                        beginTime, endTime, offset, FETCH_BATCH_SIZE);
+                log.info("Fetched {} messages at offset {}, total so far: {}",
+                        messages.size(), offset, allMessages.size());
 
                 if (messages.isEmpty()) {
                     break;
                 }
 
-                List<BloggerRawSentiment> sentiments = BloggerRawPostParser.parseRawPosts(messages);
-                log.info("Parsed {} sentiments from {} messages", sentiments.size(), messages.size());
+                allMessages.addAll(messages);
+                offset += FETCH_BATCH_SIZE;
 
-                int savedCount = saveSentiments(sentiments);
-                totalSavedSentiments += savedCount;
-                totalProcessedMessages += messages.size();
-
-                offset += BATCH_SIZE;
-
-                if (messages.size() < BATCH_SIZE) {
+                if (messages.size() < FETCH_BATCH_SIZE) {
                     break;
                 }
             }
 
-            log.info("Raw post processing completed. Total messages processed: {}, Total sentiments saved: {}",
-                    totalProcessedMessages, totalSavedSentiments);
+            log.info("Finished fetching all messages, total count: {}", allMessages.size());
+
+            if (allMessages.isEmpty()) {
+                log.info("No messages found in the time range");
+                return;
+            }
+
+            log.info("Calling LLM once to parse {} messages", allMessages.size());
+            List<BloggerRawSentiment> sentiments = BloggerRawPostParser.parseRawPosts(allMessages);
+            log.info("LLM parsing completed, parsed {} sentiments", sentiments.size());
+
+            int savedCount = saveSentiments(sentiments);
+            log.info("Raw post processing completed. Total messages: {}, Total sentiments saved: {}",
+                    allMessages.size(), savedCount);
 
         } catch (Exception e) {
             log.error("Error in raw post processing: {}", e.getMessage(), e);
@@ -109,13 +113,13 @@ public class BloggerRawPostScheduler {
     public void processRawPostsForDate(LocalDate date) {
         Timestamp beginTime = Timestamp.valueOf(date.atStartOfDay());
         Timestamp endTime = Timestamp.valueOf(date.plusDays(1).atStartOfDay());
-        processRawPostsInBatches(beginTime, endTime);
+        processRawPosts(beginTime, endTime);
     }
 
     public void processRawPostsForDateRange(LocalDate startDate, LocalDate endDate) {
         Timestamp beginTime = Timestamp.valueOf(startDate.atStartOfDay());
         Timestamp endTime = Timestamp.valueOf(endDate.plusDays(1).atStartOfDay());
-        processRawPostsInBatches(beginTime, endTime);
+        processRawPosts(beginTime, endTime);
     }
 
     private int saveSentiments(List<BloggerRawSentiment> sentiments) {

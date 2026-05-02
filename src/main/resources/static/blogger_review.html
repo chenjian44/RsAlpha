@@ -594,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const coreAssets = ['SPY', 'QQQ', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'META', 'TSLA', 'BRK'];
 
   let allBloggers = [];
-  let selectedBlogger = null;
+  let selectedChannelName = null;
   let reviewData = null;
 
   const today = new Date();
@@ -701,10 +701,10 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (accuracy >= 40) accuracyClass = 'accuracy-medium';
 
       return `
-        <div class="blogger-item" data-blogger="${b.blogger}">
+        <div class="blogger-item" data-channel-name="${b.channelName}">
           <div class="blogger-name">
             <span style="color: #64748b; font-weight: 400; margin-right: 8px;">#${idx + 1}</span>
-            ${b.blogger}
+            ${b.channelName}
           </div>
           <div class="blogger-stats">
             <span class="blogger-stat">
@@ -726,19 +726,19 @@ document.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('click', () => {
         bloggerList.querySelectorAll('.blogger-item').forEach(i => i.classList.remove('active'));
         item.classList.add('active');
-        selectedBlogger = item.dataset.blogger;
-        renderRecords(selectedBlogger);
+        selectedChannelName = item.dataset.channelName;
+        renderRecords(selectedChannelName);
       });
     });
   }
 
-  function renderRecords(blogger) {
+  function renderRecords(channelName) {
     if (!reviewData || !reviewData.records) {
       recordsList.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div>暂无记录</div></div>';
       return;
     }
 
-    const records = reviewData.records.filter(r => r.blogger === blogger);
+    const records = reviewData.records.filter(r => r.channelName === channelName);
 
     if (records.length === 0) {
       recordsList.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div>该博主暂无有效记录</div></div>';
@@ -810,7 +810,7 @@ document.addEventListener('DOMContentLoaded', () => {
     defaultStart.setMonth(today.getMonth() - 3);
     startDateInput.value = defaultStart.toISOString().split('T')[0];
     endDateInput.value = today.toISOString().split('T')[0];
-    selectedBlogger = null;
+    selectedChannelName = null;
     loadData();
   });
 

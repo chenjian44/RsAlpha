@@ -44,8 +44,13 @@ public class BloggerRawSentimentServiceImpl implements BloggerRawSentimentServic
     }
 
     @Override
-    public List<String> getDistinctBloggersByTicker(String ticker) {
-        return bloggerRawSentimentMapper.getDistinctBloggersByTicker(ticker);
+    public List<BloggerRawSentiment> getSentimentsByTickerAndChannelName(String ticker, String startTime, String endTime, String channelName) {
+        return bloggerRawSentimentMapper.getByTickerAndChannelName(ticker, startTime, endTime, channelName);
+    }
+
+    @Override
+    public List<String> getDistinctChannelNamesByTicker(String ticker) {
+        return bloggerRawSentimentMapper.getDistinctChannelNamesByTicker(ticker);
     }
 
     @Override

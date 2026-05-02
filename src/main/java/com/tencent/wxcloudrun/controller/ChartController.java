@@ -106,10 +106,10 @@ public class ChartController {
     @GetMapping("/bloggers")
     public ApiResponse getBloggers(@RequestParam String ticker) {
         try {
-            List<String> bloggers = bloggerRawSentimentService.getDistinctBloggersByTicker(ticker);
-            return ApiResponse.ok(bloggers);
+            List<String> channelNames = bloggerRawSentimentService.getDistinctChannelNamesByTicker(ticker);
+            return ApiResponse.ok(channelNames);
         } catch (Exception e) {
-            return ApiResponse.error("获取博主列表失败: " + e.getMessage());
+            return ApiResponse.error("获取频道列表失败: " + e.getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ public class ChartController {
     @GetMapping("/blogger-review")
     public ApiResponse getBloggerReviewData(
             @RequestParam String ticker,
-            @RequestParam(required = false) String blogger,
+            @RequestParam(required = false) String channelName,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate) {
         try {
@@ -144,8 +144,8 @@ public class ChartController {
             LocalDate end = endDate != null ? LocalDate.parse(endDate) : today;
 
             List<BloggerRawSentiment> sentiments;
-            if (blogger != null && !blogger.isEmpty()) {
-                sentiments = bloggerRawSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), end.toString(), Arrays.asList(blogger));
+            if (channelName != null && !channelName.isEmpty()) {
+                sentiments = bloggerRawSentimentService.getSentimentsByTickerAndChannelName(ticker, start.toString(), end.toString(), channelName);
             } else {
                 sentiments = bloggerRawSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), end.toString());
             }
@@ -193,7 +193,7 @@ public class ChartController {
                     record.put("id", s.getId());
                     record.put("date", opinionDate);
                     record.put("ticker", s.getTicker());
-                    record.put("blogger", s.getBlogger());
+                    record.put("channelName", s.getChannelName());
                     record.put("sentimentScore", s.getSentimentScore());
                     record.put("sentimentDirection", sentimentDirection);
                     record.put("horizon", s.getHorizon());
@@ -282,14 +282,12 @@ public class ChartController {
                     record.put("priceChange", roundToTwoDecimals(priceChange));
                     record.put("verificationResult", verificationResult);
 
-                    bloggerRecords.computeIfAbsent(s.getBlogger(), k -> new ArrayList<>()).add(record);
-                }
-            }
+                    bloggerRecords.computeIfAbsent(s.getChannelName(), k -> new ArrayList<>()).add(record);
 
             List<Map<String, Object>> bloggerSummaries = new ArrayList<>();
-            bloggerRecords.forEach((blogger, records) -> {
+            bloggerRecords.forEach((channelName, records) -> {
                 Map<String, Object> summary = calculateSummary(records);
-                summary.put("blogger", blogger);
+                summary.put("channelName", channelName);
                 summary.put("totalOpinions", records.size());
                 bloggerSummaries.add(summary);
             });

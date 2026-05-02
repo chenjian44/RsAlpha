@@ -18,7 +18,9 @@ public interface BloggerRawSentimentMapper {
 
     List<BloggerRawSentiment> getByTickerAndTimeRangeWithBloggers(String ticker, String startTime, String endTime, List<String> bloggers);
 
-    List<String> getDistinctBloggersByTicker(String ticker);
+    List<BloggerRawSentiment> getByTickerAndChannelName(String ticker, String startTime, String endTime, String channelName);
+
+    List<String> getDistinctChannelNamesByTicker(String ticker);
 
     BloggerRawSentiment getByDateAndTickerAndBlogger(String date, String ticker, String blogger);
 

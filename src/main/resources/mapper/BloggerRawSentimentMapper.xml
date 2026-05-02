@@ -55,6 +55,16 @@
         ORDER BY date DESC, blogger
     </select>
 
+    <select id="getByTickerAndChannelName" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
+        SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
+        FROM blogger_raw_sentiments
+        WHERE ticker = #{ticker}
+        AND date <![CDATA[ >= ]]> #{startTime}
+        AND date <![CDATA[ <= ]]> #{endTime}
+        AND channel_name = #{channelName}
+        ORDER BY date DESC
+    </select>
+
     <select id="getByDateAndTickerAndBlogger" resultType="com.tencent.wxcloudrun.model.BloggerRawSentiment">
         SELECT id, date, ticker, blogger, sentiment_score as sentimentScore, horizon, strategy, raw_content as rawContent, channel_id as channelId, channel_name as channelName, message_time as messageTime, created_at as createdAt, updated_at as updatedAt
         FROM blogger_raw_sentiments
@@ -63,11 +73,11 @@
         AND blogger = #{blogger}
     </select>
 
-    <select id="getDistinctBloggersByTicker" resultType="String">
-        SELECT DISTINCT blogger
+    <select id="getDistinctChannelNamesByTicker" resultType="String">
+        SELECT DISTINCT channel_name
         FROM blogger_raw_sentiments
         WHERE ticker = #{ticker}
-        ORDER BY blogger
+        ORDER BY channel_name
     </select>
 
     <update id="update" parameterType="com.tencent.wxcloudrun.model.BloggerRawSentiment">

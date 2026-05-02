@@ -16,7 +16,9 @@ public interface BloggerRawSentimentService {
 
     List<BloggerRawSentiment> getSentimentsByTickerAndTimeRange(String ticker, String startTime, String endTime, List<String> bloggers);
 
-    List<String> getDistinctBloggersByTicker(String ticker);
+    List<BloggerRawSentiment> getSentimentsByTickerAndChannelName(String ticker, String startTime, String endTime, String channelName);
+
+    List<String> getDistinctChannelNamesByTicker(String ticker);
 
     BloggerRawSentiment getSentimentByDateAndTickerAndBlogger(String date, String ticker, String blogger);
 
