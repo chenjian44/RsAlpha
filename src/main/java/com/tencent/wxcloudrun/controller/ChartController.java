@@ -1,8 +1,8 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
-import com.tencent.wxcloudrun.model.BloggerSentiment;
-import com.tencent.wxcloudrun.service.BloggerSentimentService;
+import com.tencent.wxcloudrun.model.BloggerRawSentiment;
+import com.tencent.wxcloudrun.service.BloggerRawSentimentService;
 import com.tencent.wxcloudrun.utils.TigerKlineUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,30 +22,24 @@ import java.util.*;
 public class ChartController {
 
     @Autowired
-    private BloggerSentimentService bloggerSentimentService;
+    private BloggerRawSentimentService bloggerRawSentimentService;
 
     @GetMapping("/markers")
     public ApiResponse getMarkers(@RequestParam String ticker, @RequestParam(required = false) List<String> bloggers) {
         List<Map<String, Object>> markers = new ArrayList<>();
 
-        // 获取当前日期和起始日期 (2026年1月1日)
         LocalDate today = LocalDate.now();
         LocalDate startDate = LocalDate.of(2026, 1, 1);
         String startTime = startDate.toString();
         String endTime = today.toString();
 
-        // 范围查询从2026年1月1日到今天的情感数据，支持按blogger筛选
-        List<BloggerSentiment> sentiments = bloggerSentimentService.getSentimentsByTickerAndTimeRange(ticker, startTime, endTime, bloggers);
+        List<BloggerRawSentiment> sentiments = bloggerRawSentimentService.getSentimentsByTickerAndTimeRange(ticker, startTime, endTime, bloggers);
 
-        // 处理查询结果
         if (sentiments != null && !sentiments.isEmpty()) {
-            // 使用 Set 来存储唯一的标记键，实现去重
             Set<String> uniqueMarkerKeys = new HashSet<>();
-            // 使用 Map 来跟踪每个日期的分钟计数，确保当天的时间按分钟递增
             Map<String, Integer> dateMinuteCounter = new HashMap<>();
-            
-            for (BloggerSentiment sentiment : sentiments) {
-                // 生成唯一键：日期-博主-策略-看多看空标记-标的
+
+            for (BloggerRawSentiment sentiment : sentiments) {
                 String sentimentDirection = "中性";
                 if (sentiment.getSentimentScore() != null) {
                     if (sentiment.getSentimentScore() > 0) {
@@ -54,37 +48,28 @@ public class ChartController {
                         sentimentDirection = "看跌";
                     }
                 }
-                
-                String uniqueKey = String.format("%s-%s-%s-%s-%s", 
-                    sentiment.getDate(), 
-                    sentiment.getBlogger(), 
-                    sentiment.getStrategy() != null ? sentiment.getStrategy() : "", 
-                    sentimentDirection, 
+
+                String uniqueKey = String.format("%s-%s-%s-%s-%s",
+                    sentiment.getDate(),
+                    sentiment.getBlogger(),
+                    sentiment.getStrategy() != null ? sentiment.getStrategy() : "",
+                    sentimentDirection,
                     sentiment.getTicker());
-                
-                // 只有当键不存在时，才添加标记
+
                 if (!uniqueMarkerKeys.contains(uniqueKey)) {
                     uniqueMarkerKeys.add(uniqueKey);
-                    // 构建标记内容
                     String content = buildMarkerContent(sentiment);
-                    // 1. 获取原始日期字符串 (假设格式为 "YYYY-MM-DD")
                     String rawDateStr = sentiment.getDate();
                     LocalDate date = LocalDate.parse(rawDateStr);
                     date = date.minusDays(1);
-                    // 2. 判断并平移周末到周五
                     DayOfWeek dayOfWeek = date.getDayOfWeek();
                     if (dayOfWeek == DayOfWeek.SATURDAY) {
-                        // 如果是周六，往前推1天
                         date = date.minusDays(1);
                     } else if (dayOfWeek == DayOfWeek.SUNDAY) {
-                        // 如果是周日，往前推2天
                         date = date.minusDays(2);
                     }
 
-                    // 3. 构建最终的时间戳（使用清洗后的日期 + 固定时间）
-                    // date.toString() 会默认输出 "YYYY-MM-DD" 格式
                     String timestamp = date.toString() + " 10:00:00";
-                    // 添加到标记列表
                     markers.add(createMarkerMap(timestamp, sentiment.getBlogger(), content, sentiment.getHorizon()));
                 }
             }
@@ -93,10 +78,10 @@ public class ChartController {
         return ApiResponse.ok(markers);
     }
 
-    private String buildMarkerContent(BloggerSentiment sentiment) {
+    private String buildMarkerContent(BloggerRawSentiment sentiment) {
         StringBuilder content = new StringBuilder();
         content.append(sentiment.getTicker());
-        
+
         if (sentiment.getSentimentScore() != null) {
             if (sentiment.getSentimentScore() > 0) {
                 content.append(" 看涨，");
@@ -106,22 +91,22 @@ public class ChartController {
                 content.append(" 中性，");
             }
         }
-        
+
         if (sentiment.getHorizon() != null) {
             content.append("时间范围：").append(sentiment.getHorizon()).append("，");
         }
-        
+
         if (sentiment.getStrategy() != null) {
             content.append("策略：").append(sentiment.getStrategy());
         }
-        
+
         return content.toString();
     }
 
     @GetMapping("/bloggers")
     public ApiResponse getBloggers(@RequestParam String ticker) {
         try {
-            List<String> bloggers = bloggerSentimentService.getDistinctBloggersByTicker(ticker);
+            List<String> bloggers = bloggerRawSentimentService.getDistinctBloggersByTicker(ticker);
             return ApiResponse.ok(bloggers);
         } catch (Exception e) {
             return ApiResponse.error("获取博主列表失败: " + e.getMessage());
@@ -158,11 +143,11 @@ public class ChartController {
             LocalDate start = startDate != null ? LocalDate.parse(startDate) : today.minusMonths(3);
             LocalDate end = endDate != null ? LocalDate.parse(endDate) : today;
 
-            List<BloggerSentiment> sentiments;
+            List<BloggerRawSentiment> sentiments;
             if (blogger != null && !blogger.isEmpty()) {
-                sentiments = bloggerSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), end.toString(), Arrays.asList(blogger));
+                sentiments = bloggerRawSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), end.toString(), Arrays.asList(blogger));
             } else {
-                sentiments = bloggerSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), end.toString());
+                sentiments = bloggerRawSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), end.toString());
             }
 
             List<Map<String, Object>> klineData = TigerKlineUtils.getKlineData(ticker);
@@ -180,7 +165,7 @@ public class ChartController {
             }
 
             List<Map<String, Object>> reviewRecords = new ArrayList<>();
-            for (BloggerSentiment s : sentiments) {
+            for (BloggerRawSentiment s : sentiments) {
                 String opinionDate = s.getDate();
                 Double opinionPrice = priceMap.get(opinionDate);
 
@@ -218,6 +203,7 @@ public class ChartController {
                     record.put("targetPrice", roundToTwoDecimals(targetPrice));
                     record.put("priceChange", roundToTwoDecimals(priceChange));
                     record.put("verificationResult", verificationResult);
+                    record.put("rawContent", s.getRawContent());
                     reviewRecords.add(record);
                 }
             }
@@ -243,7 +229,7 @@ public class ChartController {
             LocalDate today = LocalDate.now();
             LocalDate start = today.minusYears(1);
 
-            List<BloggerSentiment> allSentiments = bloggerSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), today.toString());
+            List<BloggerRawSentiment> allSentiments = bloggerRawSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), today.toString());
 
             List<Map<String, Object>> klineData = TigerKlineUtils.getKlineData(ticker);
             Map<String, Double> priceMap = new HashMap<>();
@@ -260,7 +246,7 @@ public class ChartController {
             }
 
             Map<String, List<Map<String, Object>>> bloggerRecords = new HashMap<>();
-            for (BloggerSentiment s : allSentiments) {
+            for (BloggerRawSentiment s : allSentiments) {
                 String opinionDate = s.getDate();
                 Double opinionPrice = priceMap.get(opinionDate);
 
