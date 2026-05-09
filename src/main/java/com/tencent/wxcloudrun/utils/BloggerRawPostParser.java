@@ -161,14 +161,6 @@ public class BloggerRawPostParser {
         }
     }
 
-    private static DcChannelMessage findMatchingMessage(List<DcChannelMessage> messages, String blogger) {
-        for (DcChannelMessage msg : messages) {
-            if (msg.getUser() != null && msg.getUser().equals(blogger)) {
-                return msg.message;
-            }
-        }
-        return null;
-    }
 
     private static JSONArray parseJsonArray(String response) {
         if (response == null || response.isEmpty()) {
