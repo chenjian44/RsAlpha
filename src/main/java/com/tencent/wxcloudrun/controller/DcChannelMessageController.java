@@ -122,19 +122,17 @@ public class DcChannelMessageController {
     public ApiResponse triggerRawPostProcessing(@RequestParam(required = false) Integer limit) {
         try {
             int queryLimit = limit != null && limit > 0 ? limit : 100;
-            log.info("Manually triggering raw post processing, limit: {}", queryLimit);
 
-            List<DcChannelMessage> latestMessages = dcChannelMessageService.getLatestMessages(queryLimit);
-            log.info("Retrieved {} messages from database", latestMessages.size());
+            LocalDate today = LocalDate.now();
+            LocalDate yesterday = today.minusDays(30);
 
-            if (latestMessages.isEmpty()) {
-                return ApiResponse.ok("没有查询到消息");
-            }
+            Timestamp beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
+            Timestamp endTime = Timestamp.valueOf(LocalDateTime.now());
 
-            bloggerRawPostScheduler.processRawMessages(latestMessages);
 
-            log.info("Raw post processing triggered successfully for {} messages", latestMessages.size());
-            return ApiResponse.ok("原始帖子解析任务触发成功，共处理 {0} 条消息".replace("{0}", String.valueOf(latestMessages.size())));
+            bloggerRawPostScheduler.processRawPostsByBlogger( beginTime, endTime);
+
+            return ApiResponse.ok();
         } catch (Exception e) {
             log.error("Failed to trigger raw post processing: {}", e.getMessage(), e);
             return ApiResponse.error("触发任务失败: " + e.getMessage());

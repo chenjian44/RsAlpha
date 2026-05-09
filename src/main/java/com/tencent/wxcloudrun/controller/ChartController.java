@@ -283,6 +283,8 @@ public class ChartController {
                     record.put("verificationResult", verificationResult);
 
                     bloggerRecords.computeIfAbsent(s.getChannelName(), k -> new ArrayList<>()).add(record);
+                }
+            }
 
             List<Map<String, Object>> bloggerSummaries = new ArrayList<>();
             bloggerRecords.forEach((channelName, records) -> {

@@ -20,7 +20,7 @@ public class BloggerRawPostParser {
 
     private static final Logger log = LoggerFactory.getLogger(BloggerRawPostParser.class);
     private static final int MAX_RETRIES = 3;
-    private static final String SPECIFIED_MODEL = "gemini-3.1-pro-preview";
+    private static final String SPECIFIED_MODEL = "gemini-3.1-lite-flash";
     private static final boolean LLM_ENABLED = false;
 
     private static String promptTemplate = null;
@@ -42,7 +42,7 @@ public class BloggerRawPostParser {
         return promptTemplate;
     }
 
-    public static List<BloggerRawSentiment> parseRawPosts(List<DcChannelMessage> messages) {
+    public static List<BloggerRawSentiment> parseRawPosts(List<DcChannelMessage> messages, String channelId, String channelName) {
         List<BloggerRawSentiment> allSentiments = new ArrayList<>();
 
         if (messages == null || messages.isEmpty()) {
@@ -50,179 +50,18 @@ public class BloggerRawPostParser {
             return allSentiments;
         }
 
-        List<MessageWithImages> messagesWithImages = new ArrayList<>();
-        for (DcChannelMessage msg : messages) {
-            MessageWithImages mwi = new MessageWithImages();
-            mwi.message = msg;
-            mwi.imageUrls = extractImageUrls(msg.getContent());
-            mwi.contentWithoutImages = removeImageUrls(msg.getContent());
-            messagesWithImages.add(mwi);
-        }
+        return parseTextOnly(messages, channelId, channelName);
 
-        boolean hasAnyImages = messagesWithImages.stream().anyMatch(m -> m.imageUrls != null && !m.imageUrls.isEmpty());
-
-        if (LLM_ENABLED) {
-            if (hasAnyImages) {
-                log.info("Found messages with images, using multimodal parsing");
-                return parseWithMultimodal(messagesWithImages);
-            } else {
-                log.info("No images found, using text-only parsing");
-                return parseTextOnly(messagesWithImages);
-            }
-        } else {
-            log.info("LLM is disabled. Logging input for debugging only.");
-            logMessagesForDebug(messagesWithImages);
-            return allSentiments;
-        }
     }
 
-    private static void logMessagesForDebug(List<MessageWithImages> messagesWithImages) {
-        for (MessageWithImages mwi : messagesWithImages) {
-            DcChannelMessage msg = mwi.message;
-            StringBuilder sb = new StringBuilder();
-            sb.append("=== DEBUG MESSAGE ===\n");
-            sb.append("时间: ").append(msg.getTimestamp()).append("\n");
-            sb.append("频道: ").append(msg.getChannelName()).append("\n");
-            sb.append("频道ID: ").append(msg.getChannelId()).append("\n");
-            sb.append("用户: ").append(msg.getUser()).append("\n");
-            sb.append("内容: ").append(mwi.contentWithoutImages).append("\n");
-            if (mwi.imageUrls != null && !mwi.imageUrls.isEmpty()) {
-                sb.append("图片数量: ").append(mwi.imageUrls.size()).append("\n");
-                for (String url : mwi.imageUrls) {
-                    sb.append("  - ").append(url).append("\n");
-                }
-            }
-            sb.append("====================");
 
-            log.info(sb.toString());
-        }
-    }
-
-    private static List<BloggerRawSentiment> parseWithMultimodal(List<MessageWithImages> messagesWithImages) {
-        List<BloggerRawSentiment> allSentiments = new ArrayList<>();
-
-        for (MessageWithImages mwi : messagesWithImages) {
-            DcChannelMessage msg = mwi.message;
-            List<String> imageUrls = mwi.imageUrls;
-
-            JSONArray contentParts = new JSONArray();
-
-            JSONObject textPart = new JSONObject();
-            textPart.put("type", "text");
-            StringBuilder textContent = new StringBuilder();
-            textContent.append("时间: ").append(msg.getTimestamp()).append("\n");
-            textContent.append("频道: ").append(msg.getChannelName()).append("\n");
-            textContent.append("内容: ").append(mwi.contentWithoutImages).append("\n");
-            textPart.put("text", textContent.toString());
-            contentParts.add(textPart);
-
-            if (imageUrls != null && !imageUrls.isEmpty()) {
-                for (String imageUrl : imageUrls) {
-                    try {
-                        byte[] imageBytes = YunwuApiUtils.downloadImageAsBytes(imageUrl);
-                        if (imageBytes != null) {
-                            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                            JSONObject imagePart = new JSONObject();
-                            imagePart.put("type", "image_url");
-
-                            JSONObject imageUrlObj = new JSONObject();
-                            imageUrlObj.put("url", "data:image/jpeg;base64," + base64Image);
-                            imagePart.put("image_url", imageUrlObj);
-
-                            contentParts.add(imagePart);
-                            log.info("Successfully converted image {} to base64 ({} bytes)", imageUrl, imageBytes.length);
-                        } else {
-                            log.warn("Failed to download image: {}", imageUrl);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error processing image {}: {}", imageUrl, e.getMessage());
-                    }
-                }
-            }
-
-            String prompt = getPromptTemplate();
-            JSONObject textPrompt = new JSONObject();
-            textPrompt.put("type", "text");
-            textPrompt.put("text", prompt.replace("[在此处插入原始帖子内容]", "以下是原始帖子内容，请分析：\n" + mwi.contentWithoutImages));
-            JSONArray newContentParts = new JSONArray();
-            newContentParts.add(textPrompt);
-            for (Object part : contentParts) {
-                if (part instanceof JSONObject && "image_url".equals(((JSONObject) part).getString("type"))) {
-                    newContentParts.add(part);
-                }
-            }
-
-            for (int retry = 1; retry <= MAX_RETRIES; retry++) {
-                try {
-                    log.info("Calling LLM API for multimodal parsing, attempt {}/{}", retry, MAX_RETRIES);
-
-                    JSONObject response = YunwuApiUtils.callYunwuApiWithMultimodalContent(newContentParts, SPECIFIED_MODEL);
-                    String assistantResponse = YunwuApiUtils.getAssistantResponse(response);
-
-                    if (assistantResponse == null || assistantResponse.isEmpty()) {
-                        log.warn("Empty response from LLM API, attempt {}/{}", retry, MAX_RETRIES);
-                        if (retry < MAX_RETRIES) {
-                            continue;
-                        }
-                        break;
-                    }
-
-                    log.info("LLM API response: {}", assistantResponse);
-
-                    JSONArray jsonArray = parseJsonArray(assistantResponse);
-                    if (jsonArray == null) {
-                        log.warn("Failed to parse JSON array from LLM response, attempt {}/{}", retry, MAX_RETRIES);
-                        if (retry < MAX_RETRIES) {
-                            continue;
-                        }
-                        break;
-                    }
-
-                    for (int i = 0; i < jsonArray.size(); i++) {
-                        JSONObject obj = jsonArray.getJSONObject(i);
-                        BloggerRawSentiment sentiment = new BloggerRawSentiment();
-                        sentiment.setTicker(getStringValue(obj, "ticker", "").toUpperCase());
-                        sentiment.setBlogger(getStringValue(obj, "blogger", msg.getUser()));
-                        sentiment.setSentimentScore(getIntValue(obj, "sentiment_score", 0));
-                        sentiment.setHorizon(getStringValue(obj, "horizon", null));
-                        sentiment.setStrategy(getStringValue(obj, "strategy", ""));
-                        sentiment.setRawContent(msg.getContent());
-                        sentiment.setChannelId(msg.getChannelId());
-                        sentiment.setChannelName(msg.getChannelName());
-
-                        if (msg.getTimestamp() != null) {
-                            sentiment.setMessageTime(msg.getTimestamp().toLocalDateTime());
-                            sentiment.setDate(msg.getTimestamp().toLocalDateTime().toLocalDate().toString());
-                        }
-
-                        allSentiments.add(sentiment);
-                        log.info("Parsed sentiment from multimodal: {} - {} - {}", sentiment.getTicker(), sentiment.getBlogger(), sentiment.getSentimentScore());
-                    }
-
-                    break;
-
-                } catch (Exception e) {
-                    log.error("Error in multimodal parsing, attempt {}/{}: {}", retry, MAX_RETRIES, e.getMessage());
-                    if (retry >= MAX_RETRIES) {
-                        break;
-                    }
-                }
-            }
-        }
-
-        return allSentiments;
-    }
-
-    private static List<BloggerRawSentiment> parseTextOnly(List<MessageWithImages> messagesWithImages) {
+    private static List<BloggerRawSentiment> parseTextOnly(List<DcChannelMessage> messages, String channelId, String channelName) {
         List<BloggerRawSentiment> allSentiments = new ArrayList<>();
 
         StringBuilder postsContent = new StringBuilder();
-        for (MessageWithImages mwi : messagesWithImages) {
-            DcChannelMessage msg = mwi.message;
+        for (DcChannelMessage msg : messages) {
             postsContent.append("时间: ").append(msg.getTimestamp()).append("\n");
-            postsContent.append("频道: ").append(msg.getChannelName()).append("\n");
-            postsContent.append("内容: ").append(mwi.contentWithoutImages).append("\n");
+            postsContent.append("内容: ").append(msg.getContent()).append("\n");
         }
 
         String prompt = getPromptTemplate();
@@ -256,27 +95,21 @@ public class BloggerRawPostParser {
 
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    String blogger = getStringValue(obj, "blogger", "");
 
-                    DcChannelMessage matchedMsg = findMatchingMessage(messagesWithImages, blogger);
-                    if (matchedMsg == null) {
-                        log.warn("Cannot find matching message for blogger: {}", blogger);
-                        continue;
-                    }
 
                     BloggerRawSentiment sentiment = new BloggerRawSentiment();
                     sentiment.setTicker(getStringValue(obj, "ticker", "").toUpperCase());
-                    sentiment.setBlogger(blogger);
+                    sentiment.setBlogger(channelName);
                     sentiment.setSentimentScore(getIntValue(obj, "sentiment_score", 0));
                     sentiment.setHorizon(getStringValue(obj, "horizon", null));
                     sentiment.setStrategy(getStringValue(obj, "strategy", ""));
-                    sentiment.setRawContent(matchedMsg.getContent());
-                    sentiment.setChannelId(matchedMsg.getChannelId());
-                    sentiment.setChannelName(matchedMsg.getChannelName());
+                    sentiment.setRawContent("");
+                    sentiment.setChannelId(channelId);
+                    sentiment.setChannelName(channelName);
 
-                    if (matchedMsg.getTimestamp() != null) {
-                        sentiment.setMessageTime(matchedMsg.getTimestamp().toLocalDateTime());
-                        sentiment.setDate(matchedMsg.getTimestamp().toLocalDateTime().toLocalDate().toString());
+                    if (messages.get(0).getTimestamp() != null) {
+                        sentiment.setMessageTime(messages.get(0).getTimestamp().toLocalDateTime());
+                        sentiment.setDate(messages.get(0).getTimestamp().toLocalDateTime().toLocalDate().toString());
                     }
 
                     allSentiments.add(sentiment);
@@ -328,10 +161,10 @@ public class BloggerRawPostParser {
         }
     }
 
-    private static DcChannelMessage findMatchingMessage(List<MessageWithImages> messages, String blogger) {
-        for (MessageWithImages mwi : messages) {
-            if (mwi.message.getUser() != null && mwi.message.getUser().equals(blogger)) {
-                return mwi.message;
+    private static DcChannelMessage findMatchingMessage(List<DcChannelMessage> messages, String blogger) {
+        for (DcChannelMessage msg : messages) {
+            if (msg.getUser() != null && msg.getUser().equals(blogger)) {
+                return msg.message;
             }
         }
         return null;
