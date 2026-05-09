@@ -119,20 +119,39 @@ public class DcChannelMessageController {
     }
 
     @PostMapping("/api/dc-channel-message/trigger-raw-post")
-    public ApiResponse triggerRawPostProcessing(@RequestParam(required = false) Integer limit) {
+    public ApiResponse triggerRawPostProcessing(@RequestParam(required = false) Integer days) {
         try {
-            int queryLimit = limit != null && limit > 0 ? limit : 100;
+            int daysToProcess = days != null && days > 0 ? days : 120;
 
             LocalDate today = LocalDate.now();
-            LocalDate yesterday = today.minusDays(30);
+            int successCount = 0;
+            int failCount = 0;
 
-            Timestamp beginTime = Timestamp.valueOf(yesterday.atStartOfDay());
-            Timestamp endTime = Timestamp.valueOf(LocalDateTime.now());
+            log.info("Manually triggering raw post processing for {} days, from {} backwards", 
+                    daysToProcess, today);
 
+            for (int i = 0; i < daysToProcess; i++) {
+                LocalDate currentDate = today.minusDays(i);
+                LocalDate nextDate = currentDate.plusDays(1);
 
-            bloggerRawPostScheduler.processRawPostsByBlogger( beginTime, endTime);
+                Timestamp beginTime = Timestamp.valueOf(currentDate.atStartOfDay());
+                Timestamp endTime = Timestamp.valueOf(nextDate.atStartOfDay());
 
-            return ApiResponse.ok();
+                log.info("Processing day {} of {}: {}", i + 1, daysToProcess, currentDate);
+
+                try {
+                    bloggerRawPostScheduler.processRawPostsByBlogger(beginTime, endTime);
+                    successCount++;
+                } catch (Exception e) {
+                    failCount++;
+                    log.error("Failed to process date: {}, error: {}", currentDate, e.getMessage());
+                }
+            }
+
+            log.info("Raw post processing completed. Success: {}, Failed: {}", successCount, failCount);
+            return ApiResponse.ok("原始帖子解析任务触发完成: 成功 {0} 天, 失败 {1} 天"
+                    .replace("{0}", String.valueOf(successCount))
+                    .replace("{1}", String.valueOf(failCount)));
         } catch (Exception e) {
             log.error("Failed to trigger raw post processing: {}", e.getMessage(), e);
             return ApiResponse.error("触发任务失败: " + e.getMessage());
