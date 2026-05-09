@@ -20,7 +20,7 @@ public class BloggerRawPostParser {
 
     private static final Logger log = LoggerFactory.getLogger(BloggerRawPostParser.class);
     private static final int MAX_RETRIES = 3;
-    private static final String SPECIFIED_MODEL = "gemini-3.1-lite-flash";
+    private static final String SPECIFIED_MODEL = "gemini-3.1-flash-lite";
     private static final boolean LLM_ENABLED = false;
 
     private static String promptTemplate = null;
