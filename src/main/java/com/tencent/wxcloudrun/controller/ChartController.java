@@ -227,7 +227,7 @@ public class ChartController {
     public ApiResponse getBloggerReviewSummary(@RequestParam String ticker) {
         try {
             LocalDate today = LocalDate.now();
-            LocalDate start = today.minusYears(1);
+            LocalDate start = today.minusYears(5);
 
             List<BloggerRawSentiment> allSentiments = bloggerRawSentimentService.getSentimentsByTickerAndTimeRange(ticker, start.toString(), today.toString());
 
